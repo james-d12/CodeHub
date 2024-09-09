@@ -1,0 +1,69 @@
+﻿@page "/cloud"
+@using CodeHub.Engine.Azure.Models
+@using CodeHub.Portal.Client.Services
+@inject IAzureHttpClient AzureHttpClient
+
+<PageTitle>CodeHub: Explore</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+    <MudText Typo="Typo.h3" GutterBottom="true">Cloud Resources</MudText>
+
+    @if (_azureResources == null)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+    }
+    else
+    {
+        <MudDataGrid Dense="true" T="AzureResource" Items="@_azureResources" FilterMode="@DataGridFilterMode.Simple" Filterable="true" FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true" RowsPerPage="20">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Resources</MudText>
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Name" Title="Platform" Filterable="false" Sortable="false">
+                    <CellTemplate>
+                        <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure"/>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Name" Title="Name">
+                    <CellTemplate>
+                        <MudLink Target="_blank" Href="@(context.Item?.Url)">@context.Item?.Name</MudLink>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.ResourceGroupName" Title="Resource Group">
+                    <CellTemplate>
+                        <MudLink Target="_blank" Href="@(context.Item?.ResourceGroupUrl)">@context.Item?.ResourceGroupName</MudLink>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Subscription" Title="Subscription">
+                    <CellTemplate>
+                        <MudLink Target="_blank" Href="@(context.Item?.SubscriptionUrl)">@context.Item?.Subscription</MudLink>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Location" Title="Location">
+                    <CellTemplate>
+                        @context.Item?.Location
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.ResourceType" Title="Resource Type"/>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="AzureResource"/>
+            </PagerContent>
+        </MudDataGrid>
+    }
+
+
+</MudContainer>
+
+@code {
+    private List<AzureResource>? _azureResources;
+    private List<AzureSubscription> _azureSubscriptions = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _azureSubscriptions = await AzureHttpClient.GetSubscriptionsAsync();
+        _azureSubscriptions = _azureSubscriptions.OrderBy(s => s.Name).ToList();
+        _azureResources = await AzureHttpClient.GetResourcesAsync();
+        _azureResources = _azureResources.OrderBy(a => a.Name).ToList();
+    }
+}
