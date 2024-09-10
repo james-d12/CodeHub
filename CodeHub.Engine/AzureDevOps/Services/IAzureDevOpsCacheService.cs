@@ -1,12 +1,11 @@
-﻿using Microsoft.TeamFoundation.Build.WebApi;
-using Microsoft.TeamFoundation.SourceControl.WebApi;
+﻿using CodeHub.Engine.AzureDevOps.Models;
 
 namespace CodeHub.Engine.AzureDevOps.Services;
 
 internal interface IAzureDevOpsCacheService
 {
-    void SetRepositories(List<GitRepository> repositories);
-    void SetPipelines(List<BuildDefinitionReference> pipelines);
-    List<GitRepository> GetRepositories();
-    List<BuildDefinitionReference> GetPipelines();
+    void SetRepositories(List<AzureDevOpsRepository> repositories);
+    void SetPipelines(List<AzureDevOpsPipeline> pipelines);
+    List<AzureDevOpsRepository> GetRepositories();
+    List<AzureDevOpsPipeline> GetPipelines();
 }

@@ -3,22 +3,24 @@
 namespace CodeHub.Engine.SonarCloud.Models;
 
 [JsonSerializable(typeof(SonarCloudResponse<>))]
-public sealed record SonarCloudResponse<T> where T: class
+public sealed record SonarCloudResponse<T> where T : class
 {
     [JsonPropertyName("paging")]
-    public required SonarCloudPaging Paging { get; set; }
-    
+    public required SonarCloudPaging Paging { get; init; }
+
     [JsonPropertyName("components")]
-    public required List<T> Components { get; set; }
+    public required List<T> Components { get; init; }
 }
 
 [JsonSerializable(typeof(SonarCloudPaging))]
 public sealed record SonarCloudPaging
 {
     [JsonPropertyName("pageIndex")]
-    public required int PageIndex { get; set; }
+    public required int PageIndex { get; init; }
+
     [JsonPropertyName("pageSize")]
-    public required int PageSize { get; set; }
+    public required int PageSize { get; init; }
+
     [JsonPropertyName("total")]
-    public required int Total { get; set; }
+    public required int Total { get; init; }
 }

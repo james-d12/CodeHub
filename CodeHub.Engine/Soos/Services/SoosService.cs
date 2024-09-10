@@ -15,12 +15,12 @@ internal sealed class SoosService(IOptions<SoosSettings> soosSettings, ISoosCach
     public async Task<List<SoosProject>> GetProjectsAsync(CancellationToken cancellationToken)
     {
         var cachedProjects = soosCacheService.GetProjects();
-        
+
         if (cachedProjects.Count >= 1)
         {
             return cachedProjects;
         }
-        
+
         var uri = new Uri(SoosConstants.GetProjectsUrl(soosSettings.Value.ClientId));
         using HttpRequestMessage request = new(HttpMethod.Get, uri);
         request.Headers.Add(SoosConstants.ApiKeyHeaderName, soosSettings.Value.Key);
@@ -30,7 +30,7 @@ internal sealed class SoosService(IOptions<SoosSettings> soosSettings, ISoosCach
             using var response = await HttpClient.SendAsync(request, cancellationToken);
             var jsonString = await response.Content.ReadAsStringAsync(cancellationToken);
             var projects = JsonSerializer.Deserialize<List<SoosProject>>(jsonString) ?? [];
-            
+
             soosCacheService.SetProjects(projects);
 
             return projects;
@@ -42,8 +42,44 @@ internal sealed class SoosService(IOptions<SoosSettings> soosSettings, ISoosCach
         }
     }
 
-    public Task<List<SoosProject>> GetScansAsync(CancellationToken cancellationToken)
+    public async Task<List<SoosProjectBranch>> GetProjectBranchesAsync(string projectId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var uri = new Uri(SoosConstants.GetProjectBranchesUrl(soosSettings.Value.ClientId, projectId));
+        using HttpRequestMessage request = new(HttpMethod.Get, uri);
+        request.Headers.Add(SoosConstants.ApiKeyHeaderName, soosSettings.Value.Key);
+
+        try
+        {
+            using var response = await HttpClient.SendAsync(request, cancellationToken);
+            var jsonString = await response.Content.ReadAsStringAsync(cancellationToken);
+            var branches = JsonSerializer.Deserialize<List<SoosProjectBranch>>(jsonString) ?? [];
+            return branches;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return [];
+        }
     }
+
+    public async Task<SoosProjectSetting?> GetProjectSettingsAsync(string projectId, CancellationToken cancellationToken)
+    {
+        var uri = new Uri(SoosConstants.GetProjectSettingsUrl(soosSettings.Value.ClientId, projectId));
+        using HttpRequestMessage request = new(HttpMethod.Get, uri);
+        request.Headers.Add(SoosConstants.ApiKeyHeaderName, soosSettings.Value.Key);
+
+        try
+        {
+            using var response = await HttpClient.SendAsync(request, cancellationToken);
+            var jsonString = await response.Content.ReadAsStringAsync(cancellationToken);
+            var projectSettings = JsonSerializer.Deserialize<SoosProjectSetting>(jsonString);
+            return projectSettings;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+    }
+
 }

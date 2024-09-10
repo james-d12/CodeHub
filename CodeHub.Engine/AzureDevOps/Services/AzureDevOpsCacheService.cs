@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using Microsoft.TeamFoundation.Build.WebApi;
-using Microsoft.TeamFoundation.SourceControl.WebApi;
+﻿using CodeHub.Engine.AzureDevOps.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace CodeHub.Engine.AzureDevOps.Services;
 
@@ -9,24 +8,24 @@ internal sealed class AzureDevOpsCacheService(IMemoryCache memoryCache) : IAzure
     private const string RepositoryKey = "azure-devops-repositories";
     private const string PipelineKey = "azure-devops-pipelines";
 
-    public void SetRepositories(List<GitRepository> repositories)
+    public void SetRepositories(List<AzureDevOpsRepository> repositories)
     {
         SetItem(repositories, RepositoryKey);
     }
 
-    public void SetPipelines(List<BuildDefinitionReference> pipelines)
+    public void SetPipelines(List<AzureDevOpsPipeline> pipelines)
     {
         SetItem(pipelines, PipelineKey);
     }
 
-    public List<GitRepository> GetRepositories()
+    public List<AzureDevOpsRepository> GetRepositories()
     {
-        return memoryCache.Get<List<GitRepository>>(RepositoryKey) ?? [];
+        return memoryCache.Get<List<AzureDevOpsRepository>>(RepositoryKey) ?? [];
     }
 
-    public List<BuildDefinitionReference> GetPipelines()
+    public List<AzureDevOpsPipeline> GetPipelines()
     {
-        return memoryCache.Get<List<BuildDefinitionReference>>(PipelineKey) ?? [];
+        return memoryCache.Get<List<AzureDevOpsPipeline>>(PipelineKey) ?? [];
     }
 
     private void SetItem<T>(T item, string id)

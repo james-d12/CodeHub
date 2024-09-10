@@ -1,13 +1,11 @@
-﻿using Microsoft.TeamFoundation.Build.WebApi;
-using Microsoft.TeamFoundation.Core.WebApi;
-using Microsoft.TeamFoundation.SourceControl.WebApi;
+﻿using CodeHub.Engine.AzureDevOps.Models;
 
 namespace CodeHub.Engine.AzureDevOps.Services;
 
 public interface IAzureDevOpsService
 {
-    Task<List<GitRepository>> GetRepositoriesAsync(string projectName, CancellationToken cancellationToken);
-    Task<List<BuildDefinitionReference>> GetPipelinesAsync(string projectName, CancellationToken cancellationToken);
-    Task<List<TeamProject>> GetProjectsAsync(CancellationToken cancellationToken);
-    Task<List<WebApiTeam>> GetTeamsAsync(CancellationToken cancellationToken);
+    Task<List<AzureDevOpsRepository>> GetRepositoriesAsync(string projectName, CancellationToken cancellationToken);
+    Task<List<AzureDevOpsPipeline>> GetPipelinesAsync(string projectName, CancellationToken cancellationToken);
+    Task<List<AzureDevOpsProject>> GetProjectsAsync(CancellationToken cancellationToken);
+    Task<List<AzureDevOpsTeam>> GetTeamsAsync(CancellationToken cancellationToken);
 }
