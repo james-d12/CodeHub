@@ -1,0 +1,137 @@
+﻿@page "/cloud"
+@using CodeHub.Platform.Azure.Models
+@using CodeHub.Portal.Services.Models
+@using CodeHub.Portal.Services.Services
+@inject IAzureHttpClient AzureHttpClient
+
+<PageTitle>CodeHub: Cloud Resources</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+    <MudText Typo="Typo.h3" GutterBottom="true">Cloud Resources</MudText>
+
+    @if (_azureResources == null)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+    }
+    else
+    {
+        <MudDataGrid Dense="true" T="AzureResource" Items="@_azureResources" FilterMode="@DataGridFilterMode.ColumnFilterRow" Filterable="true" FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true" RowsPerPage="20">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Resources</MudText>
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Name" Title="Platform" Filterable="false" Sortable="false">
+                    <CellTemplate>
+                        <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure"/>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Name" Title="Name">
+                    <CellTemplate>
+                        <MudLink Target="_blank" Href="@(context.Item?.Url)">@context.Item?.Name</MudLink>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.ResourceGroupName" Title="Resource Group">
+                    <CellTemplate>
+                        <MudLink Target="_blank" Href="@(context.Item?.ResourceGroupUrl)">@context.Item?.ResourceGroupName</MudLink>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Subscription" Title="Subscription">
+                    <FilterTemplate>
+                        <MudIconButton OnClick="@OpenFilter" Icon="@Icons.Material.Outlined.FilterAlt" Size="@Size.Small"/>
+                        <MudOverlay Visible="@_filterOpen" OnClick="@(() => _filterOpen = false)"/>
+                        <MudPopover Open="@_filterOpen" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter"
+                                    Style="width:500px">
+                            <MudStack Spacing="0">
+                                <MudCheckBox T="bool" Label="Select All" Size="@Size.Small" Value="@_selectAll" ValueChanged="@SelectAll"/>
+                                <MudStack Spacing="0" Style="overflow-y:auto;max-height:250px">
+                                    @foreach (var item in _azureSubscriptions)
+                                    {
+                                        <MudCheckBox T="bool" Label="@($"{item.Data.Name}")" Size="@Size.Small" Value="@(_selectedSubscriptions.Contains(item))"
+                                                     ValueChanged="@((value) => SelectedChanged(value, item))"/>
+                                    }
+                                </MudStack>
+                            </MudStack>
+                        </MudPopover>
+                    </FilterTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Location" Title="Location">
+                    <CellTemplate>
+                        @context.Item?.Location
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.ResourceType" Title="Resource Type"/>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="AzureResource"/>
+            </PagerContent>
+        </MudDataGrid>
+    }
+
+
+</MudContainer>
+
+@code {
+    private List<AzureResource>? _azureResources;
+    private List<AzureSubscriptionResponse> _azureSubscriptions = [];
+    private HashSet<AzureSubscriptionResponse> _selectedSubscriptions = [];
+    private HashSet<AzureSubscriptionResponse> _filterSubscriptions = [];
+    private FilterDefinition<AzureSubscriptionResponse>? _filterDefinition;
+    private bool _filterOpen;
+    private bool _selectAll = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _azureSubscriptions = await AzureHttpClient.GetSubscriptionsAsync();
+        _azureResources = await AzureHttpClient.GetResourcesAsync();
+        _azureResources = _azureResources.OrderBy(a => a.Name).ToList();
+        _filterDefinition = new FilterDefinition<AzureSubscriptionResponse>
+        {
+            FilterFunction = x => _filterSubscriptions.Contains(x)
+        };
+    }
+
+    private void OpenFilter()
+    {
+        _filterOpen = true;
+    }
+
+    private void SelectedChanged(bool value, AzureSubscriptionResponse azureSubscription)
+    {
+        if (value)
+            _selectedSubscriptions.Add(azureSubscription);
+        else
+            _selectedSubscriptions.Remove(azureSubscription);
+
+        _selectAll = _selectedSubscriptions.Count == _azureSubscriptions.Count();
+    }
+
+    private async Task ClearFilterAsync(FilterContext<AzureSubscriptionResponse> context)
+    {
+        _selectedSubscriptions = _azureSubscriptions.ToHashSet();
+        _filterSubscriptions = _azureSubscriptions.ToHashSet();
+        if (_filterDefinition != null) await context.Actions.ClearFilterAsync(_filterDefinition);
+        _filterOpen = false;
+    }
+
+    private async Task ApplyFilterAsync(FilterContext<AzureSubscriptionResponse> context)
+    {
+        _filterSubscriptions = _selectedSubscriptions.ToHashSet();
+        if (_filterDefinition != null) await context.Actions.ApplyFilterAsync(_filterDefinition);
+        _filterOpen = false;
+    }
+
+    private void SelectAll(bool value)
+    {
+        _selectAll = value;
+
+        if (value)
+        {
+            _selectedSubscriptions = _azureSubscriptions.ToHashSet();
+        }
+        else
+        {
+            _selectedSubscriptions.Clear();
+        }
+    }
+
+}

@@ -1,0 +1,55 @@
+﻿@page "/static-analysis"
+@using CodeHub.Platform.SonarCloud.Models
+@using CodeHub.Portal.Services.Services
+@inject ISonarCloudHttpClient SonarCloudHttpClient
+
+<PageTitle>CodeHub: Static Analysis</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+    <MudText Typo="Typo.h3" GutterBottom="true">Static Analysis Resources</MudText>
+
+    @if (_sonarCloudResources == null)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+    }
+    else
+    {
+        <MudDataGrid Dense="true" T="SonarCloudComponent" Items="@_sonarCloudResources.Components" FilterMode="@DataGridFilterMode.Simple" Filterable="true" FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true" RowsPerPage="20">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Resources</MudText>
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Name" Title="Name">
+                    <CellTemplate>
+                        @context.Item?.Name
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Organization" Title="Organization">
+                    <CellTemplate>
+                        @context.Item?.Organization
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Key" Title="Key">
+                    <CellTemplate>
+                        @context.Item?.Key
+                    </CellTemplate>
+                </PropertyColumn>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="SonarCloudComponent"/>
+            </PagerContent>
+        </MudDataGrid>
+    }
+
+
+</MudContainer>
+
+@code {
+    private SonarCloudResponse<SonarCloudComponent>? _sonarCloudResources;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _sonarCloudResources = await SonarCloudHttpClient.GetComponentsAsync();
+    }
+
+}

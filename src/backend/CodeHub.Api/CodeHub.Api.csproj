@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CodeHub.Platform\CodeHub.Platform.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageVersion Update="Swashbuckle.AspNetCore" Version="6.7.3" />
+    </ItemGroup>
+
+</Project>
