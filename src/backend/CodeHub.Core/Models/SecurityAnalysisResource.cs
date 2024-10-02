@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Engine.Models;
+﻿namespace CodeHub.Core.Models;
 
 public enum SecurityAnalysisPlatform
 {

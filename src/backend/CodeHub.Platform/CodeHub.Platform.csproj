@@ -1,16 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-
     <ItemGroup>
       <ProjectReference Include="..\CodeHub.Platform.AzureDevOps\CodeHub.Platform.AzureDevOps.csproj" />
       <ProjectReference Include="..\CodeHub.Platform.Azure\CodeHub.Platform.Azure.csproj" />
       <ProjectReference Include="..\CodeHub.Platform.SonarCloud\CodeHub.Platform.SonarCloud.csproj" />
       <ProjectReference Include="..\CodeHub.Platform.SooS\CodeHub.Platform.SooS.csproj" />
     </ItemGroup>
-
 </Project>

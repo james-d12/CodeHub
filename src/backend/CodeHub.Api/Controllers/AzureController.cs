@@ -1,5 +1,4 @@
-﻿using Azure.ResourceManager.Resources;
-using CodeHub.Platform.Azure.Models;
+﻿using CodeHub.Platform.Azure.Models;
 using CodeHub.Platform.Azure.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +10,7 @@ public sealed class AzureController(ILogger<AzureController> logger, IAzureServi
     : ControllerBase
 {
     [HttpGet, Route("")]
-    public async Task<List<SubscriptionResource>> GetSubscriptionsAsync(CancellationToken cancellationToken)
+    public async Task<List<AzureSubscription>> GetSubscriptionsAsync(CancellationToken cancellationToken)
     {
         logger.LogInformation("Getting All Subscription Resources for Azure.");
         return await azureService.GetSubscriptionsAsync(cancellationToken);

@@ -1,4 +1,5 @@
-﻿using Azure.Identity;
+﻿using Azure.Core;
+using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using CodeHub.Platform.Azure.Mappers;
@@ -37,31 +38,29 @@ internal sealed class AzureService(IAzureCacheService azureCacheService) : IAzur
         return tenants;
     }
 
-    public async Task<SubscriptionResource?> GetSubscriptionAsync(string id, CancellationToken cancellationToken)
-    {
+    public async Task<AzureSubscription?> GetSubscriptionAsync(string id, CancellationToken cancellationToken)
+    {        
         var subscriptions = await GetSubscriptionsAsync(cancellationToken);
-        return subscriptions.Find(sub => sub.Data.DisplayName == id || sub.Data.Id.Name == id);
+        return subscriptions.Find(sub => sub.Name == id || sub.Id == id);
     }
 
-    public async Task<List<SubscriptionResource>> GetSubscriptionsAsync(CancellationToken cancellationToken)
+    public async Task<List<AzureSubscription>> GetSubscriptionsAsync(CancellationToken cancellationToken)
     {
-        var cachedSubscriptionResources = azureCacheService.GetSubscriptions();
+        var subscriptionResources = await GetSubscriptionsResourceAsync(cancellationToken);
 
-        if (cachedSubscriptionResources.Count >= 1)
+        var azureSubscriptions = new List<AzureSubscription>();
+
+        foreach (var subscriptionResource in subscriptionResources)
         {
-            return cachedSubscriptionResources;
+            var tenantId = subscriptionResource.Data.TenantId.ToString() ?? string.Empty;
+            var tenant = await GetTenantAsync(tenantId, cancellationToken);
+            var tenantName = tenant?.Data.DefaultDomain ?? string.Empty;
+            var azureSubscription =
+                AzureSubscriptionMapper.MapFromSubscriptionResource(subscriptionResource, tenantName);
+            azureSubscriptions.Add(azureSubscription);
         }
 
-        var subscriptionResources = new List<SubscriptionResource>();
-
-        await foreach (var subscription in _client.GetSubscriptions().GetAllAsync(cancellationToken))
-        {
-            subscriptionResources.Add(subscription);
-        }
-
-        azureCacheService.SetSubscriptions(subscriptionResources);
-
-        return subscriptionResources;
+        return azureSubscriptions;
     }
 
     public async Task<List<AzureResource>> GetSubscriptionResourcesAsync(string subscriptionId,
@@ -74,7 +73,7 @@ internal sealed class AzureService(IAzureCacheService azureCacheService) : IAzur
             return cachedAzureResources;
         }
 
-        var subscriptionResource = await GetSubscriptionAsync(subscriptionId, cancellationToken);
+        var subscriptionResource = await GetSubscriptionResourceAsync(subscriptionId, cancellationToken);
 
         if (subscriptionResource is null)
         {
@@ -114,5 +113,36 @@ internal sealed class AzureService(IAzureCacheService azureCacheService) : IAzur
         }
 
         return resources;
+    }
+
+
+    private async Task<SubscriptionResource?> GetSubscriptionResourceAsync(string id,
+        CancellationToken cancellationToken)
+    {
+        var subscriptionResource = _client.GetSubscriptionResource(new ResourceIdentifier(id));
+        
+        var subscriptions = await GetSubscriptionsResourceAsync(cancellationToken);
+        return subscriptions.Find(sub => sub.Data.DisplayName == id || sub.Data.Id.Name == id);
+    }
+
+    private async Task<List<SubscriptionResource>> GetSubscriptionsResourceAsync(CancellationToken cancellationToken)
+    {
+        var cachedSubscriptionResources = azureCacheService.GetSubscriptions();
+
+        if (cachedSubscriptionResources.Count >= 1)
+        {
+            return cachedSubscriptionResources;
+        }
+
+        var subscriptionResources = new List<SubscriptionResource>();
+
+        await foreach (var subscription in _client.GetSubscriptions().GetAllAsync(cancellationToken))
+        {
+            subscriptionResources.Add(subscription);
+        }
+
+        azureCacheService.SetSubscriptions(subscriptionResources);
+
+        return subscriptionResources;
     }
 }
