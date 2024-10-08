@@ -5,7 +5,7 @@ public enum StaticAnalysisPlatform
     SonarCloud
 }
 
-public abstract class StaticAnalysisResource
+public abstract record StaticAnalysisResource
 {
     public required string Id { get; set; }
     public required string Name { get; set; }

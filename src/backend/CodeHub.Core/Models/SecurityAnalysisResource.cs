@@ -6,7 +6,7 @@ public enum SecurityAnalysisPlatform
     Snyk
 }
 
-public abstract class SecurityAnalysisResource
+public abstract record SecurityAnalysisResource
 {
     public required string Id { get; set; }
     public required string Name { get; set; }

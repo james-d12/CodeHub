@@ -1,9 +1,9 @@
-﻿namespace CodeHub.Core.Platforms.Azure;
+﻿using CodeHub.Core.Models;
 
-public sealed record AzureResource
+namespace CodeHub.Core.Platforms.Azure;
+
+public sealed record AzureResource : CloudResource
 {
-    public required string Id { get; init; }
-    public required string Name { get; init; }
     public required string TenantName { get; init; }
     public required string Kind { get; init; }
     public required string Subscription { get; init; }
@@ -13,5 +13,4 @@ public sealed record AzureResource
     public required string? ResourceGroupUrl { get; init; }
     public required string? ResourceType { get; init; }
     public required string? Location { get; init; }
-    public required string? Url { get; init; }
 }

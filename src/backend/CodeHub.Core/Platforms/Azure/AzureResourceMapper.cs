@@ -11,6 +11,7 @@ internal static class AzureResourceMapper
         {
             Id = genericResourceData.Id.Name,
             Name = genericResourceData.Name,
+            Description = string.Empty,
             TenantName = tenantName,
             Kind = genericResourceData.Kind,
             Subscription = subscriptionName,
