@@ -1,8 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-    <ItemGroup>
-      <ProjectReference Include="..\CodeHub.Platform.AzureDevOps\CodeHub.Platform.AzureDevOps.csproj" />
-      <ProjectReference Include="..\CodeHub.Platform.Azure\CodeHub.Platform.Azure.csproj" />
-      <ProjectReference Include="..\CodeHub.Platform.SonarCloud\CodeHub.Platform.SonarCloud.csproj" />
-      <ProjectReference Include="..\CodeHub.Platform.SooS\CodeHub.Platform.SooS.csproj" />
-    </ItemGroup>
-</Project>

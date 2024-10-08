@@ -1,5 +1,4 @@
-﻿using CodeHub.Platform.Azure.Models;
-using CodeHub.Platform.Azure.Services;
+﻿using CodeHub.Core.Platforms.Azure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeHub.Api.Controllers;

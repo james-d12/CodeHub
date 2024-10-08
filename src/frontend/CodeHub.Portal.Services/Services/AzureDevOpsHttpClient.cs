@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Json;
-using CodeHub.Platform.AzureDevOps.Models;
+using CodeHub.Core.Platforms.AzureDevOps;
 
 namespace CodeHub.Portal.Services.Services;
 

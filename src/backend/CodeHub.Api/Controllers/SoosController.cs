@@ -1,5 +1,4 @@
-﻿using CodeHub.Platform.SooS.Models;
-using CodeHub.Platform.SooS.Services;
+﻿using CodeHub.Core.Platforms.SooS;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeHub.Api.Controllers;

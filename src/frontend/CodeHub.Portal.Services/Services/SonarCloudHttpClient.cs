@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Json;
-using CodeHub.Platform.SonarCloud.Models;
+using CodeHub.Core.Platforms.SonarCloud;
 
 namespace CodeHub.Portal.Services.Services;
 

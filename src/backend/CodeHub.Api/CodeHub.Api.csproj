@@ -9,11 +9,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CodeHub.Platform\CodeHub.Platform.csproj"/>
+      <PackageVersion Update="Swashbuckle.AspNetCore" Version="6.7.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageVersion Update="Swashbuckle.AspNetCore" Version="6.7.3" />
+      <ProjectReference Include="..\CodeHub.Core\CodeHub.Core.csproj" />
     </ItemGroup>
 
 </Project>
