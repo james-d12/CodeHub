@@ -1,6 +1,5 @@
 ﻿@page "/cloud"
 @using CodeHub.Core.Platforms.Azure
-@using CodeHub.Portal.Services.Models
 @using CodeHub.Portal.Services.Services
 @inject IAzureHttpClient AzureHttpClient
 
@@ -46,7 +45,7 @@
                                 <MudStack Spacing="0" Style="overflow-y:auto;max-height:250px">
                                     @foreach (var item in _azureSubscriptions)
                                     {
-                                        <MudCheckBox T="bool" Label="@($"{item.Data.Name}")" Size="@Size.Small" Value="@(_selectedSubscriptions.Contains(item))"
+                                        <MudCheckBox T="bool" Label="@($"{item.Name}")" Size="@Size.Small" Value="@(_selectedSubscriptions.Contains(item))"
                                                      ValueChanged="@((value) => SelectedChanged(value, item))"/>
                                     }
                                 </MudStack>
@@ -72,10 +71,10 @@
 
 @code {
     private List<AzureResource>? _azureResources;
-    private List<AzureSubscriptionResponse> _azureSubscriptions = [];
-    private HashSet<AzureSubscriptionResponse> _selectedSubscriptions = [];
-    private HashSet<AzureSubscriptionResponse> _filterSubscriptions = [];
-    private FilterDefinition<AzureSubscriptionResponse>? _filterDefinition;
+    private List<AzureSubscription> _azureSubscriptions = [];
+    private HashSet<AzureSubscription> _selectedSubscriptions = [];
+    private HashSet<AzureSubscription> _filterSubscriptions = [];
+    private FilterDefinition<AzureSubscription>? _filterDefinition;
     private bool _filterOpen;
     private bool _selectAll = true;
 
@@ -84,7 +83,7 @@
         _azureSubscriptions = await AzureHttpClient.GetSubscriptionsAsync();
         _azureResources = await AzureHttpClient.GetResourcesAsync();
         _azureResources = _azureResources.OrderBy(a => a.Name).ToList();
-        _filterDefinition = new FilterDefinition<AzureSubscriptionResponse>
+        _filterDefinition = new FilterDefinition<AzureSubscription>
         {
             FilterFunction = x => _filterSubscriptions.Contains(x)
         };
@@ -95,7 +94,7 @@
         _filterOpen = true;
     }
 
-    private void SelectedChanged(bool value, AzureSubscriptionResponse azureSubscription)
+    private void SelectedChanged(bool value, AzureSubscription azureSubscription)
     {
         if (value)
             _selectedSubscriptions.Add(azureSubscription);
@@ -105,7 +104,7 @@
         _selectAll = _selectedSubscriptions.Count == _azureSubscriptions.Count();
     }
 
-    private async Task ClearFilterAsync(FilterContext<AzureSubscriptionResponse> context)
+    private async Task ClearFilterAsync(FilterContext<AzureSubscription> context)
     {
         _selectedSubscriptions = _azureSubscriptions.ToHashSet();
         _filterSubscriptions = _azureSubscriptions.ToHashSet();
@@ -113,7 +112,7 @@
         _filterOpen = false;
     }
 
-    private async Task ApplyFilterAsync(FilterContext<AzureSubscriptionResponse> context)
+    private async Task ApplyFilterAsync(FilterContext<AzureSubscription> context)
     {
         _filterSubscriptions = _selectedSubscriptions.ToHashSet();
         if (_filterDefinition != null) await context.Actions.ApplyFilterAsync(_filterDefinition);

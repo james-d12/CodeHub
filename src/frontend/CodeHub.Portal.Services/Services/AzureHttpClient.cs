@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Web;
 using CodeHub.Core.Platforms.Azure;
-using CodeHub.Portal.Services.Models;
 
 namespace CodeHub.Portal.Services.Services;
 
@@ -41,13 +40,13 @@ public sealed class AzureHttpClient(HttpClient httpClient) : IAzureHttpClient
         }
     }
 
-    public async Task<List<AzureSubscriptionResponse>> GetSubscriptionsAsync()
+    public async Task<List<AzureSubscription>> GetSubscriptionsAsync()
     {
         try
         {
             var subscriptions =
-                await httpClient.GetFromJsonAsync<List<AzureSubscriptionResponse>>("subscriptions");
-            
+                await httpClient.GetFromJsonAsync<List<AzureSubscription>>("subscriptions");
+
             return subscriptions ?? [];
         }
         catch (Exception exception)

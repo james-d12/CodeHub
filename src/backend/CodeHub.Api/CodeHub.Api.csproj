@@ -5,15 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.1"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageVersion Update="Swashbuckle.AspNetCore" Version="6.7.3" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\CodeHub.Core\CodeHub.Core.csproj" />
+        <ProjectReference Include="..\CodeHub.Core\CodeHub.Core.csproj"/>
     </ItemGroup>
 
 </Project>
