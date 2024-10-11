@@ -10,28 +10,12 @@ public sealed class AzureHttpClient(HttpClient httpClient) : IAzureHttpClient
     {
         try
         {
-            var resources = new List<AzureResource>();
-
-            var subs = new List<string>([
-                "PayPoint_Dev_MultiPay_Developers (CSP)",
-                //"PayPoint_Dev_PreProd_SharedServices (CSP)",
-                //"PayPoint_Dev_PreProd_MultiPay (CSP)",
-                //"PayPoint_Dev_ProductionSystems_MultiPay (CSP)"
-            ]);
-
-            foreach (var subscription in subs)
-            {
-                var queryString = GetQueryString(subs);
-                var requestUrl = "subscriptions/resources?" + queryString;
-
-                Console.WriteLine(requestUrl);
-
-                var subResources =
-                    await httpClient.GetFromJsonAsync<List<AzureResource>>(requestUrl);
-                resources.AddRange(subResources ?? []);
-            }
-
-            return resources;
+            var subscriptions = await GetSubscriptionsAsync();
+            var subscriptionNames = subscriptions.Select(subscription => subscription.Name).ToList();
+            var queryString = GetQueryString(subscriptionNames);
+            var requestUrl = "subscriptions/resources?" + queryString;
+            var resources = await httpClient.GetFromJsonAsync<List<AzureResource>>(requestUrl);
+            return resources ?? [];
         }
         catch (Exception exception)
         {
@@ -46,7 +30,6 @@ public sealed class AzureHttpClient(HttpClient httpClient) : IAzureHttpClient
         {
             var subscriptions =
                 await httpClient.GetFromJsonAsync<List<AzureSubscription>>("subscriptions");
-
             return subscriptions ?? [];
         }
         catch (Exception exception)
