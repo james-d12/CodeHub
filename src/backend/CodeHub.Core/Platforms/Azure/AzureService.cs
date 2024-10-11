@@ -2,6 +2,7 @@
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.Security.KeyVault.Secrets;
 
 namespace CodeHub.Core.Platforms.Azure;
 
@@ -37,7 +38,7 @@ internal sealed class AzureService(IAzureCacheService azureCacheService) : IAzur
     }
 
     public async Task<AzureSubscription?> GetSubscriptionAsync(string id, CancellationToken cancellationToken)
-    {        
+    {
         var subscriptions = await GetSubscriptionsAsync(cancellationToken);
         return subscriptions.Find(sub => sub.Name == id || sub.Id == id);
     }
@@ -117,8 +118,6 @@ internal sealed class AzureService(IAzureCacheService azureCacheService) : IAzur
     private async Task<SubscriptionResource?> GetSubscriptionResourceAsync(string id,
         CancellationToken cancellationToken)
     {
-        var subscriptionResource = _client.GetSubscriptionResource(new ResourceIdentifier(id));
-        
         var subscriptions = await GetSubscriptionsResourceAsync(cancellationToken);
         return subscriptions.Find(sub => sub.Data.DisplayName == id || sub.Data.Id.Name == id);
     }
@@ -142,5 +141,16 @@ internal sealed class AzureService(IAzureCacheService azureCacheService) : IAzur
         azureCacheService.SetSubscriptions(subscriptionResources);
 
         return subscriptionResources;
+    }
+
+    private async Task GetKeyVaultSecretsAsync(string keyVaultName)
+    {
+        var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net");
+        var secretClient = new SecretClient(keyVaultUri, new DefaultAzureCredential());
+        
+        await foreach (var secret in secretClient.GetPropertiesOfSecretsAsync())
+        {
+            
+        }
     }
 }

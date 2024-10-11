@@ -7,7 +7,11 @@ internal struct SoosConstants
 
     // Get statistics for a branch scan: 
     // https://api-projects.soos.io/api/clients/<clientid>/projects/<projectid>/branches/<branchid>/scan-types/sca/statistics/issues?skip=0&take=2
-    
+    internal static string GetProjectUrl(string clientId, string projectId)
+    {
+        return $"https://api-projects.soos.io/api/clients/{clientId}/project/{projectId}";
+    }
+
     internal static string GetProjectsUrl(string clientId)
     {
         return $"https://api-projects.soos.io/api/clients/{clientId}/projects";
@@ -28,7 +32,7 @@ internal struct SoosConstants
         return
             $"https://api-projects.soos.io/api/clients/{clientId}/projects/{projectId}/branches/{branchId}/issues?scanType=sca&status=new&skip=0&take=10000";
     }
-    
+
     internal static string GetProjectBranchScanPendingUrl(string clientId, string projectId, string branchId)
     {
         return

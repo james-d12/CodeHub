@@ -45,7 +45,7 @@ public sealed class AzureHttpClient(HttpClient httpClient) : IAzureHttpClient
 
         foreach (var sub in subscriptions)
         {
-            query["subscriptionIds"] = sub;
+            query.Add("subscriptionIds", sub);
         }
 
         return query.ToString() ?? string.Empty;
