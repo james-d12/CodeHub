@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 using Microsoft.TeamFoundation.Build.WebApi;
 using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.SourceControl.WebApi;
@@ -10,11 +11,18 @@ namespace CodeHub.Core.Platforms.AzureDevOps;
 internal sealed class AzureDevOpsService : IAzureDevOpsService
 {
     private readonly VssConnection _connection;
-    private readonly IAzureDevOpsCacheService _azureDevOpsCacheService;
+    private readonly IMemoryCache _memoryCache;
 
-    public AzureDevOpsService(IAzureDevOpsCacheService azureDevOpsCacheService, IOptions<AzureDevOpsSettings> options)
+    private const string RepositoryCacheKey = "azure-devops-repositories";
+    private const string PipelineCacheKey = "azure-devops-pipelines";
+    private const string ProjectCacheKey = "azure-devops-projects";
+    private const string TeamCacheKey = "azure-devops-teams";
+
+    private static readonly TimeSpan CacheExpirationRelativeToNow = TimeSpan.FromMinutes(10);
+
+    public AzureDevOpsService(IMemoryCache memoryCache, IOptions<AzureDevOpsSettings> options)
     {
-        _azureDevOpsCacheService = azureDevOpsCacheService;
+        _memoryCache = memoryCache;
         var connectionUri = new Uri($"https://dev.azure.com/{options.Value.Organization}");
         var credentials = new VssBasicCredential(string.Empty, options.Value.PersonalAccessToken);
         _connection = new VssConnection(connectionUri, credentials);
@@ -23,54 +31,49 @@ internal sealed class AzureDevOpsService : IAzureDevOpsService
     public async Task<List<AzureDevOpsRepository>> GetRepositoriesAsync(string projectName,
         CancellationToken cancellationToken)
     {
-        var cachedRepositories = _azureDevOpsCacheService.GetRepositories();
-
-        if (cachedRepositories.Count >= 1)
+        return await _memoryCache.GetOrCreateAsync(RepositoryCacheKey, async entry =>
         {
-            return cachedRepositories;
-        }
-
-        var gitClient = await _connection.GetClientAsync<GitHttpClient>(cancellationToken);
-        var repositories =
-            await gitClient.GetRepositoriesAsync(projectName, cancellationToken: cancellationToken) ?? [];
-        var azureDevopsRepositories = repositories.Select(AzureDevOpsRepositoryMapper.MapFromGitRepository).ToList();
-
-        _azureDevOpsCacheService.SetRepositories(azureDevopsRepositories);
-
-        return azureDevopsRepositories;
+            entry.AbsoluteExpirationRelativeToNow = CacheExpirationRelativeToNow;
+            var gitClient = await _connection.GetClientAsync<GitHttpClient>(cancellationToken);
+            var repositories =
+                await gitClient.GetRepositoriesAsync(projectName, cancellationToken: cancellationToken) ?? [];
+            return repositories.Select(r => r.MapToAzureDevOpsRepository()).ToList();
+        }) ?? [];
     }
 
     public async Task<List<AzureDevOpsPipeline>> GetPipelinesAsync(string projectName,
         CancellationToken cancellationToken)
     {
-        var cachedPipelines = _azureDevOpsCacheService.GetPipelines();
-
-        if (cachedPipelines.Count >= 1)
+        return await _memoryCache.GetOrCreateAsync(PipelineCacheKey, async entry =>
         {
-            return cachedPipelines;
-        }
-
-        var buildClient = await _connection.GetClientAsync<BuildHttpClient>(cancellationToken);
-        var pipelines = await buildClient.GetDefinitionsAsync(projectName, cancellationToken: cancellationToken) ?? [];
-        var azureDevopsPipelines = pipelines.Select(AzureDevOpsPipelineMapper.MapFromBuildDefinitionReference).ToList();
-
-        _azureDevOpsCacheService.SetPipelines(azureDevopsPipelines);
-
-        return azureDevopsPipelines;
+            entry.AbsoluteExpirationRelativeToNow = CacheExpirationRelativeToNow;
+            var buildClient = await _connection.GetClientAsync<BuildHttpClient>(cancellationToken);
+            var pipelines = await buildClient.GetDefinitionsAsync(projectName, cancellationToken: cancellationToken);
+            var azureDevopsPipelines =
+                pipelines.Select(p => p.MapToAzureDevOpsPipeline()).ToList();
+            return azureDevopsPipelines;
+        }) ?? [];
     }
 
     public async Task<List<AzureDevOpsProject>> GetProjectsAsync(CancellationToken cancellationToken)
     {
-        var projectClient = await _connection.GetClientAsync<ProjectHttpClient>(cancellationToken);
-        var results = await projectClient.GetProjects();
-        return results.Select(project => AzureDevOpsProjectMapper.MapFromTeamProject(new TeamProject(project)))
-            .ToList();
+        return await _memoryCache.GetOrCreateAsync(ProjectCacheKey, async entry =>
+        {
+            entry.AbsoluteExpirationRelativeToNow = CacheExpirationRelativeToNow;
+            var projectClient = await _connection.GetClientAsync<ProjectHttpClient>(cancellationToken);
+            var results = await projectClient.GetProjects();
+            return results.Select(pr => pr.MapToAzureDevOpsProject()).ToList();
+        }) ?? [];
     }
 
     public async Task<List<AzureDevOpsTeam>> GetTeamsAsync(CancellationToken cancellationToken)
     {
-        var teamClient = await _connection.GetClientAsync<TeamHttpClient>(cancellationToken);
-        var teams = await teamClient.GetAllTeamsAsync(cancellationToken: cancellationToken);
-        return teams.Select(AzureDevOpsTeamMapper.MapFromWebApiTeam).ToList();
+        return await _memoryCache.GetOrCreateAsync(TeamCacheKey, async entry =>
+        {
+            entry.AbsoluteExpirationRelativeToNow = CacheExpirationRelativeToNow;
+            var teamClient = await _connection.GetClientAsync<TeamHttpClient>(cancellationToken);
+            var teams = await teamClient.GetAllTeamsAsync(cancellationToken: cancellationToken);
+            return teams.Select(t => t.MapToAzureDevOpsTeam()).ToList();
+        }) ?? [];
     }
 }

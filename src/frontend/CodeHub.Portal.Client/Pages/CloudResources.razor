@@ -26,12 +26,12 @@
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.Name" Title="Name">
                     <CellTemplate>
-                        <MudLink Target="_blank" Href="@(context.Item?.Url)">@context.Item?.Name</MudLink>
+                        <MudLink Target="_blank" Href="@(context.Item?.Url.ToString())">@context.Item?.Name</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.ResourceGroupName" Title="Resource Group">
                     <CellTemplate>
-                        <MudLink Target="_blank" Href="@(context.Item?.ResourceGroupUrl)">@context.Item?.ResourceGroupName</MudLink>
+                        <MudLink Target="_blank" Href="@(context.Item?.ResourceGroupUrl?.ToString())">@context.Item?.ResourceGroupName</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.Subscription" Title="Subscription">
@@ -53,7 +53,7 @@
                         </MudPopover>
                     </FilterTemplate>
                     <CellTemplate>
-                        <MudLink Target="_blank" Href="@(context.Item?.SubscriptionUrl)">@context.Item?.Subscription</MudLink>
+                        <MudLink Target="_blank" Href="@(context.Item?.SubscriptionUrl?.ToString())">@context.Item?.Subscription</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.Location" Title="Location">

@@ -1,40 +1,45 @@
-﻿using Azure.Core;
-using Azure.Identity;
+﻿using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace CodeHub.Core.Platforms.Azure;
 
-internal sealed class AzureService(IAzureCacheService azureCacheService) : IAzureService
+internal sealed class AzureService : IAzureService
 {
     private readonly ArmClient _client = new(new DefaultAzureCredential());
+    private readonly IAzureCacheService azureCacheService;
+    private readonly IMemoryCache _memoryCache;
+
+    private const string TenantKey = "azure-tenants";
+    private const string SubscriptionKey = "azure-subscriptions";
+
+    public AzureService(IAzureCacheService azureCacheService, IMemoryCache memoryCache)
+    {
+        this.azureCacheService = azureCacheService;
+        _memoryCache = memoryCache;
+    }
 
     public async Task<TenantResource?> GetTenantAsync(string id, CancellationToken cancellationToken)
     {
         var tenants = await GetTenantsAsync(cancellationToken);
+        
         return tenants.Find(ten => ten.Data.DisplayName == id || ten.Data.TenantId.ToString() == id);
     }
 
     public async Task<List<TenantResource>> GetTenantsAsync(CancellationToken cancellationToken)
     {
-        var cachedTenants = azureCacheService.GetTenants();
-
-        if (cachedTenants.Count >= 1)
+        return await _memoryCache.GetOrCreateAsync(TenantKey, async entry =>
         {
-            return cachedTenants;
-        }
+            var tenants = new List<TenantResource>();
+            await foreach (var tenant in _client.GetTenants().GetAllAsync(cancellationToken))
+            {
+                tenants.Add(tenant);
+            }
 
-        var tenants = new List<TenantResource>();
-
-        await foreach (var tenant in _client.GetTenants().GetAllAsync(cancellationToken))
-        {
-            tenants.Add(tenant);
-        }
-
-        azureCacheService.SetTenants(tenants);
-
-        return tenants;
+            return tenants;
+        }) ?? [];
     }
 
     public async Task<AzureSubscription?> GetSubscriptionAsync(string id, CancellationToken cancellationToken)
@@ -147,10 +152,9 @@ internal sealed class AzureService(IAzureCacheService azureCacheService) : IAzur
     {
         var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net");
         var secretClient = new SecretClient(keyVaultUri, new DefaultAzureCredential());
-        
+
         await foreach (var secret in secretClient.GetPropertiesOfSecretsAsync())
         {
-            
         }
     }
 }

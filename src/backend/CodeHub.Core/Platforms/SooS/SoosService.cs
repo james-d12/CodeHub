@@ -132,7 +132,7 @@ internal sealed class SoosService(IOptions<SoosSettings> soosSettings, ISoosCach
         {
             var branches = await GetProjectBranchesAsync(projectId, cancellationToken);
             var allBranchVulnerabilities = new List<SoosProjectBranchVulnerabilityResults>();
-            var mainBranches = branches.FindAll(branch => branch.Name == "develop" || branch.Name == "master").ToList();
+            var mainBranches = branches.FindAll(branch => branch.Name is "develop" or "master").ToList();
 
             foreach (var branch in mainBranches)
             {

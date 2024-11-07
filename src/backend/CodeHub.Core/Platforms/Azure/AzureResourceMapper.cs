@@ -31,21 +31,21 @@ internal static class AzureResourceMapper
         return string.IsNullOrEmpty(locationName) ? "Global" : locationName;
     }
 
-    private static string GetUrl(string tenantName, GenericResourceData genericResourceData)
+    private static Uri GetUrl(string tenantName, GenericResourceData genericResourceData)
     {
-        return
-            $"https://portal.azure.com/#@{tenantName}/resource/subscriptions/{genericResourceData.Id.SubscriptionId}/resourceGroups/{genericResourceData.Id.ResourceGroupName}/providers/{genericResourceData.Id.ResourceType}/{genericResourceData.Name}";
+        return new Uri(
+            $"https://portal.azure.com/#@{tenantName}/resource/subscriptions/{genericResourceData.Id.SubscriptionId}/resourceGroups/{genericResourceData.Id.ResourceGroupName}/providers/{genericResourceData.Id.ResourceType}/{genericResourceData.Name}");
     }
 
-    private static string GetSubscriptionUrl(string tenantName, GenericResourceData genericResourceData)
+    private static Uri GetSubscriptionUrl(string tenantName, GenericResourceData genericResourceData)
     {
-        return
-            $"https://portal.azure.com/#@{tenantName}/resource/subscriptions/{genericResourceData.Id.SubscriptionId}/overview";
+        return new Uri(
+            $"https://portal.azure.com/#@{tenantName}/resource/subscriptions/{genericResourceData.Id.SubscriptionId}/overview");
     }
 
-    private static string GetResourceGroupUrl(string tenantName, GenericResourceData genericResourceData)
+    private static Uri GetResourceGroupUrl(string tenantName, GenericResourceData genericResourceData)
     {
-        return
-            $"https://portal.azure.com/#@{tenantName}/resource/subscriptions/{genericResourceData.Id.SubscriptionId}/resourceGroups/{genericResourceData.Id.ResourceGroupName}/overview";
+        return new Uri(
+            $"https://portal.azure.com/#@{tenantName}/resource/subscriptions/{genericResourceData.Id.SubscriptionId}/resourceGroups/{genericResourceData.Id.ResourceGroupName}/overview");
     }
 }

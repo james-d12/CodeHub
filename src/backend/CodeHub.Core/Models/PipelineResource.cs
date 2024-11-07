@@ -13,6 +13,6 @@ public abstract record PipelineResource
 {
     public required string Id { get; set; }
     public required string Name { get; set; }
-    public required string Url { get; set; }
+    public required Uri Url { get; set; }
     public required PipelinePlatform Platform { get; set; }
 }

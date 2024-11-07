@@ -10,7 +10,6 @@ public static class AzureDevOpsExtensions
         IConfiguration configuration)
     {
         services.AddMemoryCache();
-        services.TryAddSingleton<IAzureDevOpsCacheService, AzureDevOpsCacheService>();
         services.TryAddScoped<IAzureDevOpsService, AzureDevOpsService>();
 
         services.Configure<AzureDevOpsSettings>(options =>
