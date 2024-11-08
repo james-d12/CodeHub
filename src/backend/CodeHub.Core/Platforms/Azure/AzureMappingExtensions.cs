@@ -2,9 +2,11 @@
 
 namespace CodeHub.Core.Platforms.Azure;
 
-internal static class AzureResourceMapper
+internal static class AzureMappingExtensions
 {
-    internal static AzureResource MapFromGenericResource(GenericResourceData genericResourceData, string tenantName,
+    internal static AzureResource MapToAzureResource(
+        this GenericResourceData genericResourceData,
+        string tenantName,
         string subscriptionName)
     {
         return new AzureResource
@@ -21,7 +23,22 @@ internal static class AzureResourceMapper
             Url = GetUrl(tenantName, genericResourceData),
             Location = GetLocationName(genericResourceData),
             ResourceGroupUrl = GetResourceGroupUrl(tenantName, genericResourceData),
-            SubscriptionUrl = GetSubscriptionUrl(tenantName, genericResourceData),
+            SubscriptionUrl = GetSubscriptionUrl(tenantName, genericResourceData.Id.SubscriptionId ?? string.Empty),
+        };
+    }
+
+    internal static AzureSubscription MapToAzureSubscription(
+        this SubscriptionResource subscriptionResource,
+        string tenantName)
+    {
+        return new AzureSubscription
+        {
+            Id = subscriptionResource.Id.Name,
+            Name = subscriptionResource.Data.DisplayName,
+            Url = GetSubscriptionUrl(tenantName, subscriptionResource.Data.SubscriptionId),
+            Tenant = tenantName,
+            TenantId = subscriptionResource.Data.TenantId,
+            Tags = subscriptionResource.Data.Tags
         };
     }
 
@@ -37,10 +54,10 @@ internal static class AzureResourceMapper
             $"https://portal.azure.com/#@{tenantName}/resource/subscriptions/{genericResourceData.Id.SubscriptionId}/resourceGroups/{genericResourceData.Id.ResourceGroupName}/providers/{genericResourceData.Id.ResourceType}/{genericResourceData.Name}");
     }
 
-    private static Uri GetSubscriptionUrl(string tenantName, GenericResourceData genericResourceData)
+    private static Uri GetSubscriptionUrl(string tenantName, string subscriptionId)
     {
         return new Uri(
-            $"https://portal.azure.com/#@{tenantName}/resource/subscriptions/{genericResourceData.Id.SubscriptionId}/overview");
+            $"https://portal.azure.com/#@{tenantName}/resource/subscriptions/{subscriptionId}/overview");
     }
 
     private static Uri GetResourceGroupUrl(string tenantName, GenericResourceData genericResourceData)
