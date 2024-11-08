@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CodeHub.Core.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -11,11 +12,12 @@ public static class AzureDevOpsExtensions
     {
         services.AddMemoryCache();
         services.TryAddScoped<IAzureDevOpsService, AzureDevOpsService>();
-
+        services.TryAddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
         services.Configure<AzureDevOpsSettings>(options =>
         {
             configuration.GetSection("AzureDevOpsSettings").Bind(options);
         });
+
         return services;
     }
 }

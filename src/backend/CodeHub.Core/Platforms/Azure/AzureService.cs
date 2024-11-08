@@ -9,22 +9,22 @@ namespace CodeHub.Core.Platforms.Azure;
 internal sealed class AzureService : IAzureService
 {
     private readonly ArmClient _client = new(new DefaultAzureCredential());
-    private readonly IAzureCacheService azureCacheService;
     private readonly IMemoryCache _memoryCache;
 
     private const string TenantKey = "azure-tenants";
     private const string SubscriptionKey = "azure-subscriptions";
 
-    public AzureService(IAzureCacheService azureCacheService, IMemoryCache memoryCache)
+    private static readonly TimeSpan CacheExpirationRelativeToNow = TimeSpan.FromMinutes(10);
+
+    public AzureService(IMemoryCache memoryCache)
     {
-        this.azureCacheService = azureCacheService;
         _memoryCache = memoryCache;
     }
 
     public async Task<TenantResource?> GetTenantAsync(string id, CancellationToken cancellationToken)
     {
         var tenants = await GetTenantsAsync(cancellationToken);
-        
+
         return tenants.Find(ten => ten.Data.DisplayName == id || ten.Data.TenantId.ToString() == id);
     }
 
@@ -59,8 +59,7 @@ internal sealed class AzureService : IAzureService
             var tenantId = subscriptionResource.Data.TenantId.ToString() ?? string.Empty;
             var tenant = await GetTenantAsync(tenantId, cancellationToken);
             var tenantName = tenant?.Data.DefaultDomain ?? string.Empty;
-            var azureSubscription =
-                AzureSubscriptionMapper.MapFromSubscriptionResource(subscriptionResource, tenantName);
+            var azureSubscription = subscriptionResource.MapToAzureSubscription(tenantName);
             azureSubscriptions.Add(azureSubscription);
         }
 
@@ -70,39 +69,31 @@ internal sealed class AzureService : IAzureService
     public async Task<List<AzureResource>> GetSubscriptionResourcesAsync(string subscriptionId,
         CancellationToken cancellationToken)
     {
-        var cachedAzureResources = azureCacheService.GetResources(subscriptionId);
-
-        if (cachedAzureResources.Count >= 1)
+        return await _memoryCache.GetOrCreateAsync<List<AzureResource>>(subscriptionId, async entry =>
         {
-            return cachedAzureResources;
-        }
+            entry.AbsoluteExpirationRelativeToNow = CacheExpirationRelativeToNow;
+            var subscriptionResource = await GetSubscriptionResourceAsync(subscriptionId, cancellationToken);
 
-        var subscriptionResource = await GetSubscriptionResourceAsync(subscriptionId, cancellationToken);
+            if (subscriptionResource is null)
+            {
+                return [];
+            }
 
-        if (subscriptionResource is null)
-        {
-            return [];
-        }
+            var tenantId = subscriptionResource.Data.TenantId.ToString() ?? string.Empty;
+            var tenant = await GetTenantAsync(tenantId, cancellationToken);
+            var tenantName = tenant?.Data.DefaultDomain ?? string.Empty;
 
-        var tenantId = subscriptionResource.Data.TenantId.ToString() ?? string.Empty;
-        var tenant = await GetTenantAsync(tenantId, cancellationToken);
-        var tenantName = tenant?.Data.DefaultDomain ?? string.Empty;
+            var azureResources = new List<AzureResource>();
 
-        var azureResources = new List<AzureResource>();
+            await foreach (var resource in subscriptionResource.GetGenericResourcesAsync(
+                               cancellationToken: cancellationToken))
+            {
+                var azureResource = resource.Data.MapToAzureResource(tenantName, subscriptionResource.Data.DisplayName);
+                azureResources.Add(azureResource);
+            }
 
-        await foreach (var resource in subscriptionResource.GetGenericResourcesAsync(
-                           cancellationToken: cancellationToken))
-        {
-            var azureResource = AzureResourceMapper.MapFromGenericResource(
-                resource.Data,
-                tenantName,
-                subscriptionResource.Data.DisplayName);
-            azureResources.Add(azureResource);
-        }
-
-        azureCacheService.SetResources(azureResources, subscriptionResource.Id.Name);
-
-        return azureResources;
+            return azureResources;
+        }) ?? [];
     }
 
     public async Task<List<AzureResource>> GetAllSubscriptionsResourcesAsync(string[] subscriptionIds,
@@ -129,23 +120,18 @@ internal sealed class AzureService : IAzureService
 
     private async Task<List<SubscriptionResource>> GetSubscriptionsResourceAsync(CancellationToken cancellationToken)
     {
-        var cachedSubscriptionResources = azureCacheService.GetSubscriptions();
-
-        if (cachedSubscriptionResources.Count >= 1)
+        return await _memoryCache.GetOrCreateAsync(SubscriptionKey, async entry =>
         {
-            return cachedSubscriptionResources;
-        }
+            entry.AbsoluteExpirationRelativeToNow = CacheExpirationRelativeToNow;
+            var subscriptionResources = new List<SubscriptionResource>();
 
-        var subscriptionResources = new List<SubscriptionResource>();
+            await foreach (var subscription in _client.GetSubscriptions().GetAllAsync(cancellationToken))
+            {
+                subscriptionResources.Add(subscription);
+            }
 
-        await foreach (var subscription in _client.GetSubscriptions().GetAllAsync(cancellationToken))
-        {
-            subscriptionResources.Add(subscription);
-        }
-
-        azureCacheService.SetSubscriptions(subscriptionResources);
-
-        return subscriptionResources;
+            return subscriptionResources;
+        }) ?? [];
     }
 
     private async Task GetKeyVaultSecretsAsync(string keyVaultName)
