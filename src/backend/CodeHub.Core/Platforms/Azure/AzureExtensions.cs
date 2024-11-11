@@ -1,4 +1,5 @@
-﻿using CodeHub.Core.Services;
+﻿using CodeHub.Core.Models;
+using CodeHub.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -10,7 +11,7 @@ public static class AzureExtensions
     {
         services.AddMemoryCache();
         services.TryAddTransient<IAzureService, AzureService>();
-        services.TryAddTransient<IDiscoveryService, AzureDiscoveryService>();
+        services.TryAddKeyedTransient<IDiscoveryService, AzureDiscoveryService>(DiscoveryServiceType.Azure);
         return services;
     }
 }

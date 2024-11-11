@@ -1,4 +1,5 @@
 ﻿using CodeHub.Core.Platforms.Azure;
+using CodeHub.Core.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ public sealed class AzureExtensionsTests
         serviceCollection.RegisterAzureServices();
 
         // Assert
+        Assert.Contains(serviceCollection, service => service.ServiceType == typeof(IDiscoveryService));
         Assert.Contains(serviceCollection, service => service.ServiceType == typeof(IAzureService));
         Assert.Contains(serviceCollection, service => service.ServiceType == typeof(IMemoryCache));
     }

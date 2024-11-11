@@ -1,4 +1,5 @@
-﻿using CodeHub.Core.Services;
+﻿using CodeHub.Core.Models;
+using CodeHub.Core.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -12,7 +13,7 @@ public static class AzureDevOpsExtensions
     {
         services.AddMemoryCache();
         services.TryAddTransient<IAzureDevOpsService, AzureDevOpsService>();
-        services.TryAddTransient<IDiscoveryService, AzureDevOpsDiscoveryService>();
+        services.TryAddKeyedTransient<IDiscoveryService, AzureDevOpsDiscoveryService>(DiscoveryServiceType.AzureDevOps);
         services.Configure<AzureDevOpsSettings>(options =>
         {
             configuration.GetSection("AzureDevOpsSettings").Bind(options);
