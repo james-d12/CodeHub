@@ -1,5 +1,4 @@
 ﻿using CodeHub.Core.Platforms.SonarCloud;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

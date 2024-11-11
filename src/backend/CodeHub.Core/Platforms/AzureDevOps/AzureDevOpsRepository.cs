@@ -1,4 +1,4 @@
-﻿using CodeHub.Core.Models;
+﻿using CodeHub.Core.Models.Resource;
 
 namespace CodeHub.Core.Platforms.AzureDevOps;
 

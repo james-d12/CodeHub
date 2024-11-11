@@ -1,4 +1,4 @@
-﻿using CodeHub.Core.Models;
+﻿using CodeHub.Core.Models.Resource;
 using Microsoft.TeamFoundation.Build.WebApi;
 using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.SourceControl.WebApi;

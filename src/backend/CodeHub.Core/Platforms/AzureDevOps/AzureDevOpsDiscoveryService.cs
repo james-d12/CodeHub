@@ -20,15 +20,15 @@ public sealed class AzureDevOpsDiscoveryService : IDiscoveryService
         try
         {
             _logger.LogInformation("Discovering Azure DevOps team resources...");
-            _ = await _azureDevOpsService.GetTeamsAsync(cancellationToken);
+            await _azureDevOpsService.GetTeamsAsync(cancellationToken);
 
             _logger.LogInformation("Discovering Azure DevOps project resources...");
             var projects = await _azureDevOpsService.GetProjectsAsync(cancellationToken);
 
             foreach (var project in projects)
             {
-                _ = await _azureDevOpsService.GetRepositoriesAsync(project.Name, cancellationToken);
-                _ = await _azureDevOpsService.GetPipelinesAsync(project.Name, cancellationToken);
+                await _azureDevOpsService.GetRepositoriesAsync(project.Name, cancellationToken);
+                await _azureDevOpsService.GetPipelinesAsync(project.Name, cancellationToken);
             }
         }
         catch (Exception exception)

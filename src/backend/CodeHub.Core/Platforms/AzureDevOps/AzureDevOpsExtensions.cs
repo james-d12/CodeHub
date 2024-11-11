@@ -11,8 +11,8 @@ public static class AzureDevOpsExtensions
         IConfiguration configuration)
     {
         services.AddMemoryCache();
-        services.TryAddScoped<IAzureDevOpsService, AzureDevOpsService>();
-        services.TryAddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
+        services.TryAddTransient<IAzureDevOpsService, AzureDevOpsService>();
+        services.TryAddTransient<IDiscoveryService, AzureDevOpsDiscoveryService>();
         services.Configure<AzureDevOpsSettings>(options =>
         {
             configuration.GetSection("AzureDevOpsSettings").Bind(options);

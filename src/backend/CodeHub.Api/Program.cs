@@ -1,11 +1,14 @@
+using CodeHub.Api.Jobs;
 using CodeHub.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLogging();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.RegisterPlatforms(builder.Configuration);
+builder.Services.AddHostedService<DiscoveryHostedService>();
 
 builder.Services.AddCors(options =>
 {

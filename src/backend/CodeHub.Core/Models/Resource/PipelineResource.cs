@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Core.Models;
+﻿namespace CodeHub.Core.Models.Resource;
 
 public enum PipelinePlatform
 {
