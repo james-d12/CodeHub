@@ -1,4 +1,6 @@
 ﻿using CodeHub.Core.Platforms.AzureDevOps;
+using CodeHub.Core.Platforms.AzureDevOps.Extensions;
+using CodeHub.Core.Platforms.AzureDevOps.Services;
 using CodeHub.Core.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;

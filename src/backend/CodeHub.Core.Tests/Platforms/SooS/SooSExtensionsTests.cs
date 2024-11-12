@@ -1,4 +1,5 @@
-﻿using CodeHub.Core.Platforms.SooS;
+﻿using CodeHub.Core.Platforms.Soos.Extensions;
+using CodeHub.Core.Platforms.Soos.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

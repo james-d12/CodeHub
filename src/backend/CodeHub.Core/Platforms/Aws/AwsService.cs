@@ -25,7 +25,7 @@ internal sealed class AwsService
             foreach (var resourceTagMapping in resources.ResourceTagMappingList)
             {
                 foreach (var tag in resourceTagMapping.Tags)
-                {       
+                {
                 }
             }
         }

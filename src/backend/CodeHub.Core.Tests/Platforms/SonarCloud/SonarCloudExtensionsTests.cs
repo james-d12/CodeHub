@@ -1,4 +1,6 @@
 ﻿using CodeHub.Core.Platforms.SonarCloud;
+using CodeHub.Core.Platforms.SonarCloud.Extensions;
+using CodeHub.Core.Platforms.SonarCloud.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
