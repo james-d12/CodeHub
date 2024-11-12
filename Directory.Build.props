@@ -1,0 +1,13 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
+        <Features>strict</Features>
+        <WarningLevel>4</WarningLevel>
+        <Nullable>enable</Nullable>
+        <AnalyzeMode>all</AnalyzeMode>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    </PropertyGroup>
+</Project>
