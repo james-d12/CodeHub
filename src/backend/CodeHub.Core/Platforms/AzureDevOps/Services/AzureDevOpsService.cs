@@ -21,6 +21,7 @@ internal sealed class AzureDevOpsService : IAzureDevOpsService
     private const string PipelineCacheKey = "azure-devops-pipelines";
     private const string ProjectCacheKey = "azure-devops-projects";
     private const string TeamCacheKey = "azure-devops-teams";
+    private const string WorkItemsCacheKey = "azure-devops-workitems";
 
     private static readonly TimeSpan CacheExpirationRelativeToNow = TimeSpan.FromMinutes(10);
 
@@ -83,7 +84,7 @@ internal sealed class AzureDevOpsService : IAzureDevOpsService
 
     public async Task<List<WorkItem>> GetWorkItemsAsync(string projectName, CancellationToken cancellationToken)
     {
-        return await _memoryCache.GetOrCreateAsync(TeamCacheKey, async entry =>
+        return await _memoryCache.GetOrCreateAsync(WorkItemsCacheKey, async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = CacheExpirationRelativeToNow;
 
@@ -96,7 +97,7 @@ internal sealed class AzureDevOpsService : IAzureDevOpsService
                     WHERE [System.TeamProject] = '{projectName}'"
             };
 
-            var queryResult = await workItemTrackingClient.QueryByWiqlAsync(wiql);
+            var queryResult = await workItemTrackingClient.QueryByWiqlAsync(wiql, cancellationToken: cancellationToken);
 
             if (queryResult is null || !queryResult.WorkItems.Any())
             {
@@ -110,7 +111,8 @@ internal sealed class AzureDevOpsService : IAzureDevOpsService
             for (var i = 0; i < workItemIds.Count; i += batchSize)
             {
                 var batchIds = workItemIds.Skip(i).Take(batchSize).ToArray();
-                var batchWorkItems = await workItemTrackingClient.GetWorkItemsAsync(batchIds);
+                var batchWorkItems =
+                    await workItemTrackingClient.GetWorkItemsAsync(batchIds, cancellationToken: cancellationToken);
                 workItems.AddRange(batchWorkItems);
             }
 

@@ -11,7 +11,7 @@ public static class SonarCloudExtensions
     public static IServiceCollection RegisterSonarCloudServices(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.TryAddScoped<ISonarCloudService, SonarCloudService>();
+        services.TryAddTransient<ISonarCloudService, SonarCloudService>();
 
         services.Configure<SonarCloudSettings>(options =>
         {

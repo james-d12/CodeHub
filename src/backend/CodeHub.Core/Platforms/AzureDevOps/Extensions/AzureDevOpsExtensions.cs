@@ -1,5 +1,4 @@
-﻿using CodeHub.Core.Models;
-using CodeHub.Core.Platforms.AzureDevOps.Models;
+﻿using CodeHub.Core.Platforms.AzureDevOps.Models;
 using CodeHub.Core.Platforms.AzureDevOps.Services;
 using CodeHub.Core.Services;
 using Microsoft.Extensions.Configuration;
@@ -14,8 +13,8 @@ public static class AzureDevOpsExtensions
         IConfiguration configuration)
     {
         services.AddMemoryCache();
-        services.TryAddScoped<IAzureDevOpsService, AzureDevOpsService>();
-        services.TryAddKeyedScoped<IDiscoveryService, AzureDevOpsDiscoveryService>(DiscoveryServiceType.AzureDevOps);
+        services.TryAddTransient<IAzureDevOpsService, AzureDevOpsService>();
+        services.TryAddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
         services.Configure<AzureDevOpsSettings>(options =>
         {
             configuration.GetSection(nameof(AzureDevOpsSettings)).Bind(options);

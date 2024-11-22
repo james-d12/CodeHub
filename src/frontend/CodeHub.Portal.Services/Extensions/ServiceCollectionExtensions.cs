@@ -23,8 +23,8 @@ public static class ServiceCollectionExtensions
             client.BaseAddress = new Uri("http://localhost:5104/sonarcloud/");
         });
 
-        services.TryAddScoped<IAzureDevOpsHttpClient, AzureDevOpsHttpClient>();
-        services.TryAddScoped<IAzureHttpClient, AzureHttpClient>();
-        services.TryAddScoped<ISonarCloudHttpClient, SonarCloudHttpClient>();
+        services.TryAddTransient<IAzureDevOpsHttpClient, AzureDevOpsHttpClient>();
+        services.TryAddTransient<IAzureHttpClient, AzureHttpClient>();
+        services.TryAddTransient<ISonarCloudHttpClient, SonarCloudHttpClient>();
     }
 }

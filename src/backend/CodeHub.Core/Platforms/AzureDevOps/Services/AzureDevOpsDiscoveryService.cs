@@ -8,7 +8,8 @@ internal sealed class AzureDevOpsDiscoveryService : IDiscoveryService
     private readonly IAzureDevOpsService _azureDevOpsService;
     private readonly ILogger<AzureDevOpsDiscoveryService> _logger;
 
-    public AzureDevOpsDiscoveryService(ILogger<AzureDevOpsDiscoveryService> logger,
+    public AzureDevOpsDiscoveryService(
+        ILogger<AzureDevOpsDiscoveryService> logger,
         IAzureDevOpsService azureDevOpsService)
     {
         _logger = logger;

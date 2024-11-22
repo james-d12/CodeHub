@@ -13,7 +13,7 @@ public static class SoosExtensions
     {
         services.AddMemoryCache();
         services.TryAddSingleton<ISoosCacheService, SoosCacheService>();
-        services.TryAddScoped<ISoosService, SoosService>();
+        services.TryAddTransient<ISoosService, SoosService>();
 
         services.Configure<SoosSettings>(options => { configuration.GetSection(nameof(SoosSettings)).Bind(options); });
         return services;

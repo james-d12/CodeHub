@@ -1,5 +1,4 @@
-﻿using CodeHub.Core.Models;
-using CodeHub.Core.Platforms.Azure.Services;
+﻿using CodeHub.Core.Platforms.Azure.Services;
 using CodeHub.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -11,8 +10,8 @@ public static class AzureExtensions
     public static IServiceCollection RegisterAzureServices(this IServiceCollection services)
     {
         services.AddMemoryCache();
-        services.TryAddScoped<IAzureService, AzureService>();
-        services.TryAddKeyedScoped<IDiscoveryService, AzureDiscoveryService>(DiscoveryServiceType.Azure);
+        services.TryAddTransient<IAzureService, AzureService>();
+        services.TryAddSingleton<IDiscoveryService, AzureDiscoveryService>();
         return services;
     }
 }
