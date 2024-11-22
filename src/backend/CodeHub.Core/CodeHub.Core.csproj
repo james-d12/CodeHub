@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="AWSSDK.ResourceGroups" Version="3.7.401.22" />
-        <PackageReference Include="AWSSDK.ResourceGroupsTaggingAPI" Version="3.7.400.48" />
+        <PackageReference Include="AWSSDK.ResourceGroups" Version="3.7.401.30" />
+        <PackageReference Include="AWSSDK.ResourceGroupsTaggingAPI" Version="3.7.400.56" />
         <PackageReference Include="Azure.Identity" Version="1.13.1" />
         <PackageReference Include="Azure.ResourceManager" Version="1.13.0"/>
         <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
