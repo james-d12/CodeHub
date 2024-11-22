@@ -1,4 +1,5 @@
 ﻿using Azure.ResourceManager.Resources;
+using CodeHub.Core.Models.Resource;
 using CodeHub.Core.Platforms.Azure.Models;
 
 namespace CodeHub.Core.Platforms.Azure.Extensions;
@@ -13,6 +14,7 @@ internal static class AzureMappingExtensions
         return new AzureResource
         {
             Id = genericResourceData.Id.Name,
+            Platform = CloudPlatform.Azure,
             Name = genericResourceData.Name,
             Description = string.Empty,
             TenantName = tenantName,
