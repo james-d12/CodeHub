@@ -34,6 +34,7 @@ internal sealed class AzureService : IAzureService
     {
         return await _memoryCache.GetOrCreateAsync(TenantKey, async entry =>
         {
+            entry.AbsoluteExpirationRelativeToNow = CacheExpirationRelativeToNow;
             var tenants = new List<TenantResource>();
             await foreach (var tenant in _client.GetTenants().GetAllAsync(cancellationToken))
             {
@@ -134,15 +135,5 @@ internal sealed class AzureService : IAzureService
 
             return subscriptionResources;
         }) ?? [];
-    }
-
-    private async Task GetKeyVaultSecretsAsync(string keyVaultName)
-    {
-        var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net");
-        var secretClient = new SecretClient(keyVaultUri, new DefaultAzureCredential());
-
-        await foreach (var secret in secretClient.GetPropertiesOfSecretsAsync())
-        {
-        }
     }
 }

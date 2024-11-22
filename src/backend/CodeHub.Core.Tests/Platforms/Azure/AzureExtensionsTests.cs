@@ -18,8 +18,16 @@ public sealed class AzureExtensionsTests
         serviceCollection.RegisterAzureServices();
 
         // Assert
-        Assert.Contains(serviceCollection, service => service.ServiceType == typeof(IDiscoveryService));
-        Assert.Contains(serviceCollection, service => service.ServiceType == typeof(IAzureService));
-        Assert.Contains(serviceCollection, service => service.ServiceType == typeof(IMemoryCache));
+        Assert.Contains(serviceCollection,
+            service => service.ServiceType == typeof(IDiscoveryService) &&
+                       service.Lifetime == ServiceLifetime.Singleton &&
+                       service.ImplementationType == typeof(AzureDiscoveryService));
+        Assert.Contains(serviceCollection,
+            service => service.ServiceType == typeof(IAzureService) &&
+                       service.Lifetime == ServiceLifetime.Transient &&
+                       service.ImplementationType == typeof(AzureService));
+        Assert.Contains(serviceCollection,
+            service => service.ServiceType == typeof(IMemoryCache) &&
+                       service.ImplementationType == typeof(MemoryCache));
     }
 }

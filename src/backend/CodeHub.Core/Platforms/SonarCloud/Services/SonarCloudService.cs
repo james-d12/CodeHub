@@ -9,7 +9,7 @@ internal sealed class SonarCloudService(IOptions<SonarCloudSettings> sonarCloudS
 {
     private const string BaseUrl = "https://sonarcloud.io/api";
 
-    private static readonly HttpClient HttpClient = new(new SocketsHttpHandler()
+    private static readonly HttpClient HttpClient = new(new SocketsHttpHandler
     {
         PooledConnectionLifetime = TimeSpan.FromMinutes(15)
     });

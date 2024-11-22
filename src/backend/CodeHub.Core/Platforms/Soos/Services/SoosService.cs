@@ -7,7 +7,7 @@ namespace CodeHub.Core.Platforms.Soos.Services;
 internal sealed class SoosService(IOptions<SoosSettings> soosSettings, ISoosCacheService soosCacheService)
     : ISoosService
 {
-    private static readonly HttpClient HttpClient = new(new SocketsHttpHandler()
+    private static readonly HttpClient HttpClient = new(new SocketsHttpHandler
     {
         PooledConnectionLifetime = TimeSpan.FromMinutes(15)
     });
