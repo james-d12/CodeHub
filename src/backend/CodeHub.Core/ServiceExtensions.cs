@@ -1,8 +1,5 @@
-﻿using CodeHub.Core.Platforms.Azure;
-using CodeHub.Core.Platforms.Azure.Extensions;
-using CodeHub.Core.Platforms.AzureDevOps;
+﻿using CodeHub.Core.Platforms.Azure.Extensions;
 using CodeHub.Core.Platforms.AzureDevOps.Extensions;
-using CodeHub.Core.Platforms.SonarCloud;
 using CodeHub.Core.Platforms.SonarCloud.Extensions;
 using CodeHub.Core.Platforms.Soos.Extensions;
 using Microsoft.Extensions.Configuration;

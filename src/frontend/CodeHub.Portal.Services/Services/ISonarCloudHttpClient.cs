@@ -1,5 +1,4 @@
-﻿using CodeHub.Core.Platforms.SonarCloud;
-using CodeHub.Core.Platforms.SonarCloud.Models;
+﻿using CodeHub.Core.Platforms.SonarCloud.Models;
 
 namespace CodeHub.Portal.Services.Services;
 
