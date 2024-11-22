@@ -8,6 +8,7 @@
         <Nullable>enable</Nullable>
         <AnalyzeMode>all</AnalyzeMode>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     </PropertyGroup>
 </Project>
