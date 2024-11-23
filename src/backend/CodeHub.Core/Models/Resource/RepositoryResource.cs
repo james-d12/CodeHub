@@ -4,11 +4,10 @@ public enum GitPlatform
 {
     AzureDevOps,
     GitHub,
-    GitLab,
-    None
+    GitLab
 }
 
-public abstract record GitRepositoryResource
+public abstract record RepositoryResource
 {
     public required string Id { get; init; }
     public required string Name { get; init; }

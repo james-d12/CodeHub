@@ -16,6 +16,7 @@ public static class AzureDevOpsExtensions
     {
         // Register Services
         services.AddMemoryCache();
+        services.TryAddSingleton<IAzureDevOpsConnectionService, AzureDevOpsConnectionService>();
         services.TryAddTransient<IAzureDevOpsService, AzureDevOpsService>();
         services.TryAddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
         services.TryAddSingleton<IValidateOptions<AzureDevOpsSettings>, AzureDevOpsSettingsValidation>();

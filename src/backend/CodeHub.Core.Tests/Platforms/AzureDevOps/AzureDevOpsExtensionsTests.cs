@@ -34,6 +34,10 @@ public sealed class AzureDevOpsExtensionsTests
                        service.Lifetime == ServiceLifetime.Transient &&
                        service.ImplementationType == typeof(AzureDevOpsService));
         Assert.Contains(serviceCollection,
+            service => service.ServiceType == typeof(IAzureDevOpsConnectionService) &&
+                       service.Lifetime == ServiceLifetime.Singleton &&
+                       service.ImplementationType == typeof(AzureDevOpsConnectionService));
+        Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(IValidateOptions<AzureDevOpsSettings>) &&
                        service.Lifetime == ServiceLifetime.Singleton &&
                        service.ImplementationType == typeof(AzureDevOpsSettingsValidation));

@@ -2,7 +2,7 @@
 
 namespace CodeHub.Core.Platforms.AzureDevOps.Models;
 
-public sealed record AzureDevOpsRepository : GitRepositoryResource
+public sealed record AzureDevOpsRepository : RepositoryResource
 {
     public required string Project { get; init; }
     public required string ProjectUrl { get; init; }
