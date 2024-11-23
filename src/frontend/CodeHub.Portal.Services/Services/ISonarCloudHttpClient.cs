@@ -1,4 +1,4 @@
-﻿using CodeHub.Core.Platforms.SonarCloud.Models;
+﻿using CodeHub.Platform.SonarCloud.Models;
 
 namespace CodeHub.Portal.Services.Services;
 

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Web;
-using CodeHub.Core.Platforms.Azure.Models;
+using CodeHub.Platform.Azure.Models;
 
 namespace CodeHub.Portal.Services.Services;
 

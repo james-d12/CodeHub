@@ -1,4 +1,4 @@
-﻿using CodeHub.Core.Models.Resource;
+﻿using CodeHub.Core.Models;
 
 namespace CodeHub.Core.Services;
 

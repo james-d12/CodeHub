@@ -2,9 +2,8 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0"/>
     </ItemGroup>
-
     <ItemGroup>
-        <ProjectReference Include="..\..\backend\CodeHub.Core\CodeHub.Core.csproj"/>
+      <ProjectReference Include="..\..\backend\CodeHub.Platform\CodeHub.Platform.csproj" />
     </ItemGroup>
 
 </Project>

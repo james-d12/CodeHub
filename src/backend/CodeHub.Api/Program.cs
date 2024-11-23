@@ -1,5 +1,5 @@
 using CodeHub.Api.Jobs;
-using CodeHub.Core;
+using CodeHub.Platform;
 
 var builder = WebApplication.CreateBuilder(args);
 
