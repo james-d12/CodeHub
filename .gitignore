@@ -8,3 +8,6 @@ riderModule.iml
 .vs/
 /CodeHub.sln.DotSettings.user
 **/*/TestResults
+*.user
+/src/frontend/CodeHub.Portal/CodeHub.Portal.csproj.user
+/src/backend/CodeHub.Api/CodeHub.Api.csproj.user

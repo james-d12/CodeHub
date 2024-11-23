@@ -1,14 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E61D3EC1-7E4E-4EEF-909B-E503B88530DD}"
 	ProjectSection(SolutionItems) = preProject
-		Directory.Build.props = Directory.Build.props
-		.gitignore = .gitignore
-		.github\dependabot.yml = .github\dependabot.yml
-		.github\workflows\ci.yml = .github\workflows\ci.yml
 		.editorconfig = .editorconfig
-		docker-compose.yaml = docker-compose.yaml
+		.gitignore = .gitignore
 		backend.Dockerfile = backend.Dockerfile
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\dependabot.yml = .github\dependabot.yml
+		Directory.Build.props = Directory.Build.props
+		docker-compose.yaml = docker-compose.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}"
@@ -21,10 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{FD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Portal.Services", "src\frontend\CodeHub.Portal.Services\CodeHub.Portal.Services.csproj", "{5A58BC92-EC25-49F9-991A-3A2F03E5899F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Portal.Client", "src\frontend\CodeHub.Portal.Client\CodeHub.Portal.Client.csproj", "{7D0A6B84-AAC2-419D-A50A-E1B3DE42E051}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Portal", "src\frontend\CodeHub.Portal\CodeHub.Portal.csproj", "{E011EE54-2D7E-4A43-B764-5B01CC6FA907}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Core.Tests", "src\backend\CodeHub.Core.Tests\CodeHub.Core.Tests.csproj", "{57C80FD4-AE64-45C4-A484-BB25D9601E1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform", "src\backend\CodeHub.Platform\CodeHub.Platform.csproj", "{373CEB30-5762-4A54-867F-2C2107840A04}"
@@ -32,6 +31,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.Tests", "src\backend\CodeHub.Platform.Tests\CodeHub.Platform.Tests.csproj", "{ECA1EF75-5837-4189-A17E-5BD79A050062}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3AC7FEA5-756C-45E1-8988-16170C26B898}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Portal", "src\frontend\CodeHub.Portal\CodeHub.Portal.csproj", "{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,14 +52,6 @@ Global
 		{5A58BC92-EC25-49F9-991A-3A2F03E5899F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A58BC92-EC25-49F9-991A-3A2F03E5899F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A58BC92-EC25-49F9-991A-3A2F03E5899F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D0A6B84-AAC2-419D-A50A-E1B3DE42E051}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D0A6B84-AAC2-419D-A50A-E1B3DE42E051}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D0A6B84-AAC2-419D-A50A-E1B3DE42E051}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D0A6B84-AAC2-419D-A50A-E1B3DE42E051}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E011EE54-2D7E-4A43-B764-5B01CC6FA907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E011EE54-2D7E-4A43-B764-5B01CC6FA907}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E011EE54-2D7E-4A43-B764-5B01CC6FA907}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E011EE54-2D7E-4A43-B764-5B01CC6FA907}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57C80FD4-AE64-45C4-A484-BB25D9601E1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57C80FD4-AE64-45C4-A484-BB25D9601E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57C80FD4-AE64-45C4-A484-BB25D9601E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,16 +64,22 @@ Global
 		{ECA1EF75-5837-4189-A17E-5BD79A050062}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECA1EF75-5837-4189-A17E-5BD79A050062}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECA1EF75-5837-4189-A17E-5BD79A050062}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0B59B285-BE8E-48DA-9A9D-AFAF8B4D1C50} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
 		{8D2E2CFA-8324-40CA-8D0D-C1F273363F6E} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
 		{5A58BC92-EC25-49F9-991A-3A2F03E5899F} = {FD7D4EDA-3EEC-4989-B479-563417E6848F}
-		{7D0A6B84-AAC2-419D-A50A-E1B3DE42E051} = {FD7D4EDA-3EEC-4989-B479-563417E6848F}
-		{E011EE54-2D7E-4A43-B764-5B01CC6FA907} = {FD7D4EDA-3EEC-4989-B479-563417E6848F}
-		{373CEB30-5762-4A54-867F-2C2107840A04} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
-		{3AC7FEA5-756C-45E1-8988-16170C26B898} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
-		{ECA1EF75-5837-4189-A17E-5BD79A050062} = {3AC7FEA5-756C-45E1-8988-16170C26B898}
 		{57C80FD4-AE64-45C4-A484-BB25D9601E1A} = {3AC7FEA5-756C-45E1-8988-16170C26B898}
+		{373CEB30-5762-4A54-867F-2C2107840A04} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
+		{ECA1EF75-5837-4189-A17E-5BD79A050062} = {3AC7FEA5-756C-45E1-8988-16170C26B898}
+		{3AC7FEA5-756C-45E1-8988-16170C26B898} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
+		{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA} = {FD7D4EDA-3EEC-4989-B479-563417E6848F}
 	EndGlobalSection
 EndGlobal

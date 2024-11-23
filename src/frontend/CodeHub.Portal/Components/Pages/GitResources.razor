@@ -1,7 +1,5 @@
 ﻿@page "/git"
 @using CodeHub.Platform.AzureDevOps.Models
-@using CodeHub.Portal.Services.Services
-@inject IAzureDevOpsHttpClient AzureDevOpsHttpClient
 
 <PageTitle>CodeHub: Git Resources</PageTitle>
 
@@ -14,7 +12,10 @@
     }
     else
     {
-        <MudDataGrid Dense="true" T="AzureDevOpsRepository" Items="@_azureDevOpsResources" FilterMode="@DataGridFilterMode.Simple" Filterable="true" FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true" RowsPerPage="20">
+        <MudDataGrid Dense="true" T="AzureDevOpsRepository" Items="@_azureDevOpsResources"
+                     FilterMode="@DataGridFilterMode.Simple" Filterable="true"
+                     FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
+                     RowsPerPage="20">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Resources</MudText>
             </ToolBarContent>
@@ -55,16 +56,4 @@
             </PagerContent>
         </MudDataGrid>
     }
-
-
 </MudContainer>
-
-@code {
-    private List<AzureDevOpsRepository>? _azureDevOpsResources;
-
-    protected override async Task OnInitializedAsync()
-    {
-        _azureDevOpsResources = await AzureDevOpsHttpClient.GetRepositoriesAsync();
-    }
-
-}

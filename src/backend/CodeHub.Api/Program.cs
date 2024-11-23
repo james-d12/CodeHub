@@ -7,13 +7,20 @@ builder.Services.AddLogging();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHostedService<DiscoveryHostedService>();
+//builder.Services.AddHostedService<DiscoveryHostedService>();
 builder.Services.RegisterPlatforms(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "AllowFrontendOrigin",
-        policy => { policy.WithOrigins("http://localhost:5231").AllowAnyMethod().AllowAnyHeader(); });
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:5231")
+                .SetIsOriginAllowed((host) => true)
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
 });
 
 var app = builder.Build();
