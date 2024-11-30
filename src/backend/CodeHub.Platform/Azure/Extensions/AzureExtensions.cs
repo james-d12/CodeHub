@@ -1,4 +1,4 @@
-﻿using CodeHub.Core.Services;
+﻿using CodeHub.Shared.Services;
 using CodeHub.Platform.Azure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

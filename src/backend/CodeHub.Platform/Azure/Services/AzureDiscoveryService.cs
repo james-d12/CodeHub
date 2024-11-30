@@ -1,4 +1,4 @@
-﻿using CodeHub.Core.Services;
+﻿using CodeHub.Shared.Services;
 using Microsoft.Extensions.Logging;
 
 namespace CodeHub.Platform.Azure.Services;

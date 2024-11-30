@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Core.Models;
+﻿namespace CodeHub.Shared.Models;
 
 public enum GitPlatform
 {
@@ -7,7 +7,7 @@ public enum GitPlatform
     GitLab
 }
 
-public abstract record RepositoryResource
+public abstract record Repository
 {
     public required string Id { get; init; }
     public required string Name { get; init; }

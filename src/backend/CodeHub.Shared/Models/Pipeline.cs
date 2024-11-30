@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Core.Models;
+﻿namespace CodeHub.Shared.Models;
 
 public enum PipelinePlatform
 {
@@ -9,7 +9,7 @@ public enum PipelinePlatform
     TravisCi
 }
 
-public abstract record PipelineResource
+public abstract record Pipeline
 {
     public required string Id { get; set; }
     public required string Name { get; set; }

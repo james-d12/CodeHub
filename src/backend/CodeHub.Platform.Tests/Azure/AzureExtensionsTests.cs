@@ -1,6 +1,6 @@
-﻿using CodeHub.Core.Services;
-using CodeHub.Platform.Azure.Extensions;
+﻿using CodeHub.Platform.Azure.Extensions;
 using CodeHub.Platform.Azure.Services;
+using CodeHub.Shared.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 

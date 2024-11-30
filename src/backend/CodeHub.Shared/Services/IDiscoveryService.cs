@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Core.Services;
+﻿namespace CodeHub.Shared.Services;
 
 public interface IDiscoveryService
 {

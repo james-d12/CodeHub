@@ -1,9 +1,11 @@
-﻿using System.Collections.Immutable;
-using CodeHub.Core.Models;
+﻿using System.Collections.Frozen;
+using System.Collections.Immutable;
+using CodeHub.Shared.Models;
 using CodeHub.Platform.AzureDevOps.Models;
 using Microsoft.TeamFoundation.Build.WebApi;
 using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.SourceControl.WebApi;
+using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
 
 namespace CodeHub.Platform.AzureDevOps.Extensions;
 
@@ -56,6 +58,7 @@ internal static class AzureDevOpsMappingExtensions
     {
         return new AzureDevOpsTeam
         {
+            Id = webApiTeam.Id,
             Name = webApiTeam.Name,
             Description = webApiTeam.Description,
             Url = webApiTeam.Url
@@ -82,6 +85,18 @@ internal static class AzureDevOpsMappingExtensions
             Labels = gitPullRequest.Labels.Select(l => l.Name).ToImmutableHashSet() ?? [],
             Reviewers = gitPullRequest.Reviewers.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
             Status = status
+        };
+    }
+
+    internal static AzureDevOpsWorkItem MapToAzureDevOpsWorkItem(this WorkItem workItem)
+    {
+        return new AzureDevOpsWorkItem
+        {
+            Id = workItem.Id ?? 0,
+            Url = workItem.Url,
+            Revision = workItem.Rev ?? 0,
+            Fields = workItem.Fields?.ToFrozenDictionary() ?? FrozenDictionary<string, object>.Empty,
+            Relations = workItem.Relations.Select(r => r.Title).ToImmutableHashSet() ?? []
         };
     }
 }

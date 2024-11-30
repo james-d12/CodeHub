@@ -51,7 +51,8 @@ internal sealed class AzureDevOpsService : IAzureDevOpsService
         return teams.Select(t => t.MapToAzureDevOpsTeam()).ToList();
     }
 
-    public async Task<List<WorkItem>> GetWorkItemsAsync(string projectName, CancellationToken cancellationToken)
+    public async Task<List<AzureDevOpsWorkItem>> GetWorkItemsAsync(string projectName,
+        CancellationToken cancellationToken)
     {
         var workItemTrackingClient =
             await _azureDevOpsConnectionService.GetClientAsync<WorkItemTrackingHttpClient>(cancellationToken);
@@ -82,7 +83,7 @@ internal sealed class AzureDevOpsService : IAzureDevOpsService
             workItems.AddRange(batchWorkItems);
         }
 
-        return workItems;
+        return workItems.Select(w => w.MapToAzureDevOpsWorkItem()).ToList();
     }
 
     public async Task<List<AzureDevOpsPullRequest>> GetPullRequestsAsync(Guid projectId,

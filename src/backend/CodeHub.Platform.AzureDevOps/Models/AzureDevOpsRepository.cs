@@ -1,8 +1,8 @@
-﻿using CodeHub.Core.Models;
+﻿using CodeHub.Shared.Models;
 
 namespace CodeHub.Platform.AzureDevOps.Models;
 
-public sealed record AzureDevOpsRepository : RepositoryResource
+public sealed record AzureDevOpsRepository : Repository
 {
     public required string Project { get; init; }
     public required string ProjectUrl { get; init; }

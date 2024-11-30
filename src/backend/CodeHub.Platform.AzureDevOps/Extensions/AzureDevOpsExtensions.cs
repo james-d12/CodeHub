@@ -1,4 +1,4 @@
-﻿using CodeHub.Core.Services;
+﻿using CodeHub.Shared.Services;
 using CodeHub.Platform.AzureDevOps.Models;
 using CodeHub.Platform.AzureDevOps.Services;
 using CodeHub.Platform.AzureDevOps.Validation;

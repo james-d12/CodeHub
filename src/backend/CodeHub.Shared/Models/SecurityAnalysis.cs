@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Core.Models;
+﻿namespace CodeHub.Shared.Models;
 
 public enum SecurityAnalysisPlatform
 {
@@ -6,7 +6,7 @@ public enum SecurityAnalysisPlatform
     Snyk
 }
 
-public abstract record SecurityAnalysisResource
+public abstract record SecurityAnalysis
 {
     public required string Id { get; set; }
     public required string Name { get; set; }

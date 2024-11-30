@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Core.Models;
+﻿namespace CodeHub.Shared.Models;
 
 public enum CloudPlatform
 {

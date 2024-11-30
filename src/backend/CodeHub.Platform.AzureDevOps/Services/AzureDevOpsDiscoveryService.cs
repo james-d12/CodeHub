@@ -1,4 +1,4 @@
-﻿using CodeHub.Core.Services;
+﻿using CodeHub.Shared.Services;
 using CodeHub.Platform.AzureDevOps.Constants;
 using CodeHub.Platform.AzureDevOps.Models;
 using Microsoft.Extensions.Caching.Memory;

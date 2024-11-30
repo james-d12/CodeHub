@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CodeHub.Core\CodeHub.Core.csproj" />
+      <ProjectReference Include="..\CodeHub.Shared\CodeHub.Shared.csproj" />
       <ProjectReference Include="..\CodeHub.Platform.AzureDevOps\CodeHub.Platform.AzureDevOps.csproj" />
     </ItemGroup>
 

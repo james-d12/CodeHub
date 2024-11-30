@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Core.Models;
+﻿namespace CodeHub.Shared.Models;
 
 public enum TicketingPlatform
 {
@@ -6,7 +6,7 @@ public enum TicketingPlatform
     AzureDevOps
 }
 
-public abstract record TicketingResource
+public abstract record Ticketing
 {
     public required string Id { get; init; }
     public required string Name { get; init; }
