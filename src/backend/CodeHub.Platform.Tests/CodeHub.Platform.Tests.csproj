@@ -28,4 +28,8 @@
       <ProjectReference Include="..\CodeHub.Platform\CodeHub.Platform.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="AzureDevOps\" />
+    </ItemGroup>
+
 </Project>

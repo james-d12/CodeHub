@@ -1,4 +1,5 @@
-﻿using CodeHub.Core.Models;
+﻿using System.Collections.Immutable;
+using CodeHub.Core.Models;
 using CodeHub.Platform.AzureDevOps.Models;
 using Microsoft.TeamFoundation.Build.WebApi;
 using Microsoft.TeamFoundation.Core.WebApi;
@@ -28,6 +29,7 @@ internal static class AzureDevOpsMappingExtensions
 
         return new AzureDevOpsProject
         {
+            Id = teamProjectReference.Id,
             Name = teamProject.Name,
             Description = teamProject.Description,
             Url = new Uri(teamProject.Url),
@@ -57,6 +59,29 @@ internal static class AzureDevOpsMappingExtensions
             Name = webApiTeam.Name,
             Description = webApiTeam.Description,
             Url = webApiTeam.Url
+        };
+    }
+
+    internal static AzureDevOpsPullRequest MapToAzureDevOpsPullRequest(this GitPullRequest gitPullRequest)
+    {
+        AzureDevOpsPullRequestStatus status = gitPullRequest.Status switch
+        {
+            PullRequestStatus.NotSet => AzureDevOpsPullRequestStatus.NotSet,
+            PullRequestStatus.Active => AzureDevOpsPullRequestStatus.Active,
+            PullRequestStatus.Abandoned => AzureDevOpsPullRequestStatus.NotSet,
+            PullRequestStatus.Completed => AzureDevOpsPullRequestStatus.NotSet,
+            PullRequestStatus.All => AzureDevOpsPullRequestStatus.NotSet,
+            _ => AzureDevOpsPullRequestStatus.NotSet
+        };
+
+        return new AzureDevOpsPullRequest
+        {
+            Id = gitPullRequest.PullRequestId,
+            Title = gitPullRequest.Title,
+            Description = gitPullRequest.Description,
+            Labels = gitPullRequest.Labels.Select(l => l.Name).ToImmutableHashSet() ?? [],
+            Reviewers = gitPullRequest.Reviewers.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
+            Status = status
         };
     }
 }

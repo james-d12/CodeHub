@@ -34,6 +34,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3AC7FEA5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Portal", "src\frontend\CodeHub.Portal\CodeHub.Portal.csproj", "{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.AzureDevOps", "src\backend\CodeHub.Platform.AzureDevOps\CodeHub.Platform.AzureDevOps.csproj", "{5A4A50EF-186E-4FD0-BB09-BA7A46D6B8C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.AzureDevOps.Tests", "src\backend\CodeHub.Platform.AzureDevOps.Tests\CodeHub.Platform.AzureDevOps.Tests.csproj", "{F8B9B097-D031-4E97-8F65-41078E810E3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +72,14 @@ Global
 		{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A4A50EF-186E-4FD0-BB09-BA7A46D6B8C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4A50EF-186E-4FD0-BB09-BA7A46D6B8C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4A50EF-186E-4FD0-BB09-BA7A46D6B8C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4A50EF-186E-4FD0-BB09-BA7A46D6B8C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8B9B097-D031-4E97-8F65-41078E810E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B9B097-D031-4E97-8F65-41078E810E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8B9B097-D031-4E97-8F65-41078E810E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8B9B097-D031-4E97-8F65-41078E810E3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,5 +93,7 @@ Global
 		{ECA1EF75-5837-4189-A17E-5BD79A050062} = {3AC7FEA5-756C-45E1-8988-16170C26B898}
 		{3AC7FEA5-756C-45E1-8988-16170C26B898} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
 		{E6AF518B-3FAC-4D3F-8BF2-7C8411B153CA} = {FD7D4EDA-3EEC-4989-B479-563417E6848F}
+		{5A4A50EF-186E-4FD0-BB09-BA7A46D6B8C4} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
+		{F8B9B097-D031-4E97-8F65-41078E810E3D} = {3AC7FEA5-756C-45E1-8988-16170C26B898}
 	EndGlobalSection
 EndGlobal

@@ -22,7 +22,7 @@ public sealed class AzureDevOpsExtensionsTests
             .Build();
 
         // Act
-        serviceCollection.RegisterAzureDevOpsServices(configuration);
+        serviceCollection.RegisterAzureDevOps(configuration);
 
         // Assert
         Assert.Contains(serviceCollection,
@@ -30,8 +30,12 @@ public sealed class AzureDevOpsExtensionsTests
                        service.Lifetime == ServiceLifetime.Singleton &&
                        service.ImplementationType == typeof(AzureDevOpsDiscoveryService));
         Assert.Contains(serviceCollection,
+            service => service.ServiceType == typeof(IAzureDevOpsQueryService) &&
+                       service.Lifetime == ServiceLifetime.Singleton &&
+                       service.ImplementationType == typeof(AzureDevOpsQueryService));
+        Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(IAzureDevOpsService) &&
-                       service.Lifetime == ServiceLifetime.Transient &&
+                       service.Lifetime == ServiceLifetime.Singleton &&
                        service.ImplementationType == typeof(AzureDevOpsService));
         Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(IAzureDevOpsConnectionService) &&
@@ -54,7 +58,7 @@ public sealed class AzureDevOpsExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
 
         // Act + Assert
-        Assert.Throws<InvalidOperationException>(() => serviceCollection.RegisterAzureDevOpsServices(configuration));
+        Assert.Throws<InvalidOperationException>(() => serviceCollection.RegisterAzureDevOps(configuration));
     }
 
     private static Dictionary<string, string?> GetValidAzureDevOpsConfiguration()

@@ -1,11 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    
     <ItemGroup>
-        <PackageReference Include="AWSSDK.ResourceGroups" Version="3.7.401.31"/>
-        <PackageReference Include="AWSSDK.ResourceGroupsTaggingAPI" Version="3.7.400.57"/>
-        <PackageReference Include="Azure.Identity" Version="1.13.1"/>
-        <PackageReference Include="Azure.ResourceManager" Version="1.13.0"/>
-        <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.7.0"/>
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.0"/>
         <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.225.1"/>
         <PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="19.225.1"/>
@@ -19,12 +13,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="CodeHub.Platform.Tests"/>
+        <ProjectReference Include="..\CodeHub.Core\CodeHub.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CodeHub.Core\CodeHub.Core.csproj" />
-      <ProjectReference Include="..\CodeHub.Platform.AzureDevOps\CodeHub.Platform.AzureDevOps.csproj" />
+        <InternalsVisibleTo Include="CodeHub.Platform.AzureDevOps.Tests"/>
     </ItemGroup>
 
 </Project>

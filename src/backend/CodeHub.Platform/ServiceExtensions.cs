@@ -12,7 +12,7 @@ public static class ServiceExtensions
     public static void RegisterPlatforms(this IServiceCollection services, IConfiguration configuration)
     {
         services.RegisterSonarCloudServices(configuration);
-        services.RegisterAzureDevOpsServices(configuration);
+        services.RegisterAzureDevOps(configuration);
         services.RegisterSoosServices(configuration);
         services.RegisterAzureServices();
     }

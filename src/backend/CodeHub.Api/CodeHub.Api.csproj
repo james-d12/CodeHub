@@ -10,7 +10,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CodeHub.Core\CodeHub.Core.csproj" />
       <ProjectReference Include="..\CodeHub.Platform\CodeHub.Platform.csproj" />
     </ItemGroup>
 

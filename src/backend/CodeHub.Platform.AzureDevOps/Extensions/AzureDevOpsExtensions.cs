@@ -11,21 +11,35 @@ namespace CodeHub.Platform.AzureDevOps.Extensions;
 
 public static class AzureDevOpsExtensions
 {
-    public static IServiceCollection RegisterAzureDevOpsServices(this IServiceCollection services,
+    public static IServiceCollection RegisterAzureDevOps(this IServiceCollection services,
         IConfiguration configuration)
     {
-        // Register Services
-        services.AddMemoryCache();
+        services.RegisterCache();
+        services.RegisterServices();
+        services.RegisterOptions(configuration);
+        return services;
+    }
+
+    private static void RegisterCache(this IServiceCollection services)
+    {
+        services.AddMemoryCache(options => options.TrackStatistics = true);
+    }
+
+    private static void RegisterServices(this IServiceCollection services)
+    {
+        services.TryAddSingleton<IAzureDevOpsService, AzureDevOpsService>();
+        services.TryAddSingleton<IAzureDevOpsQueryService, AzureDevOpsQueryService>();
         services.TryAddSingleton<IAzureDevOpsConnectionService, AzureDevOpsConnectionService>();
-        services.TryAddTransient<IAzureDevOpsService, AzureDevOpsService>();
         services.TryAddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
+    }
+
+    private static void RegisterOptions(this IServiceCollection services, IConfiguration configuration)
+    {
         services.TryAddSingleton<IValidateOptions<AzureDevOpsSettings>, AzureDevOpsSettingsValidation>();
 
         // Register Options
         services.AddOptions<AzureDevOpsSettings>()
             .Bind(configuration.GetRequiredSection(nameof(AzureDevOpsSettings)))
             .ValidateOnStart();
-
-        return services;
     }
 }
