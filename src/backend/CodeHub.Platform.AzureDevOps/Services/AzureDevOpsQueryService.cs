@@ -1,4 +1,4 @@
-﻿using CodeHub.Platform.AzureDevOps.Constants;
+using CodeHub.Platform.AzureDevOps.Constants;
 using CodeHub.Platform.AzureDevOps.Models;
 using CodeHub.Platform.AzureDevOps.Models.Requests;
 using CodeHub.Shared.Query;
