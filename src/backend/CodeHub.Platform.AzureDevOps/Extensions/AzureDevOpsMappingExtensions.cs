@@ -47,7 +47,8 @@ internal static class AzureDevOpsMappingExtensions
             Name = gitRepository.Name,
             Url = new Uri(gitRepository.WebUrl),
             DefaultBranch = gitRepository.DefaultBranch,
-            Project = gitRepository.ProjectReference.Name,
+            ProjectName = gitRepository.ProjectReference.Name,
+            ProjectId = gitRepository.ProjectReference.Id,
             ProjectUrl = gitRepository.ProjectReference.Url,
             IsDisabled = gitRepository.IsDisabled ?? false,
             IsInMaintenance = gitRepository.IsInMaintenance ?? false,
@@ -97,7 +98,7 @@ internal static class AzureDevOpsMappingExtensions
             Url = workItem.Url,
             Revision = workItem.Rev ?? 0,
             Fields = workItem.Fields?.ToFrozenDictionary() ?? FrozenDictionary<string, object>.Empty,
-            Relations = workItem.Relations.Select(r => r.Title).ToImmutableHashSet() ?? []
+            Relations = workItem.Relations?.Select(r => r.Title).ToImmutableHashSet() ?? []
         };
     }
 }

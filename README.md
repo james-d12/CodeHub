@@ -26,3 +26,4 @@ from your connected third parties. It then presents these via a unified portal t
 - Kubernetes API integration for monitoring your orchestration stack.
 
 [![CI Workflow](https://github.com/james-d12/CodeHub/actions/workflows/ci.yml/badge.svg)](https://github.com/james-d12/CodeHub/actions/workflows/ci.yml)
+[![Dependabot Updates](https://github.com/james-d12/CodeHub/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/james-d12/CodeHub/actions/workflows/dependabot/dependabot-updates)

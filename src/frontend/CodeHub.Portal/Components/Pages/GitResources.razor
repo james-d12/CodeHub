@@ -35,9 +35,9 @@
                         @context.Item?.DefaultBranch
                     </CellTemplate>
                 </PropertyColumn>
-                <PropertyColumn Property="x => x.Project" Title="Project">
+                <PropertyColumn Property="x => x.ProjectName" Title="Project">
                     <CellTemplate>
-                        <MudLink Target="_blank" Href="@(context.Item?.ProjectUrl)">@context.Item?.Project</MudLink>
+                        <MudLink Target="_blank" Href="@(context.Item?.ProjectUrl)">@context.Item?.ProjectName</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.IsDisabled" Title="Disabled?">

@@ -2,6 +2,7 @@
 using CodeHub.Platform.AzureDevOps.Models;
 using CodeHub.Platform.AzureDevOps.Services;
 using CodeHub.Platform.AzureDevOps.Validation;
+using CodeHub.Shared.Query;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -28,6 +29,7 @@ public static class AzureDevOpsExtensions
     private static void RegisterServices(this IServiceCollection services)
     {
         services.TryAddSingleton<IAzureDevOpsService, AzureDevOpsService>();
+        services.TryAddSingleton<IQueryService, AzureDevOpsQueryService>();
         services.TryAddSingleton<IAzureDevOpsQueryService, AzureDevOpsQueryService>();
         services.TryAddSingleton<IAzureDevOpsConnectionService, AzureDevOpsConnectionService>();
         services.TryAddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
