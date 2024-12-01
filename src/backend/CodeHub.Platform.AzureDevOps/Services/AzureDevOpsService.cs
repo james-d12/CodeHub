@@ -91,7 +91,7 @@ internal sealed class AzureDevOpsService : IAzureDevOpsService
     {
         var buildClient = await _azureDevOpsConnectionService.GetClientAsync<GitHttpClient>(cancellationToken);
         var criteria = new GitPullRequestSearchCriteria() { Status = PullRequestStatus.Active };
-        var pipelines = await buildClient.GetPullRequestsAsync(projectId, criteria,
+        var pipelines = await buildClient.GetPullRequestsByProjectAsync(projectId, criteria,
             cancellationToken: cancellationToken);
         return pipelines.Select(p => p.MapToAzureDevOpsPullRequest()).ToList();
     }

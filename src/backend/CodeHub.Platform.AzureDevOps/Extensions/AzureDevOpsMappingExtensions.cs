@@ -82,8 +82,8 @@ internal static class AzureDevOpsMappingExtensions
             Id = gitPullRequest.PullRequestId,
             Title = gitPullRequest.Title,
             Description = gitPullRequest.Description,
-            Labels = gitPullRequest.Labels.Select(l => l.Name).ToImmutableHashSet() ?? [],
-            Reviewers = gitPullRequest.Reviewers.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
+            Labels = gitPullRequest.Labels?.Select(l => l.Name).ToImmutableHashSet() ?? [],
+            Reviewers = gitPullRequest.Reviewers?.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
             Status = status
         };
     }

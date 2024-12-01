@@ -11,7 +11,7 @@ public static class AzureExtensions
     {
         services.AddMemoryCache();
         services.TryAddTransient<IAzureService, AzureService>();
-        services.TryAddSingleton<IDiscoveryService, AzureDiscoveryService>();
+        //services.TryAddSingleton<IDiscoveryService, AzureDiscoveryService>();
         return services;
     }
 }
