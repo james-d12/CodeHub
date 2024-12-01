@@ -1,6 +1,6 @@
-﻿using CodeHub.Shared.Services;
-using CodeHub.Platform.AzureDevOps.Constants;
+﻿using CodeHub.Platform.AzureDevOps.Constants;
 using CodeHub.Platform.AzureDevOps.Models;
+using CodeHub.Shared.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 

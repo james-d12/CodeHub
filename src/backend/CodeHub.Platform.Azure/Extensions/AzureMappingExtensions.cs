@@ -1,6 +1,6 @@
 ﻿using Azure.ResourceManager.Resources;
-using CodeHub.Shared.Models;
 using CodeHub.Platform.Azure.Models;
+using CodeHub.Shared.Models;
 
 namespace CodeHub.Platform.Azure.Extensions;
 

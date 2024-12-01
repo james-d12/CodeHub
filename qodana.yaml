@@ -6,3 +6,5 @@ include:
   - name: CheckDependencyLicenses
 exclude:
   - name: ConvertToPrimaryConstructor
+    paths:
+      - ./.editorconfig

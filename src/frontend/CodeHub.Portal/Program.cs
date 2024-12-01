@@ -1,6 +1,6 @@
-using MudBlazor.Services;
 using CodeHub.Portal.Components;
 using CodeHub.Portal.Services.Extensions;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

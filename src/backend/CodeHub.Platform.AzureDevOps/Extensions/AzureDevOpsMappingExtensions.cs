@@ -1,7 +1,7 @@
 ﻿using System.Collections.Frozen;
 using System.Collections.Immutable;
-using CodeHub.Shared.Models;
 using CodeHub.Platform.AzureDevOps.Models;
+using CodeHub.Shared.Models;
 using Microsoft.TeamFoundation.Build.WebApi;
 using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.SourceControl.WebApi;

@@ -1,8 +1,8 @@
-﻿using CodeHub.Shared.Services;
-using CodeHub.Platform.AzureDevOps.Models;
+﻿using CodeHub.Platform.AzureDevOps.Models;
 using CodeHub.Platform.AzureDevOps.Services;
 using CodeHub.Platform.AzureDevOps.Validation;
 using CodeHub.Shared.Query;
+using CodeHub.Shared.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
