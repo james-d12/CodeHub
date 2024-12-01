@@ -1,4 +1,5 @@
 ﻿using CodeHub.Platform.AzureDevOps.Models;
+using CodeHub.Platform.AzureDevOps.Models.Requests;
 using CodeHub.Platform.AzureDevOps.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,6 @@ public sealed class AzureDevOpsController : ControllerBase
     [HttpGet, Route("pipelines")]
     public List<AzureDevOpsPipeline> GetPipelines()
     {
-        return _azureDevOpsQueryService.QueryPipelines();
+        return _azureDevOpsQueryService.QueryPipelines(new AzureDevOpsQueryPipelineRequest());
     }
 }
