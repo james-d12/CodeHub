@@ -3,3 +3,9 @@ services:
     build:
       context: ./src/backend
       dockerfile: Backend.Dockerfile
+  frontend:
+    build:
+      context: ./src/frontend
+      additional_contexts:
+          backend: ./src/backend
+      dockerfile: Frontend.Dockerfile
