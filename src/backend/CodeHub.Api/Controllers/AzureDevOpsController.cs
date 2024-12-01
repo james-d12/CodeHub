@@ -17,8 +17,8 @@ public sealed class AzureDevOpsController : ControllerBase
     }
 
     [HttpGet, Route("pipelines")]
-    public List<AzureDevOpsPipeline> GetPipelines()
+    public List<AzureDevOpsPipeline> GetPipelines([FromQuery] AzureDevOpsQueryPipelineRequest request)
     {
-        return _azureDevOpsQueryService.QueryPipelines(new AzureDevOpsQueryPipelineRequest());
+        return _azureDevOpsQueryService.QueryPipelines(request);
     }
 }

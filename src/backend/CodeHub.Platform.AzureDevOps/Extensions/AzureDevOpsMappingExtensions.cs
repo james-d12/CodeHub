@@ -18,8 +18,9 @@ internal static class AzureDevOpsMappingExtensions
             Id = buildDefinitionReference.Id.ToString(),
             Name = buildDefinitionReference.Name,
             Url = new Uri(buildDefinitionReference.Url),
-            Project = buildDefinitionReference.Project.Name,
-            ProjectName = buildDefinitionReference.Project.Url,
+            ProjectName = buildDefinitionReference.Project.Name,
+            ProjectId = buildDefinitionReference.Project.Id,
+            ProjectUrl = buildDefinitionReference.Project.Url,
             Path = buildDefinitionReference.Path,
             Platform = PipelinePlatform.AzureDevOps
         };
