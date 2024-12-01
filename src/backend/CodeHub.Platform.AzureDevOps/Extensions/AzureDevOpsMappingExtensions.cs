@@ -18,8 +18,9 @@ internal static class AzureDevOpsMappingExtensions
             Id = buildDefinitionReference.Id.ToString(),
             Name = buildDefinitionReference.Name,
             Url = new Uri(buildDefinitionReference.Url),
-            Project = buildDefinitionReference.Project.Name,
-            ProjectName = buildDefinitionReference.Project.Url,
+            ProjectName = buildDefinitionReference.Project.Name,
+            ProjectId = buildDefinitionReference.Project.Id,
+            ProjectUrl = buildDefinitionReference.Project.Url,
             Path = buildDefinitionReference.Path,
             Platform = PipelinePlatform.AzureDevOps
         };
@@ -82,8 +83,8 @@ internal static class AzureDevOpsMappingExtensions
             Id = gitPullRequest.PullRequestId,
             Title = gitPullRequest.Title,
             Description = gitPullRequest.Description,
-            Labels = gitPullRequest.Labels.Select(l => l.Name).ToImmutableHashSet() ?? [],
-            Reviewers = gitPullRequest.Reviewers.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
+            Labels = gitPullRequest.Labels?.Select(l => l.Name).ToImmutableHashSet() ?? [],
+            Reviewers = gitPullRequest.Reviewers?.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
             Status = status
         };
     }
