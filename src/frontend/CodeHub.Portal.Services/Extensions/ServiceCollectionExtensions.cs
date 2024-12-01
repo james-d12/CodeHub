@@ -17,7 +17,7 @@ public static class ServiceCollectionExtensions
         {
             client.BaseAddress = new Uri("http://localhost:5104/azure/");
         });
-        
+
         services.TryAddTransient<IAzureDevOpsHttpClient, AzureDevOpsHttpClient>();
         services.TryAddTransient<IAzureHttpClient, AzureHttpClient>();
     }

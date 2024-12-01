@@ -12,7 +12,10 @@
     }
     else
     {
-        <MudDataGrid Dense="true" T="AzureResource" Items="@_azureResources" FilterMode="@DataGridFilterMode.ColumnFilterRow" Filterable="true" FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true" RowsPerPage="20">
+        <MudDataGrid Dense="true" T="AzureResource" Items="@_azureResources"
+                     FilterMode="@DataGridFilterMode.ColumnFilterRow" Filterable="true"
+                     FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
+                     RowsPerPage="20">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Resources</MudText>
             </ToolBarContent>
@@ -29,21 +32,26 @@
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.ResourceGroupName" Title="Resource Group">
                     <CellTemplate>
-                        <MudLink Target="_blank" Href="@(context.Item?.ResourceGroupUrl?.ToString())">@context.Item?.ResourceGroupName</MudLink>
+                        <MudLink Target="_blank"
+                                 Href="@(context.Item?.ResourceGroupUrl?.ToString())">@context.Item?.ResourceGroupName</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.Subscription" Title="Subscription">
                     <FilterTemplate>
-                        <MudIconButton OnClick="@OpenFilter" Icon="@Icons.Material.Outlined.FilterAlt" Size="@Size.Small"/>
+                        <MudIconButton OnClick="@OpenFilter" Icon="@Icons.Material.Outlined.FilterAlt"
+                                       Size="@Size.Small"/>
                         <MudOverlay Visible="@_filterOpen" OnClick="@(() => _filterOpen = false)"/>
-                        <MudPopover Open="@_filterOpen" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter"
+                        <MudPopover Open="@_filterOpen" AnchorOrigin="Origin.BottomCenter"
+                                    TransformOrigin="Origin.TopCenter"
                                     Style="width:500px">
                             <MudStack Spacing="0">
-                                <MudCheckBox T="bool" Label="Select All" Size="@Size.Small" Value="@_selectAll" ValueChanged="@SelectAll"/>
+                                <MudCheckBox T="bool" Label="Select All" Size="@Size.Small" Value="@_selectAll"
+                                             ValueChanged="@SelectAll"/>
                                 <MudStack Spacing="0" Style="overflow-y:auto;max-height:250px">
                                     @foreach (var item in _azureSubscriptions)
                                     {
-                                        <MudCheckBox T="bool" Label="@($"{item.Name}")" Size="@Size.Small" Value="@(_selectedSubscriptions.Contains(item))"
+                                        <MudCheckBox T="bool" Label="@($"{item.Name}")" Size="@Size.Small"
+                                                     Value="@(_selectedSubscriptions.Contains(item))"
                                                      ValueChanged="@((value) => SelectedChanged(value, item))"/>
                                     }
                                 </MudStack>
@@ -51,7 +59,8 @@
                         </MudPopover>
                     </FilterTemplate>
                     <CellTemplate>
-                        <MudLink Target="_blank" Href="@(context.Item?.SubscriptionUrl?.ToString())">@context.Item?.Subscription</MudLink>
+                        <MudLink Target="_blank"
+                                 Href="@(context.Item?.SubscriptionUrl?.ToString())">@context.Item?.Subscription</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.Location" Title="Location">
