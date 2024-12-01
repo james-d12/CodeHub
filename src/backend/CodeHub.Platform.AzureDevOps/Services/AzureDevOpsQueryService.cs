@@ -39,6 +39,48 @@ internal sealed class AzureDevOpsQueryService : IAzureDevOpsQueryService, IQuery
             .ToList();
     }
 
+    public List<AzureDevOpsRepository> QueryRepositories(AzureDevOpsQueryRepositoryRequest request)
+    {
+        _logger.LogInformation("Querying repositories");
+        var repositories = _memoryCache.Get<List<AzureDevOpsRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
+
+        if (repositories.IsNullOrEmpty())
+        {
+            return [];
+        }
+
+        return new QueryBuilder<AzureDevOpsRepository>(repositories)
+            .Where(request.Id, p => p.Id == request.Id)
+            .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
+            .Where(request.ProjectId, p => p.ProjectId == request.ProjectId)
+            .Where(request.ProjectName, p => p.ProjectName.Contains(request.ProjectName ?? string.Empty))
+            .ToList();
+    }
+
+    public List<AzureDevOpsProject> QueryProjects()
+    {
+        _logger.LogInformation("Querying projects");
+        return _memoryCache.Get<List<AzureDevOpsProject>>(CacheConstants.ProjectCacheKey) ?? [];
+    }
+
+    public List<AzureDevOpsTeam> QueryTeams()
+    {
+        _logger.LogInformation("Querying Teams");
+        return _memoryCache.Get<List<AzureDevOpsTeam>>(CacheConstants.TeamCacheKey) ?? [];
+    }
+
+    public List<AzureDevOpsPullRequest> QueryPullRequests()
+    {
+        _logger.LogInformation("Querying pull requests");
+        return _memoryCache.Get<List<AzureDevOpsPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
+    }
+
+    public List<AzureDevOpsWorkItem> QueryWorkItems()
+    {
+        _logger.LogInformation("Querying work items");
+        return _memoryCache.Get<List<AzureDevOpsWorkItem>>(CacheConstants.WorkItemsCacheKey) ?? [];
+    }
+
     public List<Pipeline> QueryPipelines(QueryPipelineRequest request)
     {
         var azureDevOpsPipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(CacheConstants.PipelineCacheKey) ?? [];

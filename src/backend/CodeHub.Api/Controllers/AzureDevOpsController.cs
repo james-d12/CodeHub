@@ -21,4 +21,41 @@ public sealed class AzureDevOpsController : ControllerBase
     {
         return _azureDevOpsQueryService.QueryPipelines(request);
     }
+
+    [HttpGet, Route("repositories")]
+    public List<AzureDevOpsRepository> GetRepositories([FromQuery] AzureDevOpsQueryRepositoryRequest request)
+    {
+        return _azureDevOpsQueryService.QueryRepositories(request);
+    }
+
+    [HttpGet, Route("projects")]
+    public List<AzureDevOpsProject> GetProjects()
+    {
+        return _azureDevOpsQueryService.QueryProjects();
+    }
+
+    [HttpGet, Route("projects/{projectName}/repositories")]
+    public List<AzureDevOpsRepository> GetProjectRepositories([FromRoute] string projectName)
+    {
+        var request = new AzureDevOpsQueryRepositoryRequest { ProjectName = projectName };
+        return _azureDevOpsQueryService.QueryRepositories(request);
+    }
+
+    [HttpGet, Route("teams")]
+    public List<AzureDevOpsTeam> GetTeams()
+    {
+        return _azureDevOpsQueryService.QueryTeams();
+    }
+
+    [HttpGet, Route("pull-requests")]
+    public List<AzureDevOpsPullRequest> GetPullRequests()
+    {
+        return _azureDevOpsQueryService.QueryPullRequests();
+    }
+
+    [HttpGet, Route("work-items")]
+    public List<AzureDevOpsWorkItem> GetWorkItems()
+    {
+        return _azureDevOpsQueryService.QueryWorkItems();
+    }
 }
