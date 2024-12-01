@@ -24,7 +24,7 @@ public sealed class AzureExtensionsTests
                        service.ImplementationType == typeof(AzureDiscoveryService));
         Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(IAzureService) &&
-                       service.Lifetime == ServiceLifetime.Transient &&
+                       service.Lifetime == ServiceLifetime.Singleton &&
                        service.ImplementationType == typeof(AzureService));
         Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(IMemoryCache) &&

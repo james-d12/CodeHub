@@ -9,9 +9,9 @@ public static class AzureExtensions
 {
     public static IServiceCollection RegisterAzure(this IServiceCollection services)
     {
-        services.AddMemoryCache();
-        services.TryAddTransient<IAzureService, AzureService>();
-        //services.TryAddSingleton<IDiscoveryService, AzureDiscoveryService>();
+        services.AddMemoryCache(options => options.TrackStatistics = true);
+        services.TryAddSingleton<IAzureService, AzureService>();
+        services.TryAddSingleton<IDiscoveryService, AzureDiscoveryService>();
         return services;
     }
 }

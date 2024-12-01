@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 		.github\dependabot.yml = .github\dependabot.yml
 		docker-compose.yaml = docker-compose.yaml
+		LICENSE = LICENSE
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}"
@@ -34,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{794E0C
 	ProjectSection(SolutionItems) = preProject
 		src\backend\Directory.Build.props = src\backend\Directory.Build.props
 		src\backend\Directory.Packages.props = src\backend\Directory.Packages.props
+		src\backend\README.md = src\backend\README.md
+		src\backend\Backend.Dockerfile = src\backend\Backend.Dockerfile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{21C8395D-3B75-46E3-AAAE-396CDE1679DB}"
