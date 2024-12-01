@@ -1,18 +1,24 @@
 # CodeHub
-A service catalog hub for viewing all of your software infrastructure from various third party providers all in one place!
+
+A service catalog hub for viewing all of your software infrastructure from various third party providers all in one
+place!
 
 ## Why?
-I thought of this idea whilst at work. I always encountered issues with trying to see how much infrastructure we actually had. Additionally 
-having to have 5+ different websites open at once to view what we had became a big problem. CodeHub attempts to consolidate all of that into
-one consistent UI. 
 
-It's been designed in mind to be deployed and run locally. For example deployed to a Kubernetes cluster and spun up locally.
+The idea for this project came to me at work, where I often struggled to get a clear view of all the infrastructure we
+had. It was frustrating to have to juggle 5+ different websites just to get the information I needed. CodeHub aims to
+solve this by consolidating everything into a single, consistent UI.
+
+It’s designed to be deployed and run locally, such as in a Kubernetes cluster or on a local machine.
 
 ## How It Works
-At the moment, CodeHub works by spinning up background tasks called 'Discovery Services' that will fetch all relevant data
+
+At the moment, CodeHub works by spinning up background tasks called 'Discovery Services' that will fetch all relevant
+data
 from your connected third parties. It then presents these via a unified portal that you can use to browse them.
 
 ## Future Plans
+
 - GitHub, GitLab & Bitbucket for Git providers.
 - Azure / AWS for cloud providers
 - SonarCloud integration for security and static analysis
