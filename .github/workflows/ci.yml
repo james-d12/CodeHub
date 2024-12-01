@@ -32,3 +32,6 @@ jobs:
 
       - name: Run tests
         run: dotnet test CodeHub.sln --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+      - name: Build Docker
+        run: docker compose build
