@@ -7,9 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace CodeHub.Platform.Tests.SooS;
+namespace CodeHub.Platform.Soos.Tests.Extensions;
 
-public sealed class SooSExtensionsTests
+public sealed class SoosExtensionsTests
 {
     [Fact]
     public void RegisterSoosServices_WhenCalledInValidEnvironment_RegistersCorrectServices()
@@ -21,7 +21,7 @@ public sealed class SooSExtensionsTests
             .Build();
 
         // Act
-        serviceCollection.RegisterSoosServices(configuration);
+        serviceCollection.RegisterSoos(configuration);
 
         // Assert
         Assert.Contains(serviceCollection,
@@ -45,7 +45,7 @@ public sealed class SooSExtensionsTests
         var configuration = new ConfigurationBuilder().Build();
 
         // Act + Assert
-        Assert.Throws<InvalidOperationException>(() => serviceCollection.RegisterSoosServices(configuration));
+        Assert.Throws<InvalidOperationException>(() => serviceCollection.RegisterSoos(configuration));
     }
 
     private static Dictionary<string, string?> GetValidSooSConfiguration()

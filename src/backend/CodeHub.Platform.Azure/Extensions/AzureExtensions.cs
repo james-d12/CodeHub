@@ -7,7 +7,7 @@ namespace CodeHub.Platform.Azure.Extensions;
 
 public static class AzureExtensions
 {
-    public static IServiceCollection RegisterAzureServices(this IServiceCollection services)
+    public static IServiceCollection RegisterAzure(this IServiceCollection services)
     {
         services.AddMemoryCache();
         services.TryAddTransient<IAzureService, AzureService>();

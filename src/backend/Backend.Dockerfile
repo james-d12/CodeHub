@@ -3,8 +3,9 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
 WORKDIR /app
 
-COPY ./src/backend .
+COPY . .
 COPY ./Directory.Build.props .
+COPY ./Directory.Packages.props .
 
 WORKDIR CodeHub.Api
 

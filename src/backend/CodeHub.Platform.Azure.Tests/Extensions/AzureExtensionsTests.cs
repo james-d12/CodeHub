@@ -4,7 +4,7 @@ using CodeHub.Shared.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CodeHub.Platform.Tests.Azure;
+namespace CodeHub.Platform.Azure.Tests.Extensions;
 
 public sealed class AzureExtensionsTests
 {
@@ -15,7 +15,7 @@ public sealed class AzureExtensionsTests
         var serviceCollection = new ServiceCollection();
 
         // Act
-        serviceCollection.RegisterAzureServices();
+        serviceCollection.RegisterAzure();
 
         // Assert
         Assert.Contains(serviceCollection,

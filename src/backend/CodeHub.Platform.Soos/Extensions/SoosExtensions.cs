@@ -10,7 +10,7 @@ namespace CodeHub.Platform.Soos.Extensions;
 
 public static class SoosExtensions
 {
-    public static IServiceCollection RegisterSoosServices(this IServiceCollection services,
+    public static IServiceCollection RegisterSoos(this IServiceCollection services,
         IConfiguration configuration)
     {
         // Register Services
