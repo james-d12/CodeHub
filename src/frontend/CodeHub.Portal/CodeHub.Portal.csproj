@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-  
-  <ItemGroup>
-    <PackageReference Include="MudBlazor" Version="7.15.0" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CodeHub.Portal.Services\CodeHub.Portal.Services.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MudBlazor" Version="7.15.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CodeHub.Portal.Services\CodeHub.Portal.Services.csproj"/>
+    </ItemGroup>
 
 </Project>

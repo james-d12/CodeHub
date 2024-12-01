@@ -5,13 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging"/>
+        <PackageReference Include="Swashbuckle.AspNetCore"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CodeHub.Core\CodeHub.Core.csproj" />
-      <ProjectReference Include="..\CodeHub.Platform\CodeHub.Platform.csproj" />
+        <ProjectReference Include="..\CodeHub.Platform.AzureDevOps\CodeHub.Platform.AzureDevOps.csproj"/>
+        <ProjectReference Include="..\CodeHub.Platform.Azure\CodeHub.Platform.Azure.csproj"/>
+        <ProjectReference Include="..\CodeHub.Platform.Soos\CodeHub.Platform.Soos.csproj"/>
     </ItemGroup>
 
 </Project>

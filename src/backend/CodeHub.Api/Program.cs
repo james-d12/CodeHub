@@ -1,5 +1,7 @@
 using CodeHub.Api.Jobs;
-using CodeHub.Platform;
+using CodeHub.Platform.Azure.Extensions;
+using CodeHub.Platform.AzureDevOps.Extensions;
+using CodeHub.Platform.Soos.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +10,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<DiscoveryHostedService>();
-builder.Services.RegisterPlatforms(builder.Configuration);
+
+builder.Services.RegisterAzure();
+builder.Services.RegisterAzureDevOps(builder.Configuration);
+builder.Services.RegisterSoos(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {

@@ -1,4 +1,5 @@
 ﻿using CodeHub.Platform.AzureDevOps.Models;
+using CodeHub.Platform.AzureDevOps.Models.Requests;
 using CodeHub.Platform.AzureDevOps.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,29 +7,18 @@ namespace CodeHub.Api.Controllers;
 
 [ApiController]
 [Route("azure-devops/")]
-public sealed class AzureDevOpsController(ILogger<AzureDevOpsController> logger, IAzureDevOpsService azureDevOpsService)
-    : ControllerBase
+public sealed class AzureDevOpsController : ControllerBase
 {
-    [HttpGet, Route("{projectName}/repositories")]
-    public async Task<List<AzureDevOpsRepository>> GetRepositoriesForProjectAsync(string projectName,
-        CancellationToken cancellationToken)
+    private readonly IAzureDevOpsQueryService _azureDevOpsQueryService;
+
+    public AzureDevOpsController(IAzureDevOpsQueryService azureDevOpsQueryService)
     {
-        logger.LogInformation("Getting All Repositories for {Project} in Azure DevOps.", projectName);
-        return await azureDevOpsService.GetRepositoriesAsync(projectName, cancellationToken);
+        _azureDevOpsQueryService = azureDevOpsQueryService;
     }
 
-    [HttpGet, Route("{projectName}/pipelines")]
-    public async Task<List<AzureDevOpsPipeline>> GetPipelinesForProjectAsync(string projectName,
-        CancellationToken cancellationToken)
+    [HttpGet, Route("pipelines")]
+    public List<AzureDevOpsPipeline> GetPipelines()
     {
-        logger.LogInformation("Getting All Pipelines for {Project} in Azure DevOps.", projectName);
-        return await azureDevOpsService.GetPipelinesAsync(projectName, cancellationToken);
-    }
-
-    [HttpGet, Route("projects")]
-    public async Task<List<AzureDevOpsProject>> GetProjectsAsync(CancellationToken cancellationToken)
-    {
-        logger.LogInformation("Getting All Projects in Azure DevOps.");
-        return await azureDevOpsService.GetProjectsAsync(cancellationToken);
+        return _azureDevOpsQueryService.QueryPipelines(new AzureDevOpsQueryPipelineRequest());
     }
 }

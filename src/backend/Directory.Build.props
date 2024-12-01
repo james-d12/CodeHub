@@ -1,0 +1,15 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
+        <Features>strict</Features>
+        <WarningLevel>4</WarningLevel>
+        <Nullable>enable</Nullable>
+        <AnalyzeMode>all</AnalyzeMode>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+</Project>
