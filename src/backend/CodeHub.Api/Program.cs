@@ -4,45 +4,68 @@ using CodeHub.Platform.AzureDevOps.Extensions;
 using CodeHub.Platform.Soos.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+var applicationName = AppDomain.CurrentDomain.FriendlyName;
 
-builder.Services.AddLogging();
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddHostedService<DiscoveryHostedService>();
-
-builder.Services.RegisterAzure();
-builder.Services.RegisterAzureDevOps(builder.Configuration);
-builder.Services.RegisterSoos(builder.Configuration);
-
-builder.Services.AddCors(options =>
+var loggerFactory = LoggerFactory.Create(loggingBuilder =>
 {
-    options.AddPolicy(name: "AllowFrontendOrigin",
-        policy =>
-        {
-            policy
-                .WithOrigins("http://localhost:5231")
-                .SetIsOriginAllowed((host) => true)
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-        });
+    loggingBuilder.AddJsonConsole();
+    loggingBuilder.AddConfiguration(builder.Configuration.GetSection("Logging"));
+    loggingBuilder.AddDebug();
+    loggingBuilder.AddEventSourceLogger();
 });
+var logger = loggerFactory.CreateLogger<Program>();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    logger.LogInformation("Starting up: {ApplicationName}", applicationName);
+    builder.Services.AddLogging();
+    builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    builder.Services.AddHostedService<DiscoveryHostedService>();
+
+    builder.Services.RegisterAzure();
+    builder.Services.RegisterAzureDevOps(builder.Configuration);
+    builder.Services.RegisterSoos(builder.Configuration);
+
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(name: "AllowFrontendOrigin",
+            policy =>
+            {
+                policy
+                    .WithOrigins("http://localhost:5231")
+                    .SetIsOriginAllowed((host) => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+    });
+
+    var app = builder.Build();
+
+    if (app.Environment.IsDevelopment())
+    {
+        logger.LogInformation("Adding swagger UI");
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseCors("AllowFrontendOrigin");
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
 }
-
-app.UseCors("AllowFrontendOrigin");
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception exception)
+{
+    logger.LogCritical(exception, "Could not startup: {ApplicationName}.", applicationName);
+    throw;
+}
+finally
+{
+    logger.LogInformation("Stopping: {ApplicationName}.", applicationName);
+}

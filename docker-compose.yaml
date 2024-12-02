@@ -1,8 +1,13 @@
 services:
   backend:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_ENVIRONMENT=Development
     build:
       context: ./src/backend
       dockerfile: Backend.Dockerfile
+    ports:
+      - "8080:8080"
   frontend:
     build:
       context: ./src/frontend

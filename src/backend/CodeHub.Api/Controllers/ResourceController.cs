@@ -27,4 +27,16 @@ public sealed class ResourceDevOpsController : ControllerBase
 
         return pipelines;
     }
+
+    [HttpGet, Route("repositories")]
+    public List<Repository> GetRepositories([FromQuery] QueryRepositoryRequest request)
+    {
+        var repositories = new List<Repository>();
+        foreach (var queryService in _queryServices)
+        {
+            repositories.AddRange(queryService.QueryRepositories(request));
+        }
+
+        return repositories;
+    }
 }
