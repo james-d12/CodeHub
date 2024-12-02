@@ -1,16 +1,22 @@
+name: CodeHub
 services:
   backend:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DOTNET_ENVIRONMENT=Development
     build:
       context: ./src/backend
       dockerfile: Backend.Dockerfile
     ports:
       - "8080:8080"
   frontend:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     build:
       context: ./src/frontend
       additional_contexts:
-          backend: ./src/backend
+        backend: ./src/backend
       dockerfile: Frontend.Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "8090:8080"
