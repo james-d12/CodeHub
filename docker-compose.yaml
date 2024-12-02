@@ -1,4 +1,4 @@
-name: CodeHub
+name: codehub
 services:
   backend:
     environment:
