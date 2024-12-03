@@ -1,24 +1,21 @@
 ﻿using CodeHub.Platform.AzureDevOps.Extensions;
-using CodeHub.Platform.AzureDevOps.Models;
 using CodeHub.Platform.AzureDevOps.Services;
-using CodeHub.Platform.AzureDevOps.Validation;
 using CodeHub.Shared.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace CodeHub.Platform.AzureDevOps.Tests.Extensions;
 
 public sealed class AzureDevOpsExtensionsTests
 {
     [Fact]
-    public void RegisterAzureDevOpsServices_WhenCalledInValidEnvironment_RegistersCorrectServices()
+    public void RegisterAzureDevOpsServices_WhenEnabledWithValidSettings_RegistersCorrectServices()
     {
         // Arrange
         var serviceCollection = new ServiceCollection();
         var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(GetValidAzureDevOpsConfiguration())
+            .AddInMemoryCollection(GetValidAzureDevOpsConfiguration(true))
             .Build();
 
         // Act
@@ -42,31 +39,58 @@ public sealed class AzureDevOpsExtensionsTests
                        service.Lifetime == ServiceLifetime.Singleton &&
                        service.ImplementationType == typeof(AzureDevOpsConnectionService));
         Assert.Contains(serviceCollection,
-            service => service.ServiceType == typeof(IValidateOptions<AzureDevOpsSettings>) &&
-                       service.Lifetime == ServiceLifetime.Singleton &&
-                       service.ImplementationType == typeof(AzureDevOpsSettingsValidation));
-        Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(IMemoryCache) &&
                        service.ImplementationType == typeof(MemoryCache));
     }
 
     [Fact]
-    public void RegisterAzureDevOpsServices_WhenCalledWithMissingSettings_ThrowsException()
+    public void RegisterAzureDevOpsServices_WhenDisabledWithValidSettings_DoesNotRegisterServices()
     {
         // Arrange
         var serviceCollection = new ServiceCollection();
-        var configuration = new ConfigurationBuilder().Build();
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(GetValidAzureDevOpsConfiguration(false))
+            .Build();
+
+        // Act
+        var serviceCountBefore = serviceCollection.Count;
+        serviceCollection.RegisterAzureDevOps(configuration);
+
+        // Assert
+        Assert.Equal(serviceCountBefore, serviceCollection.Count);
+    }
+
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void RegisterAzureDevOpsServices_WhenEnabledButCalledWithMissingSettings_ThrowsException(bool enabled)
+    {
+        // Arrange
+        var serviceCollection = new ServiceCollection();
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(GetInvalidAzureSettings(enabled))
+            .Build();
 
         // Act + Assert
         Assert.Throws<InvalidOperationException>(() => serviceCollection.RegisterAzureDevOps(configuration));
     }
 
-    private static Dictionary<string, string?> GetValidAzureDevOpsConfiguration()
+    private static Dictionary<string, string?> GetValidAzureDevOpsConfiguration(bool enabled)
     {
         return new Dictionary<string, string?>
         {
             { "AzureDevOpsSettings:Organization", "TestOrganization" },
-            { "AzureDevOpsSettings:PersonalAccessToken", "TestPersonalAccessToken" }
+            { "AzureDevOpsSettings:PersonalAccessToken", "TestPersonalAccessToken" },
+            { "AzureDevOpsSettings:IsEnabled", enabled.ToString() }
+        };
+    }
+
+    private static Dictionary<string, string?> GetInvalidAzureSettings(bool enabled)
+    {
+        return new Dictionary<string, string?>
+        {
+            { "AzureDevOpsSettings:IsEnabled", enabled.ToString() }
         };
     }
 }

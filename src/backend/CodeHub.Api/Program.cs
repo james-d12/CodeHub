@@ -24,7 +24,7 @@ try
     builder.Services.AddSwaggerGen();
     builder.Services.AddHostedService<DiscoveryHostedService>();
 
-    builder.Services.RegisterAzure();
+    builder.Services.RegisterAzure(builder.Configuration);
     builder.Services.RegisterAzureDevOps(builder.Configuration);
     builder.Services.RegisterSoos(builder.Configuration);
 
@@ -35,7 +35,7 @@ try
             {
                 policy
                     .WithOrigins("http://localhost:5231")
-                    .SetIsOriginAllowed((host) => true)
+                    .SetIsOriginAllowed(_ => true)
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
