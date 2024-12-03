@@ -51,11 +51,13 @@ public sealed class AzureDevOpsExtensionsTests
     }
 
     [Fact]
-    public void RegisterAzureDevOpsServices_WhenCalledWithMissingSettings_ThrowsException()
+    public void RegisterAzureDevOpsServices_WhenEnabledButCalledWithMissingSettings_ThrowsException()
     {
         // Arrange
         var serviceCollection = new ServiceCollection();
-        var configuration = new ConfigurationBuilder().Build();
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(GetAzureEnabledSettings())
+            .Build();
 
         // Act + Assert
         Assert.Throws<InvalidOperationException>(() => serviceCollection.RegisterAzureDevOps(configuration));
@@ -66,7 +68,16 @@ public sealed class AzureDevOpsExtensionsTests
         return new Dictionary<string, string?>
         {
             { "AzureDevOpsSettings:Organization", "TestOrganization" },
-            { "AzureDevOpsSettings:PersonalAccessToken", "TestPersonalAccessToken" }
+            { "AzureDevOpsSettings:PersonalAccessToken", "TestPersonalAccessToken" },
+            { "AzureDevOpsSettings:IsEnabled", "true" }
+        };
+    }
+
+    private static Dictionary<string, string?> GetAzureEnabledSettings()
+    {
+        return new Dictionary<string, string?>
+        {
+            { "AzureDevOpsSettings:IsEnabled", "true" }
         };
     }
 }

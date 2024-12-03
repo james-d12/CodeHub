@@ -2,6 +2,7 @@
 using CodeHub.Platform.Azure.Services;
 using CodeHub.Shared.Services;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeHub.Platform.Azure.Tests.Extensions;
@@ -13,9 +14,12 @@ public sealed class AzureExtensionsTests
     {
         // Arrange
         var serviceCollection = new ServiceCollection();
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(GetValidAzureConfiguration())
+            .Build();
 
         // Act
-        serviceCollection.RegisterAzure();
+        serviceCollection.RegisterAzure(configuration);
 
         // Assert
         Assert.Contains(serviceCollection,
@@ -29,5 +33,13 @@ public sealed class AzureExtensionsTests
         Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(IMemoryCache) &&
                        service.ImplementationType == typeof(MemoryCache));
+    }
+
+    private static Dictionary<string, string?> GetValidAzureConfiguration()
+    {
+        return new Dictionary<string, string?>
+        {
+            { "AzureSettings:IsEnabled", "true" }
+        };
     }
 }

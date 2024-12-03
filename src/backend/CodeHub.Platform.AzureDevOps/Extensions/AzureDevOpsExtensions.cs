@@ -15,10 +15,21 @@ public static class AzureDevOpsExtensions
     public static IServiceCollection RegisterAzureDevOps(this IServiceCollection services,
         IConfiguration configuration)
     {
+        if (!IsAzureDevOpsEnabled(configuration))
+        {
+            return services;
+        }
+
         services.RegisterCache();
         services.RegisterServices();
         services.RegisterOptions(configuration);
         return services;
+    }
+
+    private static bool IsAzureDevOpsEnabled(IConfiguration configuration)
+    {
+        const string key = $"{nameof(AzureDevOpsSettings)}:{nameof(AzureDevOpsSettings.IsEnabled)}";
+        return configuration.GetValue<bool>(key);
     }
 
     private static void RegisterCache(this IServiceCollection services)
@@ -39,7 +50,6 @@ public static class AzureDevOpsExtensions
     {
         services.TryAddSingleton<IValidateOptions<AzureDevOpsSettings>, AzureDevOpsSettingsValidation>();
 
-        // Register Options
         services.AddOptions<AzureDevOpsSettings>()
             .Bind(configuration.GetRequiredSection(nameof(AzureDevOpsSettings)))
             .ValidateOnStart();
