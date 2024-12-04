@@ -7,7 +7,7 @@ public enum GitPlatform
     GitLab
 }
 
-public abstract record Repository
+public record Repository
 {
     public required string Id { get; init; }
     public required string Name { get; init; }

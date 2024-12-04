@@ -20,7 +20,7 @@ public sealed class AzureDevOpsHttpClient : IAzureDevOpsHttpClient
         try
         {
             _logger.LogInformation("Attempting to get all repositories from azure devops.");
-            var repositories = await _httpClient.GetFromJsonAsync<List<AzureDevOpsRepository>>("repositories");
+            var repositories = await _httpClient.GetFromJsonAsync<List<AzureDevOpsRepository>>("/repositories");
 
             _logger.LogInformation("Retrieved: {Count}", repositories?.Count);
 

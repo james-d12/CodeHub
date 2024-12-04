@@ -4,15 +4,15 @@ namespace CodeHub.Portal.Components.Layout;
 
 public partial class MainLayout
 {
-    private bool _drawerOpen = false;
-    private bool _isDarkMode = true;
+    private bool _drawerOpen = true;
+    private bool _isDarkMode = false;
     private MudTheme? _theme = null;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        _theme = new()
+        _theme = new MudTheme
         {
             PaletteLight = _lightPalette,
             PaletteDark = _darkPalette,

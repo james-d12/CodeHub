@@ -6,7 +6,7 @@ public enum TicketingPlatform
     AzureDevOps
 }
 
-public abstract record Ticketing
+public record Ticketing
 {
     public required string Id { get; init; }
     public required string Name { get; init; }

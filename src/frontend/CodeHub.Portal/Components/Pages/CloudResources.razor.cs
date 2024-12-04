@@ -6,7 +6,6 @@ namespace CodeHub.Portal.Components.Pages;
 
 public partial class CloudResources
 {
-    private readonly ILogger<CloudResources> _logger;
     private readonly IAzureHttpClient _azureHttpClient;
 
     private List<AzureResource>? _azureResources;
@@ -17,9 +16,8 @@ public partial class CloudResources
     private bool _filterOpen;
     private bool _selectAll = true;
 
-    public CloudResources(ILogger<CloudResources> logger, IAzureHttpClient azureHttpClient)
+    public CloudResources(IAzureHttpClient azureHttpClient)
     {
-        _logger = logger;
         _azureHttpClient = azureHttpClient;
     }
 
@@ -27,7 +25,7 @@ public partial class CloudResources
     {
         _azureSubscriptions = await _azureHttpClient.GetSubscriptionsAsync();
         _azureResources = await _azureHttpClient.GetResourcesAsync();
-        _azureResources = _azureResources.OrderBy(a => a.Name).ToList();
+        _azureResources = [.. _azureResources.OrderBy(a => a.Name)];
         _filterDefinition = new FilterDefinition<AzureSubscription>
         {
             FilterFunction = x => _filterSubscriptions.Contains(x)
@@ -46,20 +44,20 @@ public partial class CloudResources
         else
             _selectedSubscriptions.Remove(azureSubscription);
 
-        _selectAll = _selectedSubscriptions.Count == _azureSubscriptions.Count();
+        _selectAll = _selectedSubscriptions.Count == _azureSubscriptions.Count;
     }
 
     private async Task ClearFilterAsync(FilterContext<AzureSubscription> context)
     {
-        _selectedSubscriptions = _azureSubscriptions.ToHashSet();
-        _filterSubscriptions = _azureSubscriptions.ToHashSet();
+        _selectedSubscriptions = [.. _azureSubscriptions];
+        _filterSubscriptions = [.. _azureSubscriptions];
         if (_filterDefinition != null) await context.Actions.ClearFilterAsync(_filterDefinition);
         _filterOpen = false;
     }
 
     private async Task ApplyFilterAsync(FilterContext<AzureSubscription> context)
     {
-        _filterSubscriptions = _selectedSubscriptions.ToHashSet();
+        _filterSubscriptions = [.. _selectedSubscriptions];
         if (_filterDefinition != null) await context.Actions.ApplyFilterAsync(_filterDefinition);
         _filterOpen = false;
     }

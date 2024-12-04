@@ -1,1 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder"/>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Validation\" />
+    </ItemGroup>
+</Project>

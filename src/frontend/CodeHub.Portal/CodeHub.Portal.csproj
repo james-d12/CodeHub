@@ -17,4 +17,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Features\Repositories\Repositories.razor" />
+    </ItemGroup>
+
 </Project>

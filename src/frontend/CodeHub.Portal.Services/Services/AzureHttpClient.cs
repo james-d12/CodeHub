@@ -13,7 +13,7 @@ public sealed class AzureHttpClient(HttpClient httpClient) : IAzureHttpClient
             var subscriptions = await GetSubscriptionsAsync();
             var subscriptionNames = subscriptions.Select(subscription => subscription.Name).ToList();
             var queryString = GetQueryString(subscriptionNames);
-            var requestUrl = "subscriptions/resources?" + queryString;
+            var requestUrl = "/subscriptions/resources?" + queryString;
             var resources = await httpClient.GetFromJsonAsync<List<AzureResource>>(requestUrl);
             return resources ?? [];
         }
@@ -29,7 +29,7 @@ public sealed class AzureHttpClient(HttpClient httpClient) : IAzureHttpClient
         try
         {
             var subscriptions =
-                await httpClient.GetFromJsonAsync<List<AzureSubscription>>("subscriptions");
+                await httpClient.GetFromJsonAsync<List<AzureSubscription>>("/subscriptions");
             return subscriptions ?? [];
         }
         catch (Exception exception)

@@ -9,7 +9,7 @@ public enum PipelinePlatform
     TravisCi
 }
 
-public abstract record Pipeline
+public record Pipeline
 {
     public required string Id { get; set; }
     public required string Name { get; set; }

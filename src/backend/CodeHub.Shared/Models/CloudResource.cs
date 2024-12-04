@@ -7,7 +7,7 @@ public enum CloudPlatform
     GoogleCloud
 }
 
-public abstract record CloudResource
+public record CloudResource
 {
     public required string Id { get; set; }
     public required string Name { get; init; }

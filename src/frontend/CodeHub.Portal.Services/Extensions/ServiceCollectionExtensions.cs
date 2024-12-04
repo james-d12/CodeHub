@@ -18,15 +18,21 @@ public static class ServiceCollectionExtensions
 
         services.AddHttpClient<IAzureDevOpsHttpClient, AzureDevOpsHttpClient>(client =>
         {
-            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/azure-devops/");
+            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/azure-devops");
         });
 
         services.AddHttpClient<IAzureHttpClient, AzureHttpClient>(client =>
         {
-            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/azure/");
+            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/azure");
+        });
+
+        services.AddHttpClient<IResourceHttpClient, ResourceHttpClient>(client =>
+        {
+            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/resources/");
         });
 
         services.TryAddTransient<IAzureDevOpsHttpClient, AzureDevOpsHttpClient>();
         services.TryAddTransient<IAzureHttpClient, AzureHttpClient>();
+        services.TryAddTransient<IResourceHttpClient, ResourceHttpClient>();
     }
 }
