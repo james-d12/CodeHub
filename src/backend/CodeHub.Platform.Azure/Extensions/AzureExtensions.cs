@@ -1,5 +1,5 @@
-﻿using CodeHub.Platform.Azure.Models;
-using CodeHub.Platform.Azure.Services;
+﻿using CodeHub.Platform.Azure.Services;
+using CodeHub.Platform.Azure.Validation;
 using CodeHub.Shared.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +11,9 @@ public static class AzureExtensions
 {
     public static IServiceCollection RegisterAzure(this IServiceCollection services, IConfiguration configuration)
     {
-        if (!IsAzureEnabled(configuration))
+        var settings = AzureSettingsValidator.GetValidSettings(configuration);
+
+        if (!settings.IsEnabled)
         {
             return services;
         }
@@ -20,12 +22,6 @@ public static class AzureExtensions
         services.TryAddSingleton<IAzureService, AzureService>();
         services.TryAddSingleton<IDiscoveryService, AzureDiscoveryService>();
         return services;
-    }
-
-    private static bool IsAzureEnabled(IConfiguration configuration)
-    {
-        const string key = $"{nameof(AzureSettings)}:{nameof(AzureSettings.IsEnabled)}";
-        return configuration.GetValue<bool>(key);
     }
 
     private static void RegisterCache(this IServiceCollection services)

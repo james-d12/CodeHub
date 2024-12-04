@@ -1,18 +1,18 @@
-﻿@page "/repositories"
+﻿@page "/pipelines"
 @using CodeHub.Shared.Models
 
 <PageTitle>CodeHub: Repositories</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
-    <MudText Typo="Typo.h3" GutterBottom="true">Repositories</MudText>
+    <MudText Typo="Typo.h3" GutterBottom="true">Pipelines</MudText>
 
-    @if (_repositories == null)
+    @if (_pipelines == null)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
     }
     else
     {
-        <MudDataGrid Dense="true" T="Repository" Items="@_repositories"
+        <MudDataGrid Dense="true" T="Pipeline" Items="@_pipelines"
                      FilterMode="@DataGridFilterMode.ColumnFilterRow" Filterable="true"
                      FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
                      RowsPerPage="20">
@@ -28,11 +28,6 @@
                 <PropertyColumn Property="x => x.Name" Title="Name">
                     <CellTemplate>
                         <MudLink Target="_blank" Href="@(context.Item?.Url.ToString())">@context.Item?.Name</MudLink>
-                    </CellTemplate>
-                </PropertyColumn>
-                <PropertyColumn Property="x => x.DefaultBranch" Title="Default Branch">
-                    <CellTemplate>
-                        @context.Item?.DefaultBranch
                     </CellTemplate>
                 </PropertyColumn>
             </Columns>
