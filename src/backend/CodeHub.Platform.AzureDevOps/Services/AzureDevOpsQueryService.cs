@@ -110,6 +110,14 @@ internal sealed class AzureDevOpsQueryService : IAzureDevOpsQueryService, IQuery
         return _memoryCache.Get<List<AzureDevOpsPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
     }
 
+    public List<PullRequest> QueryPullRequests(QueryPullRequestRequest request)
+    {
+        var azureDevOpsPullRequests =
+            _memoryCache.Get<List<AzureDevOpsPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
+        var pullRequests = azureDevOpsPullRequests.ConvertAll(p => (PullRequest)p);
+        return pullRequests;
+    }
+
     public List<AzureDevOpsWorkItem> QueryWorkItems()
     {
         _logger.LogInformation("Querying work items");

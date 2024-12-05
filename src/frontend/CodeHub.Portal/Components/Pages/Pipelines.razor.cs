@@ -5,11 +5,11 @@ namespace CodeHub.Portal.Components.Pages;
 
 public partial class Pipelines
 {
-    private readonly ILogger<Repositories> _logger;
+    private readonly ILogger<Pipeline> _logger;
     private readonly IResourceHttpClient _resourceHttpClient;
     private List<Pipeline>? _pipelines;
 
-    public Pipelines(ILogger<Repositories> logger, IResourceHttpClient resourceHttpClient)
+    public Pipelines(ILogger<Pipeline> logger, IResourceHttpClient resourceHttpClient)
     {
         _logger = logger;
         _resourceHttpClient = resourceHttpClient;

@@ -1,11 +1,9 @@
 ﻿@page "/pipelines"
 @using CodeHub.Shared.Models
 
-<PageTitle>CodeHub: Repositories</PageTitle>
+<PageTitle>CodeHub: Pipelines</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
-    <MudText Typo="Typo.h3" GutterBottom="true">Pipelines</MudText>
-
     @if (_pipelines == null)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
@@ -17,7 +15,9 @@
                      FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
                      RowsPerPage="20">
             <ToolBarContent>
-                <MudText Typo="Typo.h6">Repositories</MudText>
+                <MudText Typo="Typo.h4">
+                    <MudElement HtmlTag="b">Pipelines</MudElement>
+                </MudText>
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Platform" Title="Platform" Filterable="false" Sortable="false">
@@ -32,7 +32,7 @@
                 </PropertyColumn>
             </Columns>
             <PagerContent>
-                <MudDataGridPager T="Repository"/>
+                <MudDataGridPager T="Pipeline"/>
             </PagerContent>
         </MudDataGrid>
     }

@@ -6,6 +6,7 @@ using Microsoft.TeamFoundation.Build.WebApi;
 using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.SourceControl.WebApi;
 using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
+using PullRequestStatus = Microsoft.TeamFoundation.SourceControl.WebApi.PullRequestStatus;
 
 namespace CodeHub.Platform.AzureDevOps.Extensions;
 
@@ -69,24 +70,25 @@ internal static class AzureDevOpsMappingExtensions
 
     internal static AzureDevOpsPullRequest MapToAzureDevOpsPullRequest(this GitPullRequest gitPullRequest)
     {
-        AzureDevOpsPullRequestStatus status = gitPullRequest.Status switch
+        var status = gitPullRequest.Status switch
         {
-            PullRequestStatus.NotSet => AzureDevOpsPullRequestStatus.NotSet,
-            PullRequestStatus.Active => AzureDevOpsPullRequestStatus.Active,
-            PullRequestStatus.Abandoned => AzureDevOpsPullRequestStatus.NotSet,
-            PullRequestStatus.Completed => AzureDevOpsPullRequestStatus.NotSet,
-            PullRequestStatus.All => AzureDevOpsPullRequestStatus.NotSet,
-            _ => AzureDevOpsPullRequestStatus.NotSet
+            PullRequestStatus.NotSet => Shared.Models.PullRequestStatus.Draft,
+            PullRequestStatus.Active => Shared.Models.PullRequestStatus.Active,
+            PullRequestStatus.Abandoned => Shared.Models.PullRequestStatus.Abandoned,
+            PullRequestStatus.Completed => Shared.Models.PullRequestStatus.Completed,
+            PullRequestStatus.All => Shared.Models.PullRequestStatus.Unknown,
+            _ => Shared.Models.PullRequestStatus.Unknown
         };
 
         return new AzureDevOpsPullRequest
         {
-            Id = gitPullRequest.PullRequestId,
+            Id = gitPullRequest.PullRequestId.ToString(),
             Title = gitPullRequest.Title,
             Description = gitPullRequest.Description,
             Labels = gitPullRequest.Labels?.Select(l => l.Name).ToImmutableHashSet() ?? [],
             Reviewers = gitPullRequest.Reviewers?.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
-            Status = status
+            Status = status,
+            Platform = PullRequestPlatform.AzureDevOps
         };
     }
 

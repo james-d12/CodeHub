@@ -39,4 +39,16 @@ public sealed class ResourceDevOpsController : ControllerBase
 
         return repositories;
     }
+
+    [HttpGet, Route("pull-requests")]
+    public List<PullRequest> GetPullRequests([FromQuery] QueryPullRequestRequest request)
+    {
+        var pullRequests = new List<PullRequest>();
+        foreach (var queryService in _queryServices)
+        {
+            pullRequests.AddRange(queryService.QueryPullRequests(request));
+        }
+
+        return pullRequests;
+    }
 }

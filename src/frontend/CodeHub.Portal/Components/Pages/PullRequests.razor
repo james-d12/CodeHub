@@ -1,0 +1,56 @@
+﻿@page "/pull-requests"
+@using CodeHub.Shared.Models
+
+<PageTitle>CodeHub: Pull Requests</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+    @if (_pullRequests == null)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+    }
+    else
+    {
+        <MudDataGrid Dense="true" T="PullRequest" Items="@_pullRequests"
+                     FilterMode="@DataGridFilterMode.ColumnFilterRow" Filterable="true"
+                     FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
+                     RowsPerPage="20">
+            <ToolBarContent>
+                <MudText Typo="Typo.h4">
+                    <MudElement HtmlTag="b">Pull Requests</MudElement>
+                </MudText>
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Platform" Title="Platform" Filterable="false" Sortable="false">
+                    <CellTemplate>
+                        <MudIcon Icon="@GetPlatformIcon(context.Item)"/>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Title" Title="Title">
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Description" Title="Description">
+                    <CellTemplate>
+                        <MudText Typo="Typo.body1">@context.Item?.Description</MudText>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Labels" Title="Labels" Filterable="false">
+                    <CellTemplate>
+                        @string.Join(',', context.Item?.Labels ?? [])
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Reviewers" Title="Reviewers" Filterable="false">
+                    <CellTemplate>
+                        @string.Join(',', context.Item?.Reviewers ?? [])
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Status" Title="Status">
+                    <CellTemplate>
+                        @context.Item?.Status.ToString()
+                    </CellTemplate>
+                </PropertyColumn>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="PullRequest"/>
+            </PagerContent>
+        </MudDataGrid>
+    }
+</MudContainer>

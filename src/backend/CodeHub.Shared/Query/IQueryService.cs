@@ -7,4 +7,5 @@ public interface IQueryService
 {
     List<Pipeline> QueryPipelines(QueryPipelineRequest request);
     List<Repository> QueryRepositories(QueryRepositoryRequest request);
+    List<PullRequest> QueryPullRequests(QueryPullRequestRequest request);
 }
