@@ -51,10 +51,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.Azure", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.Azure.Tests", "src\backend\CodeHub.Platform.Azure.Tests\CodeHub.Platform.Azure.Tests.csproj", "{4D69214A-521E-413C-8732-A228A50753DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.Soos", "src\backend\CodeHub.Platform.Soos\CodeHub.Platform.Soos.csproj", "{070D46D5-5F8C-4E0F-BA75-40830A896852}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.Soos.Tests", "src\backend\CodeHub.Platform.Soos.Tests\CodeHub.Platform.Soos.Tests.csproj", "{751658AE-F76F-4298-B0F9-9EBE06A647E5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,14 +89,6 @@ Global
 		{4D69214A-521E-413C-8732-A228A50753DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D69214A-521E-413C-8732-A228A50753DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D69214A-521E-413C-8732-A228A50753DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{070D46D5-5F8C-4E0F-BA75-40830A896852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{070D46D5-5F8C-4E0F-BA75-40830A896852}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{070D46D5-5F8C-4E0F-BA75-40830A896852}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{070D46D5-5F8C-4E0F-BA75-40830A896852}.Release|Any CPU.Build.0 = Release|Any CPU
-		{751658AE-F76F-4298-B0F9-9EBE06A647E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{751658AE-F76F-4298-B0F9-9EBE06A647E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{751658AE-F76F-4298-B0F9-9EBE06A647E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{751658AE-F76F-4298-B0F9-9EBE06A647E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,7 +105,5 @@ Global
 		{21C8395D-3B75-46E3-AAAE-396CDE1679DB} = {FD7D4EDA-3EEC-4989-B479-563417E6848F}
 		{58014886-DBFC-4D3B-9EA3-03B8A228B601} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
 		{4D69214A-521E-413C-8732-A228A50753DD} = {3AC7FEA5-756C-45E1-8988-16170C26B898}
-		{070D46D5-5F8C-4E0F-BA75-40830A896852} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
-		{751658AE-F76F-4298-B0F9-9EBE06A647E5} = {3AC7FEA5-756C-45E1-8988-16170C26B898}
 	EndGlobalSection
 EndGlobal

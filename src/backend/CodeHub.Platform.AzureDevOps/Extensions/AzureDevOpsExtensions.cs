@@ -36,7 +36,6 @@ public static class AzureDevOpsExtensions
     {
         services.TryAddSingleton<IAzureDevOpsService, AzureDevOpsService>();
         services.TryAddSingleton<IQueryService, AzureDevOpsQueryService>();
-        services.TryAddSingleton<IAzureDevOpsQueryService, AzureDevOpsQueryService>();
         services.TryAddSingleton<IAzureDevOpsConnectionService, AzureDevOpsConnectionService>();
         services.TryAddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
     }

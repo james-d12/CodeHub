@@ -35,6 +35,11 @@
                         @context.Item?.DefaultBranch
                     </CellTemplate>
                 </PropertyColumn>
+                <PropertyColumn Property="x => x.Project.Name" Title="Project">
+                    <CellTemplate>
+                        <MudLink Target="_blank" Href="@(context.Item?.Project.Url.ToString())">@context.Item?.Project.Name</MudLink>
+                    </CellTemplate>
+                </PropertyColumn>
             </Columns>
             <PagerContent>
                 <MudDataGridPager T="Repository"/>

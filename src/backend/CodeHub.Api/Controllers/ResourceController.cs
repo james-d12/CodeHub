@@ -1,7 +1,8 @@
 ﻿using CodeHub.Shared.Models;
-using CodeHub.Shared.Models.Requests;
 using CodeHub.Shared.Query;
+using CodeHub.Shared.Query.Requests;
 using Microsoft.AspNetCore.Mvc;
+using PipelineQueryRequest = CodeHub.Shared.Query.Requests.PipelineQueryRequest;
 
 namespace CodeHub.Api.Controllers;
 
@@ -17,7 +18,7 @@ public sealed class ResourceDevOpsController : ControllerBase
     }
 
     [HttpGet, Route("pipelines")]
-    public List<Pipeline> GetPipelines([FromQuery] QueryPipelineRequest request)
+    public List<Pipeline> GetPipelines([FromQuery] PipelineQueryRequest request)
     {
         var pipelines = new List<Pipeline>();
         foreach (var queryService in _queryServices)
@@ -29,7 +30,7 @@ public sealed class ResourceDevOpsController : ControllerBase
     }
 
     [HttpGet, Route("repositories")]
-    public List<Repository> GetRepositories([FromQuery] QueryRepositoryRequest request)
+    public List<Repository> GetRepositories([FromQuery] RepositoryQueryRequest request)
     {
         var repositories = new List<Repository>();
         foreach (var queryService in _queryServices)
@@ -41,7 +42,7 @@ public sealed class ResourceDevOpsController : ControllerBase
     }
 
     [HttpGet, Route("pull-requests")]
-    public List<PullRequest> GetPullRequests([FromQuery] QueryPullRequestRequest request)
+    public List<PullRequest> GetPullRequests([FromQuery] PullRequestQueryRequest request)
     {
         var pullRequests = new List<PullRequest>();
         foreach (var queryService in _queryServices)

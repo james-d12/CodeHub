@@ -36,7 +36,7 @@ internal sealed class AzureDevOpsDiscoveryService : IDiscoveryService
             var repositories = new List<AzureDevOpsRepository>();
             var pullRequests = new List<AzureDevOpsPullRequest>();
 
-            foreach (var project in projects)
+            foreach (var project in projects.Slice(19, 1))
             {
                 _logger.LogInformation("Discovering Azure DevOps Repository resources for {ProjectName}", project.Name);
                 var projectRepositories =

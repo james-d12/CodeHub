@@ -13,7 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CodeHub.Platform.AzureDevOps\CodeHub.Platform.AzureDevOps.csproj"/>
     <ProjectReference Include="..\CodeHub.Platform.Azure\CodeHub.Platform.Azure.csproj"/>
-    <ProjectReference Include="..\CodeHub.Platform.Soos\CodeHub.Platform.Soos.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
