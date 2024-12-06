@@ -27,10 +27,6 @@ public sealed class AzureDevOpsExtensionsTests
                        service.Lifetime == ServiceLifetime.Singleton &&
                        service.ImplementationType == typeof(AzureDevOpsDiscoveryService));
         Assert.Contains(serviceCollection,
-            service => service.ServiceType == typeof(IAzureDevOpsQueryService) &&
-                       service.Lifetime == ServiceLifetime.Singleton &&
-                       service.ImplementationType == typeof(AzureDevOpsQueryService));
-        Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(IAzureDevOpsService) &&
                        service.Lifetime == ServiceLifetime.Singleton &&
                        service.ImplementationType == typeof(AzureDevOpsService));

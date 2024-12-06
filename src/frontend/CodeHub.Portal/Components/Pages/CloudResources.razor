@@ -4,8 +4,6 @@
 <PageTitle>CodeHub: Cloud Resources</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
-    <MudText Typo="Typo.h3" GutterBottom="true">Cloud Resources</MudText>
-
     @if (_azureResources == null)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
@@ -17,7 +15,9 @@
                      FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
                      RowsPerPage="20">
             <ToolBarContent>
-                <MudText Typo="Typo.h6">Resources</MudText>
+                <MudText Typo="Typo.h4">
+                    <MudElement HtmlTag="b">Resources</MudElement>
+                </MudText>
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Platform" Filterable="false" Sortable="false">

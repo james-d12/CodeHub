@@ -1,22 +1,22 @@
-﻿@page "/pipelines"
+﻿@page "/pull-requests"
 @using CodeHub.Shared.Models
 
-<PageTitle>CodeHub: Pipelines</PageTitle>
+<PageTitle>CodeHub: Pull Requests</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
-    @if (_pipelines == null)
+    @if (_pullRequests == null)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
     }
     else
     {
-        <MudDataGrid Dense="true" T="Pipeline" Items="@_pipelines"
+        <MudDataGrid Dense="true" T="PullRequest" Items="@_pullRequests"
                      FilterMode="@DataGridFilterMode.ColumnFilterRow" Filterable="true"
                      FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
                      RowsPerPage="20">
             <ToolBarContent>
                 <MudText Typo="Typo.h4">
-                    <MudElement HtmlTag="b">Pipelines</MudElement>
+                    <MudElement HtmlTag="b">Pull Requests</MudElement>
                 </MudText>
             </ToolBarContent>
             <Columns>
@@ -25,19 +25,34 @@
                         <MudIcon Icon="@GetPlatformIcon(context.Item)"/>
                     </CellTemplate>
                 </PropertyColumn>
+                <PropertyColumn Property="x => x.RepositoryName" Title="Repository">
+                    <CellTemplate>
+                        <MudLink Target="_blank" Href="@(context.Item?.RepositoryUrl.ToString())">@context.Item?.RepositoryName</MudLink>
+                    </CellTemplate>
+                </PropertyColumn>
                 <PropertyColumn Property="x => x.Name" Title="Name">
                     <CellTemplate>
                         <MudLink Target="_blank" Href="@(context.Item?.Url.ToString())">@context.Item?.Name</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
-                <PropertyColumn Property="x => x.Project.Name" Title="Project">
+                <PropertyColumn Property="x => x.Labels" Title="Labels" Filterable="false">
                     <CellTemplate>
-                        <MudLink Target="_blank" Href="@(context.Item?.Project.Url.ToString())">@context.Item?.Project.Name</MudLink>
+                        @string.Join(',', context.Item?.Labels ?? [])
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Reviewers" Title="Reviewers" Filterable="false">
+                    <CellTemplate>
+                        @string.Join(',', context.Item?.Reviewers ?? [])
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Status" Title="Status">
+                    <CellTemplate>
+                        @context.Item?.Status.ToString()
                     </CellTemplate>
                 </PropertyColumn>
             </Columns>
             <PagerContent>
-                <MudDataGridPager T="Pipeline"/>
+                <MudDataGridPager T="PullRequest"/>
             </PagerContent>
         </MudDataGrid>
     }

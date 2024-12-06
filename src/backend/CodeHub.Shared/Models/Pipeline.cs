@@ -11,8 +11,9 @@ public enum PipelinePlatform
 
 public record Pipeline
 {
-    public required string Id { get; set; }
-    public required string Name { get; set; }
-    public required Uri Url { get; set; }
-    public required PipelinePlatform Platform { get; set; }
+    public required string Id { get; init; }
+    public required string Name { get; init; }
+    public required Uri Url { get; init; }
+    public required Project Project { get; init; }
+    public required PipelinePlatform Platform { get; init; }
 }

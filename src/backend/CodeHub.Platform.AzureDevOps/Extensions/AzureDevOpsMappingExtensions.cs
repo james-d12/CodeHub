@@ -6,6 +6,7 @@ using Microsoft.TeamFoundation.Build.WebApi;
 using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.SourceControl.WebApi;
 using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
+using PullRequestStatus = Microsoft.TeamFoundation.SourceControl.WebApi.PullRequestStatus;
 
 namespace CodeHub.Platform.AzureDevOps.Extensions;
 
@@ -18,11 +19,16 @@ internal static class AzureDevOpsMappingExtensions
             Id = buildDefinitionReference.Id.ToString(),
             Name = buildDefinitionReference.Name,
             Url = new Uri(buildDefinitionReference.Url),
-            ProjectName = buildDefinitionReference.Project.Name,
-            ProjectId = buildDefinitionReference.Project.Id,
-            ProjectUrl = buildDefinitionReference.Project.Url,
             Path = buildDefinitionReference.Path,
-            Platform = PipelinePlatform.AzureDevOps
+            Platform = PipelinePlatform.AzureDevOps,
+            Project = new Project
+            {
+                Id = buildDefinitionReference.Project.Id.ToString(),
+                Name = buildDefinitionReference.Project.Name,
+                Description = buildDefinitionReference.Project.Description,
+                Url = new Uri(buildDefinitionReference.Project.Url.Replace("_apis/", string.Empty)),
+                Platform = ProjectPlatform.AzureDevOps,
+            }
         };
     }
 
@@ -46,13 +52,18 @@ internal static class AzureDevOpsMappingExtensions
             Id = gitRepository.Id.ToString(),
             Name = gitRepository.Name,
             Url = new Uri(gitRepository.WebUrl),
-            DefaultBranch = gitRepository.DefaultBranch,
-            ProjectName = gitRepository.ProjectReference.Name,
-            ProjectId = gitRepository.ProjectReference.Id,
-            ProjectUrl = gitRepository.ProjectReference.Url,
+            DefaultBranch = gitRepository.DefaultBranch?.Replace("refs/heads/", string.Empty) ?? string.Empty,
             IsDisabled = gitRepository.IsDisabled ?? false,
             IsInMaintenance = gitRepository.IsInMaintenance ?? false,
-            Platform = GitPlatform.AzureDevOps
+            Platform = RepositoryPlatform.AzureDevOps,
+            Project = new Project
+            {
+                Id = gitRepository.ProjectReference.Id.ToString(),
+                Name = gitRepository.ProjectReference.Name,
+                Description = gitRepository.ProjectReference.Description,
+                Url = new Uri(gitRepository.ProjectReference.Url.Replace("_apis/", string.Empty)),
+                Platform = ProjectPlatform.AzureDevOps,
+            }
         };
     }
 
@@ -69,24 +80,29 @@ internal static class AzureDevOpsMappingExtensions
 
     internal static AzureDevOpsPullRequest MapToAzureDevOpsPullRequest(this GitPullRequest gitPullRequest)
     {
-        AzureDevOpsPullRequestStatus status = gitPullRequest.Status switch
+        var status = gitPullRequest.Status switch
         {
-            PullRequestStatus.NotSet => AzureDevOpsPullRequestStatus.NotSet,
-            PullRequestStatus.Active => AzureDevOpsPullRequestStatus.Active,
-            PullRequestStatus.Abandoned => AzureDevOpsPullRequestStatus.NotSet,
-            PullRequestStatus.Completed => AzureDevOpsPullRequestStatus.NotSet,
-            PullRequestStatus.All => AzureDevOpsPullRequestStatus.NotSet,
-            _ => AzureDevOpsPullRequestStatus.NotSet
+            PullRequestStatus.NotSet => Shared.Models.PullRequestStatus.Draft,
+            PullRequestStatus.Active => Shared.Models.PullRequestStatus.Active,
+            PullRequestStatus.Abandoned => Shared.Models.PullRequestStatus.Abandoned,
+            PullRequestStatus.Completed => Shared.Models.PullRequestStatus.Completed,
+            PullRequestStatus.All => Shared.Models.PullRequestStatus.Unknown,
+            _ => Shared.Models.PullRequestStatus.Unknown
         };
 
         return new AzureDevOpsPullRequest
         {
-            Id = gitPullRequest.PullRequestId,
-            Title = gitPullRequest.Title,
+            Id = gitPullRequest.PullRequestId.ToString(),
+            Name = gitPullRequest.Title,
             Description = gitPullRequest.Description,
+            Url = new Uri(gitPullRequest.Url),
             Labels = gitPullRequest.Labels?.Select(l => l.Name).ToImmutableHashSet() ?? [],
             Reviewers = gitPullRequest.Reviewers?.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
-            Status = status
+            Status = status,
+            Platform = PullRequestPlatform.AzureDevOps,
+            LastCommit = null,
+            RepositoryName = gitPullRequest.Repository?.Name ?? string.Empty,
+            RepositoryUrl = new Uri(gitPullRequest.Repository?.Url ?? string.Empty),
         };
     }
 

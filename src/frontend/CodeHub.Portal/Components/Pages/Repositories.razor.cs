@@ -25,9 +25,9 @@ public partial class Repositories
     {
         return repository.Platform switch
         {
-            GitPlatform.AzureDevOps => PlatformIcons.AzureDevOps,
-            GitPlatform.GitHub => PlatformIcons.GitHub,
-            GitPlatform.GitLab => PlatformIcons.GitLab,
+            RepositoryPlatform.AzureDevOps => PlatformIcons.AzureDevOps,
+            RepositoryPlatform.GitHub => PlatformIcons.GitHub,
+            RepositoryPlatform.GitLab => PlatformIcons.GitLab,
             _ => string.Empty
         };
     }

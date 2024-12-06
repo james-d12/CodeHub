@@ -1,16 +1,15 @@
 using CodeHub.Platform.AzureDevOps.Constants;
 using CodeHub.Platform.AzureDevOps.Models;
-using CodeHub.Platform.AzureDevOps.Models.Requests;
 using CodeHub.Shared.Models;
-using CodeHub.Shared.Models.Requests;
 using CodeHub.Shared.Query;
+using CodeHub.Shared.Query.Requests;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.TeamFoundation.Common;
 
 namespace CodeHub.Platform.AzureDevOps.Services;
 
-internal sealed class AzureDevOpsQueryService : IAzureDevOpsQueryService, IQueryService
+internal sealed class AzureDevOpsQueryService : IQueryService
 {
     private readonly ILogger<AzureDevOpsQueryService> _logger;
     private readonly IMemoryCache _memoryCache;
@@ -21,30 +20,13 @@ internal sealed class AzureDevOpsQueryService : IAzureDevOpsQueryService, IQuery
         _memoryCache = memoryCache;
     }
 
-    public List<AzureDevOpsPipeline> QueryPipelines(AzureDevOpsQueryPipelineRequest request)
+    public List<Pipeline> QueryPipelines(PipelineQueryRequest request)
     {
-        _logger.LogInformation("Querying pipelines with Request: {Request}", request);
-        var pipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
-
-        if (pipelines.IsNullOrEmpty())
-        {
-            return [];
-        }
-
-        return new QueryBuilder<AzureDevOpsPipeline>(pipelines)
-            .Where(request.Id, p => p.Id == request.Id)
-            .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
-            .Where(request.ProjectId, p => p.ProjectId == request.ProjectId)
-            .Where(request.ProjectName, p => p.ProjectName.Contains(request.ProjectName ?? string.Empty))
-            .ToList();
-    }
-
-    public List<Pipeline> QueryPipelines(QueryPipelineRequest request)
-    {
+        _logger.LogInformation("Querying pipelines from Azure DevOps");
         var azureDevOpsPipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
         var pipelines = azureDevOpsPipelines.ConvertAll(p => (Pipeline)p);
 
-        if (azureDevOpsPipelines.IsNullOrEmpty())
+        if (azureDevOpsPipelines.Count <= 0)
         {
             return [];
         }
@@ -56,32 +38,14 @@ internal sealed class AzureDevOpsQueryService : IAzureDevOpsQueryService, IQuery
             .ToList();
     }
 
-    public List<AzureDevOpsRepository> QueryRepositories(AzureDevOpsQueryRepositoryRequest request)
+    public List<Repository> QueryRepositories(RepositoryQueryRequest request)
     {
-        _logger.LogInformation("Querying repositories");
-        var repositories = _memoryCache.Get<List<AzureDevOpsRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
-
-        if (repositories.IsNullOrEmpty())
-        {
-            return [];
-        }
-
-        return new QueryBuilder<AzureDevOpsRepository>(repositories)
-            .Where(request.Id, p => p.Id == request.Id)
-            .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
-            .Where(request.ProjectId, p => p.ProjectId == request.ProjectId)
-            .Where(request.ProjectName, p => p.ProjectName.Contains(request.ProjectName ?? string.Empty))
-            .ToList();
-    }
-
-    public List<Repository> QueryRepositories(QueryRepositoryRequest request)
-    {
-        _logger.LogInformation("Querying repositories");
+        _logger.LogInformation("Querying repositories from Azure DevOps");
         var azureDevOpsRepositories =
             _memoryCache.Get<List<AzureDevOpsRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
         var repositories = azureDevOpsRepositories.ConvertAll(p => (Repository)p);
 
-        if (repositories.IsNullOrEmpty())
+        if (repositories.Count <= 0)
         {
             return [];
         }
@@ -92,27 +56,21 @@ internal sealed class AzureDevOpsQueryService : IAzureDevOpsQueryService, IQuery
             .ToList();
     }
 
-    public List<AzureDevOpsProject> QueryProjects()
+    public List<PullRequest> QueryPullRequests(PullRequestQueryRequest request)
     {
-        _logger.LogInformation("Querying projects");
-        return _memoryCache.Get<List<AzureDevOpsProject>>(CacheConstants.ProjectCacheKey) ?? [];
-    }
+        _logger.LogInformation("Querying pull requests from Azure DevOps");
+        var azureDevOpsPullRequests =
+            _memoryCache.Get<List<AzureDevOpsPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
+        var pullRequests = azureDevOpsPullRequests.ConvertAll(p => (PullRequest)p);
 
-    public List<AzureDevOpsTeam> QueryTeams()
-    {
-        _logger.LogInformation("Querying Teams");
-        return _memoryCache.Get<List<AzureDevOpsTeam>>(CacheConstants.TeamCacheKey) ?? [];
-    }
+        if (pullRequests.Count <= 0)
+        {
+            return [];
+        }
 
-    public List<AzureDevOpsPullRequest> QueryPullRequests()
-    {
-        _logger.LogInformation("Querying pull requests");
-        return _memoryCache.Get<List<AzureDevOpsPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
-    }
-
-    public List<AzureDevOpsWorkItem> QueryWorkItems()
-    {
-        _logger.LogInformation("Querying work items");
-        return _memoryCache.Get<List<AzureDevOpsWorkItem>>(CacheConstants.WorkItemsCacheKey) ?? [];
+        return new QueryBuilder<PullRequest>(pullRequests)
+            .Where(request.Id, p => p.Id == request.Id)
+            .Where(request.Title, p => p.Name.Contains(request.Title ?? string.Empty))
+            .ToList();
     }
 }

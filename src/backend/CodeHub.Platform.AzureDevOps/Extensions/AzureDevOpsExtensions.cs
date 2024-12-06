@@ -35,10 +35,9 @@ public static class AzureDevOpsExtensions
     private static void RegisterServices(this IServiceCollection services)
     {
         services.TryAddSingleton<IAzureDevOpsService, AzureDevOpsService>();
-        services.TryAddSingleton<IQueryService, AzureDevOpsQueryService>();
-        services.TryAddSingleton<IAzureDevOpsQueryService, AzureDevOpsQueryService>();
         services.TryAddSingleton<IAzureDevOpsConnectionService, AzureDevOpsConnectionService>();
-        services.TryAddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
+        services.AddTransient<IQueryService, AzureDevOpsQueryService>();
+        services.AddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
     }
 
     private static void RegisterOptions(this IServiceCollection services, IConfiguration configuration)

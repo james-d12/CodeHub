@@ -5,7 +5,7 @@ namespace CodeHub.Portal.Components.Layout;
 public partial class MainLayout
 {
     private bool _drawerOpen = true;
-    private bool _isDarkMode = false;
+    private bool _isDarkMode = true;
     private MudTheme? _theme = null;
 
     protected override void OnInitialized()

@@ -1,13 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using CodeHub.Shared.Models;
 
 namespace CodeHub.Platform.AzureDevOps.Models;
 
-public sealed record AzureDevOpsPullRequest
-{
-    public required int Id { get; init; }
-    public required string Title { get; init; }
-    public required string Description { get; init; }
-    public required ImmutableHashSet<string> Labels { get; init; }
-    public required ImmutableHashSet<string> Reviewers { get; init; }
-    public required AzureDevOpsPullRequestStatus Status { get; init; }
-}
+public sealed record AzureDevOpsPullRequest : PullRequest;

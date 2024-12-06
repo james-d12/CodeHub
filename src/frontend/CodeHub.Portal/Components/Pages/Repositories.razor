@@ -4,8 +4,6 @@
 <PageTitle>CodeHub: Repositories</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
-    <MudText Typo="Typo.h3" GutterBottom="true">Repositories</MudText>
-
     @if (_repositories == null)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
@@ -17,10 +15,12 @@
                      FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
                      RowsPerPage="20">
             <ToolBarContent>
-                <MudText Typo="Typo.h6">Repositories</MudText>
+                <MudText Typo="Typo.h4">
+                    <MudElement HtmlTag="b">Repositories</MudElement>
+                </MudText>
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Platform" Title="Platform" Filterable="false" Sortable="false">
+                <PropertyColumn Property="x => x.Platform" Title="Platform" Filterable="false" Sortable="true">
                     <CellTemplate>
                         <MudIcon Icon="@GetPlatformIcon(context.Item)"/>
                     </CellTemplate>
@@ -33,6 +33,11 @@
                 <PropertyColumn Property="x => x.DefaultBranch" Title="Default Branch">
                     <CellTemplate>
                         @context.Item?.DefaultBranch
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Project.Name" Title="Project">
+                    <CellTemplate>
+                        <MudLink Target="_blank" Href="@(context.Item?.Project.Url.ToString())">@context.Item?.Project.Name</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
             </Columns>

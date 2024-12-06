@@ -1,6 +1,6 @@
 ﻿namespace CodeHub.Shared.Models;
 
-public enum GitPlatform
+public enum RepositoryPlatform
 {
     AzureDevOps,
     GitHub,
@@ -13,5 +13,6 @@ public record Repository
     public required string Name { get; init; }
     public required Uri Url { get; init; }
     public required string DefaultBranch { get; init; }
-    public required GitPlatform Platform { get; init; }
+    public required Project Project { get; init; }
+    public required RepositoryPlatform Platform { get; init; }
 }

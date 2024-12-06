@@ -7,6 +7,7 @@ public sealed class ResourceHttpClient(HttpClient httpClient) : IResourceHttpCli
 {
     private const string RepositoryUrl = "repositories";
     private const string PipelineUrl = "pipelines";
+    private const string PullRequestUrl = "pull-requests";
 
     public async Task<List<Pipeline>> GetPipelines()
     {
@@ -16,7 +17,11 @@ public sealed class ResourceHttpClient(HttpClient httpClient) : IResourceHttpCli
 
     public async Task<List<Repository>> GetRepositories()
     {
-        var resources = await httpClient.GetFromJsonAsync<List<Repository>>(RepositoryUrl);
-        return resources ?? [];
+        return await httpClient.GetFromJsonAsync<List<Repository>>(RepositoryUrl) ?? [];
+    }
+
+    public async Task<List<PullRequest>> GetPullRequests()
+    {
+        return await httpClient.GetFromJsonAsync<List<PullRequest>>(PullRequestUrl) ?? [];
     }
 }
