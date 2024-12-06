@@ -89,7 +89,7 @@ internal static class AzureDevOpsMappingExtensions
             PullRequestStatus.All => Shared.Models.PullRequestStatus.Unknown,
             _ => Shared.Models.PullRequestStatus.Unknown
         };
-        
+
         return new AzureDevOpsPullRequest
         {
             Id = gitPullRequest.PullRequestId.ToString(),

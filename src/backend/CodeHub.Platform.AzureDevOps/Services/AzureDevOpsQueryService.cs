@@ -54,7 +54,7 @@ internal sealed class AzureDevOpsQueryService : IQueryService
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
             .ToList();
     }
-    
+
     public List<PullRequest> QueryPullRequests(PullRequestQueryRequest request)
     {
         var azureDevOpsPullRequests =
