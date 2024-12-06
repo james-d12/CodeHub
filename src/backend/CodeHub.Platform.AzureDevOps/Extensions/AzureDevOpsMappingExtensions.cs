@@ -52,7 +52,7 @@ internal static class AzureDevOpsMappingExtensions
             Id = gitRepository.Id.ToString(),
             Name = gitRepository.Name,
             Url = new Uri(gitRepository.WebUrl),
-            DefaultBranch = gitRepository.DefaultBranch,
+            DefaultBranch = gitRepository.DefaultBranch?.Replace("refs/heads/", string.Empty) ?? string.Empty,
             IsDisabled = gitRepository.IsDisabled ?? false,
             IsInMaintenance = gitRepository.IsInMaintenance ?? false,
             Platform = RepositoryPlatform.AzureDevOps,

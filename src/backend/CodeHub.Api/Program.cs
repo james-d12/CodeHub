@@ -1,6 +1,7 @@
 using CodeHub.Api.Jobs;
 using CodeHub.Platform.Azure.Extensions;
 using CodeHub.Platform.AzureDevOps.Extensions;
+using CodeHub.Platform.GitHub.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var applicationName = AppDomain.CurrentDomain.FriendlyName;
@@ -25,6 +26,7 @@ try
 
     builder.Services.RegisterAzure(builder.Configuration);
     builder.Services.RegisterAzureDevOps(builder.Configuration);
+    builder.Services.RegisterGitHub(builder.Configuration);
 
     builder.Services.AddCors(options =>
     {

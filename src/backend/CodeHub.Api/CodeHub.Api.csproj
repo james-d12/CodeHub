@@ -3,6 +3,7 @@
   <PropertyGroup>
     <IsPublishable>true</IsPublishable>
     <OutputType>Exe</OutputType>
+    <UserSecretsId>248812f8-0aba-4142-b6df-9ba4cfb253cd</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CodeHub.Platform.AzureDevOps\CodeHub.Platform.AzureDevOps.csproj"/>
     <ProjectReference Include="..\CodeHub.Platform.Azure\CodeHub.Platform.Azure.csproj"/>
+    <ProjectReference Include="..\CodeHub.Platform.GitHub\CodeHub.Platform.GitHub.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -22,10 +22,11 @@ internal sealed class AzureDevOpsQueryService : IQueryService
 
     public List<Pipeline> QueryPipelines(PipelineQueryRequest request)
     {
+        _logger.LogInformation("Querying pipelines from Azure DevOps");
         var azureDevOpsPipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
         var pipelines = azureDevOpsPipelines.ConvertAll(p => (Pipeline)p);
 
-        if (azureDevOpsPipelines.IsNullOrEmpty())
+        if (azureDevOpsPipelines.Count <= 0)
         {
             return [];
         }
@@ -39,12 +40,12 @@ internal sealed class AzureDevOpsQueryService : IQueryService
 
     public List<Repository> QueryRepositories(RepositoryQueryRequest request)
     {
-        _logger.LogInformation("Querying repositories");
+        _logger.LogInformation("Querying repositories from Azure DevOps");
         var azureDevOpsRepositories =
             _memoryCache.Get<List<AzureDevOpsRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
         var repositories = azureDevOpsRepositories.ConvertAll(p => (Repository)p);
 
-        if (repositories.IsNullOrEmpty())
+        if (repositories.Count <= 0)
         {
             return [];
         }
@@ -57,11 +58,12 @@ internal sealed class AzureDevOpsQueryService : IQueryService
 
     public List<PullRequest> QueryPullRequests(PullRequestQueryRequest request)
     {
+        _logger.LogInformation("Querying pull requests from Azure DevOps");
         var azureDevOpsPullRequests =
             _memoryCache.Get<List<AzureDevOpsPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
         var pullRequests = azureDevOpsPullRequests.ConvertAll(p => (PullRequest)p);
 
-        if (pullRequests.IsNullOrEmpty())
+        if (pullRequests.Count <= 0)
         {
             return [];
         }

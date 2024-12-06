@@ -20,7 +20,7 @@ public static class AzureExtensions
 
         services.RegisterCache();
         services.TryAddSingleton<IAzureService, AzureService>();
-        services.TryAddSingleton<IDiscoveryService, AzureDiscoveryService>();
+        services.AddSingleton<IDiscoveryService, AzureDiscoveryService>();
         return services;
     }
 
