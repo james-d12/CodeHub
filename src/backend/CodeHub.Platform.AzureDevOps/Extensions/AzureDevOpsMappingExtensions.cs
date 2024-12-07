@@ -100,9 +100,17 @@ internal static class AzureDevOpsMappingExtensions
             Reviewers = gitPullRequest.Reviewers?.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
             Status = status,
             Platform = PullRequestPlatform.AzureDevOps,
-            LastCommit = null,
+            LastCommit = new Commit
+            {
+                Id = gitPullRequest.LastMergeCommit?.CommitId ?? string.Empty,
+                Url = new Uri(gitPullRequest.LastMergeCommit?.Url ?? "https://dev.azure.com"),
+                Committer = gitPullRequest.LastMergeCommit?.Committer?.Name ?? string.Empty,
+                Comment = gitPullRequest.LastMergeCommit?.Comment ?? string.Empty,
+                ChangeCount = gitPullRequest.LastMergeCommit?.ChangeCounts?.Count ?? 0
+            },
             RepositoryName = gitPullRequest.Repository?.Name ?? string.Empty,
             RepositoryUrl = new Uri(gitPullRequest.Repository?.Url ?? string.Empty),
+            CreatedOnDate = DateOnly.FromDateTime(gitPullRequest.CreationDate),
         };
     }
 
