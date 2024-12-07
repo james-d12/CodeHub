@@ -45,6 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{21C839
 	ProjectSection(SolutionItems) = preProject
 		src\frontend\Directory.Build.props = src\frontend\Directory.Build.props
 		src\frontend\Frontend.Dockerfile = src\frontend\Frontend.Dockerfile
+		src\frontend\README.md = src\frontend\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.Azure", "src\backend\CodeHub.Platform.Azure\CodeHub.Platform.Azure.csproj", "{58014886-DBFC-4D3B-9EA3-03B8A228B601}"
