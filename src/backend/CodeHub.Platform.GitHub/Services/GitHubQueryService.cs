@@ -20,7 +20,20 @@ internal sealed class GitHubQueryService : IQueryService
 
     public List<Pipeline> QueryPipelines(PipelineQueryRequest request)
     {
-        return [];
+        _logger.LogInformation("Querying pipelines from GitHub");
+        var pipelines =
+            _memoryCache.Get<List<Pipeline>>(CacheConstants.PipelineCacheKey) ?? [];
+
+        if (pipelines.Count <= 0)
+        {
+            return [];
+        }
+
+        return new QueryBuilder<Pipeline>(pipelines)
+            .Where(request.Id, p => p.Id == request.Id)
+            .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
+            .Where(request.Platform, p => p.Platform == request.Platform)
+            .ToList();
     }
 
     public List<Repository> QueryRepositories(RepositoryQueryRequest request)
@@ -37,6 +50,7 @@ internal sealed class GitHubQueryService : IQueryService
         return new QueryBuilder<Repository>(repositories)
             .Where(request.Id, p => p.Id == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
+            .Where(request.Platform, p => p.Platform == request.Platform)
             .ToList();
     }
 

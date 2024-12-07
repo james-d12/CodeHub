@@ -13,6 +13,6 @@ public record Repository
     public required string Name { get; init; }
     public required Uri Url { get; init; }
     public required string DefaultBranch { get; init; }
-    public required Project Project { get; init; }
+    public required Owner Owner { get; init; }
     public required RepositoryPlatform Platform { get; init; }
 }

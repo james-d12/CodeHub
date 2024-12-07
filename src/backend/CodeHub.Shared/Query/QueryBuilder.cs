@@ -29,6 +29,16 @@ public sealed class QueryBuilder<T> : IQueryBuilder<T> where T : class
         return this;
     }
 
+    public QueryBuilder<T> Where<T1>(T1? value, Func<T, bool> predicate) where T1 : struct, Enum
+    {
+        if (value is not null)
+        {
+            _query = _query.AsEnumerable().Where(predicate).AsQueryable();
+        }
+
+        return this;
+    }
+
     public List<T> ToList()
     {
         return [.. _query];

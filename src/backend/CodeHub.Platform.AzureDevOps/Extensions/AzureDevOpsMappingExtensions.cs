@@ -21,13 +21,13 @@ internal static class AzureDevOpsMappingExtensions
             Url = new Uri(buildDefinitionReference.Url),
             Path = buildDefinitionReference.Path,
             Platform = PipelinePlatform.AzureDevOps,
-            Project = new Project
+            Owner = new Owner
             {
                 Id = buildDefinitionReference.Project.Id.ToString(),
                 Name = buildDefinitionReference.Project.Name,
                 Description = buildDefinitionReference.Project.Description,
                 Url = new Uri(buildDefinitionReference.Project.Url.Replace("_apis/", string.Empty)),
-                Platform = ProjectPlatform.AzureDevOps,
+                Platform = OwnerPlatform.AzureDevOps,
             }
         };
     }
@@ -56,13 +56,13 @@ internal static class AzureDevOpsMappingExtensions
             IsDisabled = gitRepository.IsDisabled ?? false,
             IsInMaintenance = gitRepository.IsInMaintenance ?? false,
             Platform = RepositoryPlatform.AzureDevOps,
-            Project = new Project
+            Owner = new Owner
             {
                 Id = gitRepository.ProjectReference.Id.ToString(),
                 Name = gitRepository.ProjectReference.Name,
                 Description = gitRepository.ProjectReference.Description,
                 Url = new Uri(gitRepository.ProjectReference.Url.Replace("_apis/", string.Empty)),
-                Platform = ProjectPlatform.AzureDevOps,
+                Platform = OwnerPlatform.AzureDevOps,
             }
         };
     }
