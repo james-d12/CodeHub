@@ -19,9 +19,18 @@ At the moment, CodeHub works by spinning up background tasks called 'Discovery S
 data from your connected third parties. It then presents these via a unified portal that you can use to browse them.
 It’s designed to be deployed and run locally, such as in a Kubernetes cluster or on a local machine.
 
+## What Does The Portal Look Like?
+
+At the moment it is in its infancy, so the UI is very basic, but below are some screenshots taken (07-12-2024) of its
+current state.
+
+![img.png](./docs/Portal-Screenshot-GitHub.png)
+
 ## Documentation
 
-For further information please see the READMEs for the [backend](https://github.com/james-d12/CodeHub/blob/main/src/backend/README.md) and [frontend](https://github.com/james-d12/CodeHub/blob/main/src/frontend/README.md) folders.
+For further information please see the READMEs for
+the [backend](https://github.com/james-d12/CodeHub/blob/main/src/backend/README.md)
+and [frontend](https://github.com/james-d12/CodeHub/blob/main/src/frontend/README.md) folders.
 
 ## Future Plans
 
