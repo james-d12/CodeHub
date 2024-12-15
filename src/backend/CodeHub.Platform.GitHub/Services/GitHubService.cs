@@ -1,6 +1,5 @@
 ﻿using CodeHub.Platform.GitHub.Extensions;
 using CodeHub.Shared.Models;
-using Repository = CodeHub.Shared.Models.Repository;
 
 namespace CodeHub.Platform.GitHub.Services;
 
@@ -25,6 +24,12 @@ internal sealed class GitHubService : IGitHubService
     {
         var pipelines = await _gitHubConnectionService.Client().Actions.Workflows.List(owner, repository);
         var jobs = await _gitHubConnectionService.Client().Actions.Workflows.Runs.List(owner, repository);
+
+        // group by workflows and workflow runs
+        var workflows = pipelines.Workflows.GroupJoin(jobs.WorkflowRuns,
+            workflow => workflow.Id,
+            workflowRuns => workflowRuns.WorkflowId,
+            (workflow, workflowRuns) => new { workflow, workflowRuns });
 
         return pipelines.Workflows.Select(w => w.MapToPipeline()).ToList();
     }
