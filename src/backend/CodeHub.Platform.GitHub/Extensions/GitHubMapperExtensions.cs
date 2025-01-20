@@ -1,4 +1,6 @@
 ﻿using CodeHub.Shared.Models;
+using Octokit;
+using Repository = CodeHub.Shared.Models.Repository;
 
 namespace CodeHub.Platform.GitHub.Extensions;
 
@@ -24,7 +26,7 @@ internal static class GitHubMapperExtensions
         };
     }
 
-    internal static Pipeline MapToPipeline(this Octokit.Workflow workflow)
+    internal static Pipeline MapToPipeline(this Workflow workflow)
     {
         return new Pipeline
         {
@@ -37,6 +39,25 @@ internal static class GitHubMapperExtensions
                 Name = string.Empty,
                 Description = string.Empty,
                 Url = new Uri(workflow.HtmlUrl),
+                Platform = OwnerPlatform.GitHub
+            },
+            Platform = PipelinePlatform.GitHub
+        };
+    }
+
+    internal static Pipeline MapToPipeline((Workflow workflow, WorkflowRun run) pipeline)
+    {
+        return new Pipeline
+        {
+            Id = pipeline.workflow.Id.ToString(),
+            Name = pipeline.workflow.Name,
+            Url = new Uri(pipeline.workflow.HtmlUrl),
+            Owner = new Owner
+            {
+                Id = string.Empty,
+                Name = string.Empty,
+                Description = string.Empty,
+                Url = new Uri(pipeline.workflow.HtmlUrl),
                 Platform = OwnerPlatform.GitHub
             },
             Platform = PipelinePlatform.GitHub

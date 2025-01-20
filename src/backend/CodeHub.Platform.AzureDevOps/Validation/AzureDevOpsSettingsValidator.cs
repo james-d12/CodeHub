@@ -19,9 +19,14 @@ internal static class AzureDevOpsSettingsValidator
         var personalAccessToken = settingsSection.GetValue<string>(nameof(AzureDevOpsSettings.PersonalAccessToken));
         var isEnabled = settingsSection.GetValue<bool>(nameof(AzureDevOpsSettings.IsEnabled));
 
-        if (string.IsNullOrEmpty(organization) || string.IsNullOrEmpty(personalAccessToken))
+        if (string.IsNullOrEmpty(organization))
         {
-            throw new InvalidOperationException("");
+            throw new InvalidOperationException("Organization configuration is missing");
+        }
+        
+        if (string.IsNullOrEmpty(personalAccessToken))
+        {
+            throw new InvalidOperationException("Personal Access Token configuration is missing");
         }
 
         return new AzureDevOpsSettings
