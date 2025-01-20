@@ -1,7 +1,6 @@
 # CodeHub
 
 [![CI Workflow](https://github.com/james-d12/CodeHub/actions/workflows/ci.yml/badge.svg)](https://github.com/james-d12/CodeHub/actions/workflows/ci.yml)
-[![Qodana](https://github.com/james-d12/CodeHub/actions/workflows/qodana_code_quality.yml/badge.svg)](https://github.com/james-d12/CodeHub/actions/workflows/qodana_code_quality.yml)
 [![Dependabot Updates](https://github.com/james-d12/CodeHub/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/james-d12/CodeHub/actions/workflows/dependabot/dependabot-updates)
 
 A service catalog hub for viewing all of your software infrastructure from various third party providers all in one
