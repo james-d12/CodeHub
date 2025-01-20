@@ -23,7 +23,7 @@ internal static class AzureDevOpsSettingsValidator
         {
             throw new InvalidOperationException("Organization configuration is missing");
         }
-        
+
         if (string.IsNullOrEmpty(personalAccessToken))
         {
             throw new InvalidOperationException("Personal Access Token configuration is missing");
