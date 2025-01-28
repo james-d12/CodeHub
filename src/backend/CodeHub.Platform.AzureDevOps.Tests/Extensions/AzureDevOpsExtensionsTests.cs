@@ -56,16 +56,31 @@ public sealed class AzureDevOpsExtensionsTests
         Assert.Equal(serviceCountBefore, serviceCollection.Count);
     }
 
-
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public void RegisterAzureDevOpsServices_WhenEnabledButCalledWithMissingSettings_ThrowsException(bool enabled)
+    [Fact]
+    public void RegisterAzureDevOpsServices_WhenDisabledWithValidSettingsButNotWholeSection_DoesNotRegisterServices()
     {
         // Arrange
         var serviceCollection = new ServiceCollection();
         var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(GetInvalidAzureSettings(enabled))
+            .AddInMemoryCollection(GetValidWithoutOtherAzureDevOpsConfiguration(false))
+            .Build();
+
+        // Act
+        var serviceCountBefore = serviceCollection.Count;
+        serviceCollection.RegisterAzureDevOps(configuration);
+
+        // Assert
+        Assert.Equal(serviceCountBefore, serviceCollection.Count);
+    }
+
+
+    [Fact]
+    public void RegisterAzureDevOpsServices_WhenEnabledButCalledWithMissingSettings_ThrowsException()
+    {
+        // Arrange
+        var serviceCollection = new ServiceCollection();
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(GetInvalidAzureSettings(true))
             .Build();
 
         // Act + Assert
@@ -78,6 +93,14 @@ public sealed class AzureDevOpsExtensionsTests
         {
             { "AzureDevOpsSettings:Organization", "TestOrganization" },
             { "AzureDevOpsSettings:PersonalAccessToken", "TestPersonalAccessToken" },
+            { "AzureDevOpsSettings:IsEnabled", enabled.ToString() }
+        };
+    }
+
+    private static Dictionary<string, string?> GetValidWithoutOtherAzureDevOpsConfiguration(bool enabled)
+    {
+        return new Dictionary<string, string?>
+        {
             { "AzureDevOpsSettings:IsEnabled", enabled.ToString() }
         };
     }

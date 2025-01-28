@@ -8,16 +8,22 @@ internal static class AzureDevOpsSettingsValidator
     internal static AzureDevOpsSettings GetValidSettings(IConfiguration configuration)
     {
         var settingsSection = configuration.GetSection(nameof(AzureDevOpsSettings));
-        var isEnabledSection = settingsSection.GetSection(nameof(AzureDevOpsSettings.IsEnabled));
 
-        if (!settingsSection.Exists() || !isEnabledSection.Exists())
+        if (!settingsSection.Exists())
         {
-            throw new InvalidOperationException("");
+            throw new InvalidOperationException("Azure DevOps settings section is missing.");
+        }
+
+        var isEnabledSection = settingsSection.GetSection(nameof(AzureDevOpsSettings.IsEnabled));
+        var isEnabled = settingsSection.GetValue<bool>(nameof(AzureDevOpsSettings.IsEnabled));
+
+        if (!isEnabledSection.Exists() || !isEnabled)
+        {
+            return AzureDevOpsSettings.CreateDisabled();
         }
 
         var organization = settingsSection.GetValue<string>(nameof(AzureDevOpsSettings.Organization));
         var personalAccessToken = settingsSection.GetValue<string>(nameof(AzureDevOpsSettings.PersonalAccessToken));
-        var isEnabled = settingsSection.GetValue<bool>(nameof(AzureDevOpsSettings.IsEnabled));
 
         if (string.IsNullOrEmpty(organization))
         {
