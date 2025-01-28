@@ -112,7 +112,6 @@ internal sealed class AzureService : IAzureService
         return resources;
     }
 
-
     private async Task<SubscriptionResource?> GetSubscriptionResourceAsync(string id,
         CancellationToken cancellationToken)
     {
