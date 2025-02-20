@@ -16,6 +16,11 @@ public static class ServiceCollectionExtensions
             throw new ArgumentException("CodeHubBackendBaseUrl cannot be null or empty.");
         }
 
+        if (!Uri.IsWellFormedUriString(codeHubBackendBaseUrl, UriKind.Absolute))
+        {
+            throw new ArgumentException("CodeHubBackendBaseUrl is not a valid URL.");
+        }
+
         services.AddHttpClient<IAzureDevOpsHttpClient, AzureDevOpsHttpClient>(client =>
         {
             client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/azure-devops");

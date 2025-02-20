@@ -3,6 +3,9 @@ services:
   backend:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - AzureSettings__IsEnabled=false
+      - AzureDevOpsSettings__IsEnabled=false
+      - GitHubSettings__IsEnabled=false
     build:
       context: ./src/backend
       dockerfile: Backend.Dockerfile
@@ -11,6 +14,7 @@ services:
   frontend:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - CodeHubBackendBaseUrl="http://localhost:8080"
     build:
       context: ./src/frontend
       additional_contexts:

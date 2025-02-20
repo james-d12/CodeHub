@@ -1,5 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
+    <PropertyGroup>
+      <UserSecretsId>6f4253a7-27d8-4923-8cfa-291a93425f24</UserSecretsId>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="MudBlazor" Version="8.2.0" />
     </ItemGroup>
