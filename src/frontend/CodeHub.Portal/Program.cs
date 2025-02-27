@@ -17,6 +17,11 @@ var logger = loggerFactory.CreateLogger<Program>();
 try
 {
     logger.LogInformation("Starting up: {ApplicationName}", applicationName);
+
+    builder.Configuration
+        .AddJsonFile("appsettings.json", false, false)
+        .AddEnvironmentVariables();
+
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
 

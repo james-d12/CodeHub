@@ -6,6 +6,7 @@ services:
       - AzureSettings__IsEnabled=false
       - AzureDevOpsSettings__IsEnabled=false
       - GitHubSettings__IsEnabled=false
+      - CorsSettings__AllowedFrontend=http://localhost:5231
     build:
       context: ./src/backend
       dockerfile: Backend.Dockerfile
