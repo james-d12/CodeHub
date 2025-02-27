@@ -36,8 +36,8 @@ public static class GitHubExtensions
     {
         services.TryAddSingleton<IGitHubConnectionService, GitHubConnectionService>();
         services.TryAddSingleton<IGitHubService, GitHubService>();
+        services.AddScoped<IQueryService, GitHubQueryService>();
         services.AddSingleton<IDiscoveryService, GitHubDiscoveryService>();
-        services.AddTransient<IQueryService, GitHubQueryService>();
     }
 
     private static void RegisterOptions(this IServiceCollection services, IConfiguration configuration)

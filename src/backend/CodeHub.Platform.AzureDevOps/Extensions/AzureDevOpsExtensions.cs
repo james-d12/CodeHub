@@ -36,7 +36,7 @@ public static class AzureDevOpsExtensions
     {
         services.TryAddSingleton<IAzureDevOpsService, AzureDevOpsService>();
         services.TryAddSingleton<IAzureDevOpsConnectionService, AzureDevOpsConnectionService>();
-        services.AddTransient<IQueryService, AzureDevOpsQueryService>();
+        services.AddScoped<IQueryService, AzureDevOpsQueryService>();
         services.AddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
     }
 
