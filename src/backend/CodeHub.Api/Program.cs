@@ -1,7 +1,10 @@
+using System.Text.Json;
 using CodeHub.Api.Jobs;
+using CodeHub.Api.Settings;
 using CodeHub.Platform.Azure.Extensions;
 using CodeHub.Platform.AzureDevOps.Extensions;
 using CodeHub.Platform.GitHub.Extensions;
+using Microsoft.VisualStudio.Services.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 var applicationName = AppDomain.CurrentDomain.FriendlyName;
@@ -17,7 +20,9 @@ var logger = loggerFactory.CreateLogger<Program>();
 
 try
 {
+    logger.LogDebug("Configuration: {Config}", JsonSerializer.Serialize(builder.Configuration.GetSection("CorsSettings").Value));
     logger.LogInformation("Starting up: {ApplicationName}", applicationName);
+
     builder.Services.AddLogging();
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
@@ -28,16 +33,25 @@ try
     builder.Services.RegisterAzureDevOps(builder.Configuration);
     builder.Services.RegisterGitHub(builder.Configuration);
 
+    var corsSettings = builder.Configuration.GetSection(nameof(CorsSettings)).Get<CorsSettings>();
+
     builder.Services.AddCors(options =>
     {
-        options.AddPolicy(name: "AllowFrontendOrigin",
-            policy =>
+        logger.LogInformation("Enabling Cors.");
+
+        corsSettings?.Policies
+            .ForEach(policy =>
             {
-                policy
-                    .WithOrigins("http://localhost:5231")
-                    .SetIsOriginAllowed(_ => true)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
+                logger.LogInformation("Adding Cors policy: {Name} {Origin}", policy.Key, policy.Value);
+
+                options.AddPolicy(name: policy.Key, corsPolicy =>
+                {
+                    corsPolicy
+                        .WithOrigins(policy.Value)
+                        .SetIsOriginAllowed(_ => true)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
             });
     });
 

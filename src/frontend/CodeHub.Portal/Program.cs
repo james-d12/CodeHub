@@ -17,6 +17,7 @@ var logger = loggerFactory.CreateLogger<Program>();
 try
 {
     logger.LogInformation("Starting up: {ApplicationName}", applicationName);
+
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
 
