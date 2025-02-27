@@ -1,21 +1,18 @@
 name: codehub
 services:
   backend:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - AzureSettings__IsEnabled=false
-      - AzureDevOpsSettings__IsEnabled=false
-      - GitHubSettings__IsEnabled=false
-      - CorsSettings__AllowedFrontend=http://localhost:5231
     build:
       context: ./src/backend
       dockerfile: Backend.Dockerfile
     ports:
       - "8080:8080"
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./src/backend
+          target: /src/backend
+  
   frontend:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - CodeHubBackendBaseUrl="http://localhost:8080"
     build:
       context: ./src/frontend
       additional_contexts:
@@ -25,3 +22,8 @@ services:
       - backend
     ports:
       - "8090:8080"
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./src/frontend
+          target: /src/frontend

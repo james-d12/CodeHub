@@ -20,7 +20,7 @@ var logger = loggerFactory.CreateLogger<Program>();
 
 try
 {
-    logger.LogDebug("Configuration: {Config}", JsonSerializer.Serialize(builder.Configuration));
+    logger.LogDebug("Configuration: {Config}", JsonSerializer.Serialize(builder.Configuration.GetSection("CorsSettings").Value));
     logger.LogInformation("Starting up: {ApplicationName}", applicationName);
 
     builder.Services.AddLogging();
