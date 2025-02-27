@@ -14,6 +14,7 @@ Below is the current list of platforms that are supported:
 - Azure
 - Azure DevOps
 - GitHub
+- GitLab
 
 ### Structure
 
@@ -31,16 +32,58 @@ platform:
 Each platform can be configured and enabled through the ```appsettings.json``` file. Each platform has its own required
 way of of authenticating. For example, with DevOps you can use a Personal Access Token.
 
+#### Azure
+
+For Azure you just need to tell it to be enabled. It uses the ```DefaultArmCredential``` to authenticate.
+See more information about what sources it gets authentication information from
+here: https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
+
+```json
+{
+  "AzureSettings": {
+    "IsEnabled": true
+  }
+}
+```
+
 #### Azure DevOps
 
-For Azure DevOps below is an example. This example will enable the Azure DevOps platform and read the provided 
-'Organization' and 'PersonalAccessToken' fields. 
+For Azure DevOps below is an example. This example will enable the Azure DevOps platform and read the provided
+'Organization' and 'PersonalAccessToken' fields.
 
 ```json
 {
   "AzureDevOpsSettings": {
     "Organization": "<INSERT YOUR ORGANIZATION NAME HERE>",
     "PersonalAccessToken": "<INSERT YOUR PERSONAL ACCESS TOKEN HERE>",
+    "IsEnabled": true
+  }
+}
+```
+
+#### GitHub
+
+For GitHub you need to provide the AgentName (Name used in the Header for identifying request) and the Token.
+
+```json
+{
+  "GitHubSettings": {
+    "AgentName": "<INSERT YOUR AGENT NAME HERE>",
+    "Token": "<INSERT YOUR TOKEN HERE>",
+    "IsEnabled": true
+  }
+}
+```
+
+#### GitLab
+
+For GitLab you need to provide the Host Url and the Token.
+
+```json
+{
+  "GitLabSettings": {
+    "HostUrl": "<INSERT YOUR HOST URL HERE>",
+    "Token": "<INSERT YOUR TOKEN HERE>",
     "IsEnabled": true
   }
 }
