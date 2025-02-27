@@ -13,7 +13,7 @@ internal static class AzureMappingExtensions
     {
         return new AzureResource
         {
-            Id = genericResourceData.Id.Name,
+            Id = new CloudResourceId(genericResourceData.Id.Name),
             Platform = CloudPlatform.Azure,
             Name = genericResourceData.Name,
             Description = string.Empty,

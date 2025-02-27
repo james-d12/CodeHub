@@ -18,9 +18,11 @@ public enum PullRequestStatus
     Unknown
 }
 
+public readonly record struct PullRequestId(string Value);
+
 public record PullRequest
 {
-    public required string Id { get; init; }
+    public required PullRequestId Id { get; init; }
     public required string Name { get; init; }
     public required string? Description { get; init; }
     public required Uri Url { get; init; }

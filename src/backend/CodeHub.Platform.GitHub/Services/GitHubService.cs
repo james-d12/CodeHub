@@ -25,7 +25,6 @@ internal sealed class GitHubService : IGitHubService
         var pipelines = await _gitHubConnectionService.Client().Actions.Workflows.List(owner, repository);
         var jobs = await _gitHubConnectionService.Client().Actions.Workflows.Runs.List(owner, repository);
 
-        // group by workflows and workflow runs
         var workflows = pipelines.Workflows.GroupJoin(jobs.WorkflowRuns,
             workflow => workflow.Id,
             workflowRuns => workflowRuns.WorkflowId,

@@ -9,9 +9,11 @@ public enum PipelinePlatform
     TravisCi
 }
 
+public readonly record struct PipelineId(string Value);
+
 public record Pipeline
 {
-    public required string Id { get; init; }
+    public required PipelineId Id { get; init; }
     public required string Name { get; init; }
     public required Uri Url { get; init; }
     public required Owner Owner { get; init; }

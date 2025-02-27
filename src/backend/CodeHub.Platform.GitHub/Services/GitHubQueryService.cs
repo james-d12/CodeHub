@@ -30,7 +30,7 @@ internal sealed class GitHubQueryService : IQueryService
         }
 
         return new QueryBuilder<Pipeline>(pipelines)
-            .Where(request.Id, p => p.Id == request.Id)
+            .Where(request.Id, p => p.Id.Value == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
             .Where(request.Platform, p => p.Platform == request.Platform)
             .ToList();
@@ -48,7 +48,7 @@ internal sealed class GitHubQueryService : IQueryService
         }
 
         return new QueryBuilder<Repository>(repositories)
-            .Where(request.Id, p => p.Id == request.Id)
+            .Where(request.Id, p => p.Id.Value == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
             .Where(request.Platform, p => p.Platform == request.Platform)
             .ToList();

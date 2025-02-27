@@ -10,13 +10,13 @@ internal static class GitHubMapperExtensions
     {
         return new Repository
         {
-            Id = repository.Id.ToString(),
+            Id = new RepositoryId(repository.Id.ToString()),
             Name = repository.Name,
             Url = new Uri(repository.HtmlUrl),
             DefaultBranch = repository.DefaultBranch,
             Owner = new Owner
             {
-                Id = repository.Owner.Id.ToString(),
+                Id = new OwnerId(repository.Owner.Id.ToString()),
                 Name = repository.Owner.Login,
                 Description = repository.Owner.Bio,
                 Url = new Uri(repository.Owner.Url),
@@ -30,12 +30,12 @@ internal static class GitHubMapperExtensions
     {
         return new Pipeline
         {
-            Id = workflow.Id.ToString(),
+            Id = new PipelineId(workflow.Id.ToString()),
             Name = workflow.Name,
             Url = new Uri(workflow.HtmlUrl),
             Owner = new Owner
             {
-                Id = string.Empty,
+                Id = new OwnerId(string.Empty),
                 Name = string.Empty,
                 Description = string.Empty,
                 Url = new Uri(workflow.HtmlUrl),
@@ -49,12 +49,12 @@ internal static class GitHubMapperExtensions
     {
         return new Pipeline
         {
-            Id = pipeline.workflow.Id.ToString(),
+            Id = new PipelineId(pipeline.workflow.Id.ToString()),
             Name = pipeline.workflow.Name,
             Url = new Uri(pipeline.workflow.HtmlUrl),
             Owner = new Owner
             {
-                Id = string.Empty,
+                Id = new OwnerId(string.Empty),
                 Name = string.Empty,
                 Description = string.Empty,
                 Url = new Uri(pipeline.workflow.HtmlUrl),

@@ -7,9 +7,11 @@ public enum RepositoryPlatform
     GitLab
 }
 
+public readonly record struct RepositoryId(string Value);
+
 public record Repository
 {
-    public required string Id { get; init; }
+    public required RepositoryId Id { get; init; }
     public required string Name { get; init; }
     public required Uri Url { get; init; }
     public required string DefaultBranch { get; init; }

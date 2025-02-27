@@ -16,14 +16,14 @@ internal static class AzureDevOpsMappingExtensions
     {
         return new AzureDevOpsPipeline
         {
-            Id = buildDefinitionReference.Id.ToString(),
+            Id = new PipelineId(buildDefinitionReference.Id.ToString()),
             Name = buildDefinitionReference.Name,
             Url = new Uri(buildDefinitionReference.Url),
             Path = buildDefinitionReference.Path,
             Platform = PipelinePlatform.AzureDevOps,
             Owner = new Owner
             {
-                Id = buildDefinitionReference.Project.Id.ToString(),
+                Id = new OwnerId(buildDefinitionReference.Project.Id.ToString()),
                 Name = buildDefinitionReference.Project.Name,
                 Description = buildDefinitionReference.Project.Description,
                 Url = new Uri(buildDefinitionReference.Project.Url.Replace("_apis/", string.Empty)),
@@ -49,7 +49,7 @@ internal static class AzureDevOpsMappingExtensions
     {
         return new AzureDevOpsRepository
         {
-            Id = gitRepository.Id.ToString(),
+            Id = new RepositoryId(gitRepository.Id.ToString()),
             Name = gitRepository.Name,
             Url = new Uri(gitRepository.WebUrl),
             DefaultBranch = gitRepository.DefaultBranch?.Replace("refs/heads/", string.Empty) ?? string.Empty,
@@ -58,7 +58,7 @@ internal static class AzureDevOpsMappingExtensions
             Platform = RepositoryPlatform.AzureDevOps,
             Owner = new Owner
             {
-                Id = gitRepository.ProjectReference.Id.ToString(),
+                Id = new OwnerId(gitRepository.ProjectReference.Id.ToString()),
                 Name = gitRepository.ProjectReference.Name,
                 Description = gitRepository.ProjectReference.Description,
                 Url = new Uri(gitRepository.ProjectReference.Url.Replace("_apis/", string.Empty)),
@@ -92,7 +92,7 @@ internal static class AzureDevOpsMappingExtensions
 
         return new AzureDevOpsPullRequest
         {
-            Id = gitPullRequest.PullRequestId.ToString(),
+            Id = new PullRequestId(gitPullRequest.PullRequestId.ToString()),
             Name = gitPullRequest.Title,
             Description = gitPullRequest.Description,
             Url = new Uri(gitPullRequest.Url),
@@ -102,7 +102,7 @@ internal static class AzureDevOpsMappingExtensions
             Platform = PullRequestPlatform.AzureDevOps,
             LastCommit = new Commit
             {
-                Id = gitPullRequest.LastMergeCommit?.CommitId ?? string.Empty,
+                Id = new CommitId(gitPullRequest.LastMergeCommit?.CommitId ?? string.Empty),
                 Url = new Uri(gitPullRequest.LastMergeCommit?.Url ?? "https://dev.azure.com"),
                 Committer = gitPullRequest.LastMergeCommit?.Committer?.Name ?? string.Empty,
                 Comment = gitPullRequest.LastMergeCommit?.Comment ?? string.Empty,
