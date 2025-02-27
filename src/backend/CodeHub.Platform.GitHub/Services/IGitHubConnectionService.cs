@@ -4,5 +4,5 @@ namespace CodeHub.Platform.GitHub.Services;
 
 internal interface IGitHubConnectionService
 {
-    GitHubClient Client();
+    GitHubClient Client { get; }
 }
