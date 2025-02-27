@@ -23,10 +23,6 @@ try
     logger.LogDebug("Configuration: {Config}", JsonSerializer.Serialize(builder.Configuration));
     logger.LogInformation("Starting up: {ApplicationName}", applicationName);
 
-    builder.Configuration
-        .AddJsonFile("appsettings.json", false, false)
-        .AddEnvironmentVariables();
-
     builder.Services.AddLogging();
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
