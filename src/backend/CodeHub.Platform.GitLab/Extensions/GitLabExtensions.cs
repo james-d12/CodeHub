@@ -1,6 +1,7 @@
 using CodeHub.Platform.GitLab.Models;
 using CodeHub.Platform.GitLab.Services;
 using CodeHub.Platform.GitLab.Validator;
+using CodeHub.Shared.Query;
 using CodeHub.Shared.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +36,7 @@ public static class GitLabExtensions
     {
         services.TryAddSingleton<IGitLabConnectionService, GitLabConnectionService>();
         services.TryAddSingleton<IGitLabService, GitLabService>();
+        services.AddScoped<IQueryService, GitLabQueryService>();
         services.AddSingleton<IDiscoveryService, GitLabDiscoveryService>();
     }
 

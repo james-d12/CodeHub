@@ -4,6 +4,7 @@ using CodeHub.Api.Settings;
 using CodeHub.Platform.Azure.Extensions;
 using CodeHub.Platform.AzureDevOps.Extensions;
 using CodeHub.Platform.GitHub.Extensions;
+using CodeHub.Platform.GitLab.Extensions;
 using Microsoft.VisualStudio.Services.Common;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,7 +33,8 @@ try
     builder.Services.RegisterAzure(builder.Configuration);
     builder.Services.RegisterAzureDevOps(builder.Configuration);
     builder.Services.RegisterGitHub(builder.Configuration);
-
+    builder.Services.RegisterGitLab(builder.Configuration);
+    
     var corsSettings = builder.Configuration.GetSection(nameof(CorsSettings)).Get<CorsSettings>();
 
     builder.Services.AddCors(options =>

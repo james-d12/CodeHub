@@ -1,6 +1,11 @@
+using CodeHub.Platform.GitLab.Models;
+using NGitLab.Models;
+
 namespace CodeHub.Platform.GitLab.Services;
 
 public interface IGitLabService
 {
-    void GetProjects();
+    List<Project> GetProjects();
+    List<GitLabPullRequest> GetPullRequests();
+    List<GitLabPipeline> GetPipelines(Project project);
 }

@@ -23,7 +23,7 @@ internal sealed class AzureDevOpsQueryService : IQueryService
     {
         _logger.LogInformation("Querying pipelines from Azure DevOps");
         var azureDevOpsPipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
-        var pipelines = azureDevOpsPipelines.ConvertAll(p => (Pipeline)p);
+        var pipelines = azureDevOpsPipelines.ConvertAll<Pipeline>(p => p);
 
         if (azureDevOpsPipelines.Count <= 0)
         {
@@ -43,7 +43,7 @@ internal sealed class AzureDevOpsQueryService : IQueryService
         _logger.LogInformation("Querying repositories from Azure DevOps");
         var azureDevOpsRepositories =
             _memoryCache.Get<List<AzureDevOpsRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
-        var repositories = azureDevOpsRepositories.ConvertAll(p => (Repository)p);
+        var repositories = azureDevOpsRepositories.ConvertAll<Repository>(p => p);
 
         if (repositories.Count <= 0)
         {
@@ -62,7 +62,7 @@ internal sealed class AzureDevOpsQueryService : IQueryService
         _logger.LogInformation("Querying pull requests from Azure DevOps");
         var azureDevOpsPullRequests =
             _memoryCache.Get<List<AzureDevOpsPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
-        var pullRequests = azureDevOpsPullRequests.ConvertAll(p => (PullRequest)p);
+        var pullRequests = azureDevOpsPullRequests.ConvertAll<PullRequest>(p => p);
 
         if (pullRequests.Count <= 0)
         {
