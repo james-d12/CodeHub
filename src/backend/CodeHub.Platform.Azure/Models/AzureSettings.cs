@@ -1,14 +1,7 @@
-﻿namespace CodeHub.Platform.Azure.Models;
+﻿using CodeHub.Shared.Models;
 
-internal sealed record AzureSettings
+namespace CodeHub.Platform.Azure.Models;
+
+internal sealed class AzureSettings : Settings
 {
-    public required bool IsEnabled { get; init; }
-
-    public static AzureSettings CreateDisabled()
-    {
-        return new AzureSettings
-        {
-            IsEnabled = false
-        };
-    }
 }

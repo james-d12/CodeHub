@@ -1,18 +1,9 @@
+using CodeHub.Shared.Models;
+
 namespace CodeHub.Platform.GitLab.Models;
 
-internal sealed record GitLabSettings
+internal sealed class GitLabSettings : Settings
 {
-    public required string HostUrl { get; init; }
-    public required string Token { get; init; }
-    public required bool IsEnabled { get; init; }
-
-    public static GitLabSettings CreateDisabled()
-    {
-        return new GitLabSettings
-        {
-            IsEnabled = false,
-            HostUrl = string.Empty,
-            Token = string.Empty
-        };
-    }
+    public string HostUrl { get; init; } = string.Empty;
+    public string Token { get; init; } = string.Empty;
 }

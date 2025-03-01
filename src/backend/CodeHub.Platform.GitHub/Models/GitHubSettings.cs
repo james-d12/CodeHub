@@ -1,18 +1,9 @@
-﻿namespace CodeHub.Platform.GitHub.Models;
+﻿using CodeHub.Shared.Models;
 
-internal sealed record GitHubSettings
+namespace CodeHub.Platform.GitHub.Models;
+
+internal sealed class GitHubSettings : Settings
 {
-    public required string AgentName { get; init; }
-    public required string Token { get; init; }
-    public required bool IsEnabled { get; init; }
-
-    public static GitHubSettings CreateDisabled()
-    {
-        return new GitHubSettings
-        {
-            IsEnabled = false,
-            AgentName = string.Empty,
-            Token = string.Empty
-        };
-    }
+    public string AgentName { get; init; } = string.Empty;
+    public string Token { get; init; } = string.Empty;
 }
