@@ -1,6 +1,31 @@
-@CodeHub.Api_HostAddress = http://localhost:5104
-
-GET {{CodeHub.Api_HostAddress}}/weatherforecast/
+### Get list of all pipelines
+GET {{BaseAddress}}/resources/pipelines/
 Accept: application/json
+
+> {%
+    client.test('Can Get List Of Resource Pipelines', function () {
+        client.assert(response.status == 200)
+    })
+%}
+
+### Get list of all pull requests
+GET {{BaseAddress}}/resources/pull-requests/
+Accept: application/json
+
+> {%
+    client.test('Can Get List Of Resource Pull Requests', function () {
+        client.assert(response.status == 200)
+    })
+%}
+
+### Get list of all repositories
+GET {{BaseAddress}}/resources/repositories/
+Accept: application/json
+
+> {%
+    client.test('Can Get List Of Resource Repositories', function () {
+        client.assert(response.status == 200)
+    })
+%}
 
 ###

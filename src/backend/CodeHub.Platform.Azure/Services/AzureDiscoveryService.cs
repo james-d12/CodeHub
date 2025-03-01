@@ -3,36 +3,32 @@ using Microsoft.Extensions.Logging;
 
 namespace CodeHub.Platform.Azure.Services;
 
-internal sealed class AzureDiscoveryService : IDiscoveryService
+internal sealed class AzureDiscoveryService : DiscoveryService
 {
     private readonly ILogger<AzureDiscoveryService> _logger;
     private readonly IAzureService _azureService;
 
-    public AzureDiscoveryService(ILogger<AzureDiscoveryService> logger, IAzureService azureService)
+    public AzureDiscoveryService(
+        ILogger<AzureDiscoveryService> logger,
+        IAzureService azureService) : base(logger)
     {
         _logger = logger;
         _azureService = azureService;
     }
 
-    public async Task DiscoverAsync(CancellationToken cancellationToken)
+    public override string Platform => "Azure";
+
+    protected override async Task StartAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Discovering Azure resources...");
-        try
-        {
-            _logger.LogInformation("Discovering Azure Tenant resources...");
-            await _azureService.GetTenantsAsync(cancellationToken);
+        _logger.LogInformation("Discovering Azure Tenant resources...");
+        await _azureService.GetTenantsAsync(cancellationToken);
 
-            _logger.LogInformation("Discovering Azure Subscription resources.");
-            var subscriptions = await _azureService.GetSubscriptionsAsync(cancellationToken);
+        _logger.LogInformation("Discovering Azure Subscription resources.");
+        var subscriptions = await _azureService.GetSubscriptionsAsync(cancellationToken);
 
-            foreach (var subscription in subscriptions)
-            {
-                await _azureService.GetSubscriptionResourcesAsync(subscription.Id, cancellationToken);
-            }
-        }
-        catch (Exception exception)
+        foreach (var subscription in subscriptions)
         {
-            _logger.LogError(exception, "Error occurred whilst trying to discover Azure resources.");
+            await _azureService.GetSubscriptionResourcesAsync(subscription.Id, cancellationToken);
         }
     }
 }

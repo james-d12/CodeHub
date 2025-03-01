@@ -21,7 +21,7 @@ public sealed class DiscoveryHostedService : BackgroundService
 
         foreach (var discoveryService in _discoveryServices)
         {
-            await discoveryService.DiscoverAsync(stoppingToken);
+            await discoveryService.DiscoveryAsync(stoppingToken);
         }
 
         _logger.LogDebug("Worker finished running at: {time}", DateTimeOffset.Now);
