@@ -1,4 +1,5 @@
 using CodeHub.Platform.GitLab.Constants;
+using CodeHub.Platform.GitLab.Extensions;
 using CodeHub.Platform.GitLab.Models;
 using CodeHub.Shared.Services;
 using Microsoft.Extensions.Caching.Memory;
@@ -27,6 +28,8 @@ internal sealed class GitLabDiscoveryService : IDiscoveryService
         try
         {
             var projects = _gitLabService.GetProjects();
+
+            var repositories = projects.Select(p => p.MapToGitLabRepository()).ToList();
             var pullRequests = _gitLabService.GetPullRequests();
 
             var pipelines = new List<GitLabPipeline>();
@@ -38,6 +41,7 @@ internal sealed class GitLabDiscoveryService : IDiscoveryService
 
             _memoryCache.Set(CacheConstants.PipelineCacheKey, pipelines);
             _memoryCache.Set(CacheConstants.PullRequestCacheKey, pullRequests);
+            _memoryCache.Set(CacheConstants.RepositoryCacheKey, repositories);
 
             return Task.FromResult(true);
         }

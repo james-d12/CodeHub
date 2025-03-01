@@ -27,7 +27,7 @@ internal sealed class GitLabQueryService : IQueryService
         var gitLabPipelines = _memoryCache.Get<List<GitLabPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
         var pipelines = gitLabPipelines.ConvertAll<Pipeline>(p => p);
 
-        if (gitLabPipelines.Count <= 0)
+        if (pipelines.Count <= 0)
         {
             return [];
         }
@@ -42,7 +42,21 @@ internal sealed class GitLabQueryService : IQueryService
 
     public List<Repository> QueryRepositories(RepositoryQueryRequest request)
     {
-        throw new NotImplementedException();
+        _logger.LogInformation("Querying repositories from GitLab");
+        var gitLabRepositories =
+            _memoryCache.Get<List<GitLabRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
+        var repositories = gitLabRepositories.ConvertAll<Repository>(p => p);
+
+        if (repositories.Count <= 0)
+        {
+            return [];
+        }
+
+        return new QueryBuilder<Repository>(repositories)
+            .Where(request.Id, p => p.Id.Value == request.Id)
+            .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
+            .Where(request.Platform, p => p.Platform == request.Platform)
+            .ToList();
     }
 
     public List<PullRequest> QueryPullRequests(PullRequestQueryRequest request)

@@ -45,4 +45,24 @@ internal static class GitLabMapperExtensions
             Platform = PipelinePlatform.GitLab
         };
     }
+
+    internal static GitLabRepository MapToGitLabRepository(this Project project)
+    {
+        return new GitLabRepository
+        {
+            Id = new RepositoryId(project.Id.ToString()),
+            Name = project.Name,
+            Url = new Uri(project.WebUrl),
+            DefaultBranch = project.DefaultBranch,
+            Owner = new Owner
+            {
+                Id = new OwnerId(project.Owner.Id.ToString()),
+                Name = project.Owner.Name,
+                Description = project.Owner.Bio,
+                Url = new Uri(project.Owner.WebURL),
+                Platform = OwnerPlatform.AzureDevOps
+            },
+            Platform = RepositoryPlatform.GitLab
+        };
+    }
 }
