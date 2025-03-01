@@ -2,5 +2,6 @@
 
 public interface IDiscoveryService
 {
-    Task DiscoverAsync(CancellationToken cancellationToken);
+    string Platform { get; }
+    Task DiscoveryAsync(CancellationToken cancellationToken);
 }

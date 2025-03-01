@@ -7,48 +7,40 @@ using Microsoft.Extensions.Logging;
 
 namespace CodeHub.Platform.GitLab.Services;
 
-internal sealed class GitLabDiscoveryService : IDiscoveryService
+internal sealed class GitLabDiscoveryService : DiscoveryService
 {
-    private readonly ILogger<GitLabDiscoveryService> _logger;
     private readonly IGitLabService _gitLabService;
     private readonly IMemoryCache _memoryCache;
 
     public GitLabDiscoveryService(
         ILogger<GitLabDiscoveryService> logger,
         IGitLabService gitLabService,
-        IMemoryCache memoryCache)
+        IMemoryCache memoryCache) : base(logger)
     {
-        _logger = logger;
         _gitLabService = gitLabService;
         _memoryCache = memoryCache;
     }
 
-    public Task DiscoverAsync(CancellationToken cancellationToken)
+    public override string Platform => "GitLab";
+
+    protected override Task StartAsync(CancellationToken cancellationToken)
     {
-        try
+        var projects = _gitLabService.GetProjects();
+
+        var repositories = projects.Select(p => p.MapToGitLabRepository()).ToList();
+        var pullRequests = _gitLabService.GetPullRequests();
+
+        var pipelines = new List<GitLabPipeline>();
+        foreach (var project in projects)
         {
-            var projects = _gitLabService.GetProjects();
-
-            var repositories = projects.Select(p => p.MapToGitLabRepository()).ToList();
-            var pullRequests = _gitLabService.GetPullRequests();
-
-            var pipelines = new List<GitLabPipeline>();
-            foreach (var project in projects)
-            {
-                var projectPipelines = _gitLabService.GetPipelines(project);
-                pipelines.AddRange(projectPipelines);
-            }
-
-            _memoryCache.Set(CacheConstants.PipelineCacheKey, pipelines);
-            _memoryCache.Set(CacheConstants.PullRequestCacheKey, pullRequests);
-            _memoryCache.Set(CacheConstants.RepositoryCacheKey, repositories);
-
-            return Task.FromResult(true);
+            var projectPipelines = _gitLabService.GetPipelines(project);
+            pipelines.AddRange(projectPipelines);
         }
-        catch (Exception exception)
-        {
-            _logger.LogError(exception, "Error occurred whilst trying to discover the latest GitHub resources.");
-            return Task.FromResult(false);
-        }
+
+        _memoryCache.Set(CacheConstants.PipelineCacheKey, pipelines);
+        _memoryCache.Set(CacheConstants.PullRequestCacheKey, pullRequests);
+        _memoryCache.Set(CacheConstants.RepositoryCacheKey, repositories);
+
+        return Task.FromResult(true);
     }
 }
