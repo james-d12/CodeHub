@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using CodeHub.Api.Jobs;
 using CodeHub.Api.Settings;
 using CodeHub.Platform.Azure.Extensions;
@@ -21,11 +22,15 @@ var logger = loggerFactory.CreateLogger<Program>();
 
 try
 {
-    logger.LogDebug("Configuration: {Config}", JsonSerializer.Serialize(builder.Configuration.GetSection("CorsSettings").Value));
+    logger.LogDebug("Configuration: {Config}",
+        JsonSerializer.Serialize(builder.Configuration.GetSection("CorsSettings").Value));
     logger.LogInformation("Starting up: {ApplicationName}", applicationName);
 
     builder.Services.AddLogging();
-    builder.Services.AddControllers();
+    builder.Services.AddControllers().AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddHostedService<DiscoveryHostedService>();
@@ -34,7 +39,7 @@ try
     builder.Services.RegisterAzureDevOps(builder.Configuration);
     builder.Services.RegisterGitHub(builder.Configuration);
     builder.Services.RegisterGitLab(builder.Configuration);
-    
+
     var corsSettings = builder.Configuration.GetSection(nameof(CorsSettings)).Get<CorsSettings>();
 
     builder.Services.AddCors(options =>
