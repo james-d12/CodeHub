@@ -18,6 +18,7 @@ public sealed class ResourceDevOpsController : ControllerBase
     }
 
     [HttpGet, Route("pipelines")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public List<Pipeline> GetPipelines([FromQuery] PipelineQueryRequest request)
     {
         var pipelines = new List<Pipeline>();
@@ -30,6 +31,7 @@ public sealed class ResourceDevOpsController : ControllerBase
     }
 
     [HttpGet, Route("repositories")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public List<Repository> GetRepositories([FromQuery] RepositoryQueryRequest request)
     {
         var repositories = new List<Repository>();
@@ -42,6 +44,7 @@ public sealed class ResourceDevOpsController : ControllerBase
     }
 
     [HttpGet, Route("pull-requests")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public List<PullRequest> GetPullRequests([FromQuery] PullRequestQueryRequest request)
     {
         var pullRequests = new List<PullRequest>();

@@ -56,6 +56,6 @@ internal sealed class GitHubQueryService : IQueryService
 
     public List<PullRequest> QueryPullRequests(PullRequestQueryRequest request)
     {
-        return [];
+        throw new NotImplementedException();
     }
 }

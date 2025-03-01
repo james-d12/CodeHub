@@ -1,19 +1,21 @@
-using CodeHub.Platform.AzureDevOps.Constants;
-using CodeHub.Platform.AzureDevOps.Models;
+using CodeHub.Platform.GitLab.Constants;
+using CodeHub.Platform.GitLab.Models;
 using CodeHub.Shared.Models;
 using CodeHub.Shared.Query;
 using CodeHub.Shared.Query.Requests;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace CodeHub.Platform.AzureDevOps.Services;
+namespace CodeHub.Platform.GitLab.Services;
 
-internal sealed class AzureDevOpsQueryService : IQueryService
+internal sealed class GitLabQueryService : IQueryService
 {
-    private readonly ILogger<AzureDevOpsQueryService> _logger;
+    private readonly ILogger<GitLabQueryService> _logger;
     private readonly IMemoryCache _memoryCache;
 
-    public AzureDevOpsQueryService(ILogger<AzureDevOpsQueryService> logger, IMemoryCache memoryCache)
+    public GitLabQueryService(
+        ILogger<GitLabQueryService> logger,
+        IMemoryCache memoryCache)
     {
         _logger = logger;
         _memoryCache = memoryCache;
@@ -21,11 +23,11 @@ internal sealed class AzureDevOpsQueryService : IQueryService
 
     public List<Pipeline> QueryPipelines(PipelineQueryRequest request)
     {
-        _logger.LogInformation("Querying pipelines from Azure DevOps");
-        var azureDevOpsPipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
-        var pipelines = azureDevOpsPipelines.ConvertAll<Pipeline>(p => p);
+        _logger.LogInformation("Querying pipelines from GitLab");
+        var gitLabPipelines = _memoryCache.Get<List<GitLabPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
+        var pipelines = gitLabPipelines.ConvertAll<Pipeline>(p => p);
 
-        if (azureDevOpsPipelines.Count <= 0)
+        if (pipelines.Count <= 0)
         {
             return [];
         }
@@ -40,10 +42,10 @@ internal sealed class AzureDevOpsQueryService : IQueryService
 
     public List<Repository> QueryRepositories(RepositoryQueryRequest request)
     {
-        _logger.LogInformation("Querying repositories from Azure DevOps");
-        var azureDevOpsRepositories =
-            _memoryCache.Get<List<AzureDevOpsRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
-        var repositories = azureDevOpsRepositories.ConvertAll<Repository>(p => p);
+        _logger.LogInformation("Querying repositories from GitLab");
+        var gitLabRepositories =
+            _memoryCache.Get<List<GitLabRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
+        var repositories = gitLabRepositories.ConvertAll<Repository>(p => p);
 
         if (repositories.Count <= 0)
         {
@@ -59,10 +61,10 @@ internal sealed class AzureDevOpsQueryService : IQueryService
 
     public List<PullRequest> QueryPullRequests(PullRequestQueryRequest request)
     {
-        _logger.LogInformation("Querying pull requests from Azure DevOps");
-        var azureDevOpsPullRequests =
-            _memoryCache.Get<List<AzureDevOpsPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
-        var pullRequests = azureDevOpsPullRequests.ConvertAll<PullRequest>(p => p);
+        _logger.LogInformation("Querying pull requests from GitLab");
+        var gitLabPullRequests =
+            _memoryCache.Get<List<GitLabPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
+        var pullRequests = gitLabPullRequests.ConvertAll<PullRequest>(p => p);
 
         if (pullRequests.Count <= 0)
         {

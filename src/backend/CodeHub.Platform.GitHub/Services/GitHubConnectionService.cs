@@ -6,18 +6,13 @@ namespace CodeHub.Platform.GitHub.Services;
 
 internal sealed class GitHubConnectionService : IGitHubConnectionService
 {
-    private readonly GitHubClient _client;
+    public GitHubClient Client { get; }
 
     public GitHubConnectionService(IOptions<GitHubSettings> options)
     {
-        _client = new GitHubClient(new ProductHeaderValue(options.Value.AgentName))
+        Client = new GitHubClient(new ProductHeaderValue(options.Value.AgentName))
         {
             Credentials = new Credentials(options.Value.Token)
         };
-    }
-
-    public GitHubClient Client()
-    {
-        return _client;
     }
 }
