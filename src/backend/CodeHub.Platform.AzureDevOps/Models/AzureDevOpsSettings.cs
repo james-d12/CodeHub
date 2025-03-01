@@ -1,18 +1,9 @@
-﻿namespace CodeHub.Platform.AzureDevOps.Models;
+﻿using CodeHub.Shared.Models;
 
-internal sealed record AzureDevOpsSettings
+namespace CodeHub.Platform.AzureDevOps.Models;
+
+internal sealed class AzureDevOpsSettings : Settings
 {
-    public required string PersonalAccessToken { get; init; }
-    public required string Organization { get; init; }
-    public required bool IsEnabled { get; init; }
-
-    public static AzureDevOpsSettings CreateDisabled()
-    {
-        return new AzureDevOpsSettings
-        {
-            IsEnabled = false,
-            PersonalAccessToken = string.Empty,
-            Organization = string.Empty,
-        };
-    }
+    public string PersonalAccessToken { get; init; } = string.Empty;
+    public string Organization { get; init; } = string.Empty;
 }

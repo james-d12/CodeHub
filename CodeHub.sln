@@ -56,6 +56,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.GitHub", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.GitLab", "src\backend\CodeHub.Platform.GitLab\CodeHub.Platform.GitLab.csproj", "{7014F74C-506D-4DC3-85DC-DF14EC446FB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.GitHub.Tests", "src\backend\CodeHub.Platform.GitHub.Tests\CodeHub.Platform.GitHub.Tests.csproj", "{8BD76230-630B-42A1-AAB3-E3A6E2EAB8A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Platform.GitLab.Tests", "src\backend\CodeHub.Platform.GitLab.Tests\CodeHub.Platform.GitLab.Tests.csproj", "{6A915CB9-8153-433B-9DC1-0AFE159486B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +106,14 @@ Global
 		{7014F74C-506D-4DC3-85DC-DF14EC446FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7014F74C-506D-4DC3-85DC-DF14EC446FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7014F74C-506D-4DC3-85DC-DF14EC446FB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BD76230-630B-42A1-AAB3-E3A6E2EAB8A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BD76230-630B-42A1-AAB3-E3A6E2EAB8A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BD76230-630B-42A1-AAB3-E3A6E2EAB8A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BD76230-630B-42A1-AAB3-E3A6E2EAB8A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A915CB9-8153-433B-9DC1-0AFE159486B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A915CB9-8153-433B-9DC1-0AFE159486B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A915CB9-8153-433B-9DC1-0AFE159486B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A915CB9-8153-433B-9DC1-0AFE159486B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,5 +132,7 @@ Global
 		{4D69214A-521E-413C-8732-A228A50753DD} = {3AC7FEA5-756C-45E1-8988-16170C26B898}
 		{8AFCA3A8-0CDB-4FF7-B484-803EA74E94D5} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
 		{7014F74C-506D-4DC3-85DC-DF14EC446FB4} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
+		{8BD76230-630B-42A1-AAB3-E3A6E2EAB8A1} = {3AC7FEA5-756C-45E1-8988-16170C26B898}
+		{6A915CB9-8153-433B-9DC1-0AFE159486B7} = {3AC7FEA5-756C-45E1-8988-16170C26B898}
 	EndGlobalSection
 EndGlobal
