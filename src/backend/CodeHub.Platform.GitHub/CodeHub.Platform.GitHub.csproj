@@ -1,11 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
-        <PackageReference Include="Octokit" />
+        <PackageReference Include="Octokit"/>
         <PackageReference Include="System.Text.Json"/>
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Memory"/>
     </ItemGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\CodeHub.Shared\CodeHub.Shared.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="CodeHub.Platform.GitHub.Tests"/>
     </ItemGroup>
 </Project>
