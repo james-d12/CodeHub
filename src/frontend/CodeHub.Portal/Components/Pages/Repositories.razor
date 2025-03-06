@@ -1,5 +1,5 @@
 ﻿@page "/repositories"
-@using CodeHub.Shared.Models
+@using CodeHub.Core.Shared.Models
 
 <PageTitle>CodeHub: Repositories</PageTitle>
 
@@ -37,7 +37,8 @@
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.Owner.Name" Title="Project">
                     <CellTemplate>
-                        <MudLink Target="_blank" Href="@(context.Item?.Owner.Url.ToString())">@context.Item?.Owner.Name</MudLink>
+                        <MudLink Target="_blank"
+                                 Href="@(context.Item?.Owner.Url.ToString())">@context.Item?.Owner.Name</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
             </Columns>

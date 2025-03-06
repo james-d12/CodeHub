@@ -1,5 +1,5 @@
-﻿using CodeHub.Portal.Services.Services;
-using CodeHub.Shared.Models;
+﻿using CodeHub.Core.Shared.Models;
+using CodeHub.Portal.Services.Services;
 
 namespace CodeHub.Portal.Components.Pages;
 

@@ -1,4 +1,4 @@
-﻿using CodeHub.Platform.Azure.Models;
+﻿using CodeHub.Core.Azure.Models;
 
 namespace CodeHub.Portal.Services.Services;
 

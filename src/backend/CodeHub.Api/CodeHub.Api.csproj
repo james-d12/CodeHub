@@ -12,16 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CodeHub.Platform.AzureDevOps\CodeHub.Platform.AzureDevOps.csproj"/>
-    <ProjectReference Include="..\CodeHub.Platform.Azure\CodeHub.Platform.Azure.csproj"/>
-    <ProjectReference Include="..\CodeHub.Platform.GitHub\CodeHub.Platform.GitHub.csproj" />
-    <ProjectReference Include="..\CodeHub.Platform.GitLab\CodeHub.Platform.GitLab.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeHub.Core\CodeHub.Core.csproj" />
   </ItemGroup>
 
 </Project>

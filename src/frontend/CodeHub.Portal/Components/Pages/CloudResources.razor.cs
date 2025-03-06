@@ -1,4 +1,4 @@
-﻿using CodeHub.Platform.Azure.Models;
+﻿using CodeHub.Core.Azure.Models;
 using CodeHub.Portal.Services.Services;
 using MudBlazor;
 
