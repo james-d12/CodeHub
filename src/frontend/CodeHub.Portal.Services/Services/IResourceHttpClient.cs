@@ -1,4 +1,4 @@
-﻿using CodeHub.Shared.Models;
+﻿using CodeHub.Core.Shared.Models;
 
 namespace CodeHub.Portal.Services.Services;
 

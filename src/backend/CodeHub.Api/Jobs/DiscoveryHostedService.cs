@@ -1,4 +1,4 @@
-﻿using CodeHub.Shared.Services;
+﻿using CodeHub.Core.Shared.Services;
 
 namespace CodeHub.Api.Jobs;
 
