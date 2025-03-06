@@ -1,8 +1,7 @@
-﻿using CodeHub.Shared.Models;
-using CodeHub.Shared.Query;
-using CodeHub.Shared.Query.Requests;
+﻿using CodeHub.Core.Shared.Models;
+using CodeHub.Core.Shared.Query;
+using CodeHub.Core.Shared.Query.Requests;
 using Microsoft.AspNetCore.Mvc;
-using PipelineQueryRequest = CodeHub.Shared.Query.Requests.PipelineQueryRequest;
 
 namespace CodeHub.Api.Controllers;
 

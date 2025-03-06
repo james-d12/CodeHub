@@ -5,11 +5,7 @@ and querying from third parties. As well as exposing the API that is used by the
 
 ## Platforms
 
-Each platform is given its own class library project. This is so that all the internal code can be neatly separated
-and closed off from other platforms. This helps to prevent using classes / code in unintended ways. It also ensures each
-platform acts as a ``module`` of sorts, with its own public API of how you interact with it.
-
-Below is the current list of platforms that are supported:
+Each platform is in its own folder in the CodeHub.Core project. Below is the current list of platforms that are supported:
 
 - Azure
 - Azure DevOps
