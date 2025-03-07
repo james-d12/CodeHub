@@ -16,10 +16,4 @@
         <PackageReference Include="System.Net.Http"/>
         <PackageReference Include="System.Text.RegularExpressions"/>
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="AzureDevOps\" />
-      <Folder Include="GitHub\" />
-      <Folder Include="GitLab\" />
-    </ItemGroup>
-
 </Project>
