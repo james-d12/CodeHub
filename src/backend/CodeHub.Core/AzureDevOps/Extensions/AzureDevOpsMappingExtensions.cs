@@ -10,7 +10,7 @@ using PullRequestStatus = Microsoft.TeamFoundation.SourceControl.WebApi.PullRequ
 
 namespace CodeHub.Core.AzureDevOps.Extensions;
 
-internal static class AzureDevOpsMappingExtensions
+public static class AzureDevOpsMappingExtensions
 {
     public static AzureDevOpsPipeline MapToAzureDevOpsPipeline(this BuildDefinitionReference buildDefinitionReference)
     {

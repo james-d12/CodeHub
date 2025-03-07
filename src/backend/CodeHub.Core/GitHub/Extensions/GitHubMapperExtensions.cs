@@ -4,9 +4,9 @@ using Repository = CodeHub.Core.Shared.Models.Repository;
 
 namespace CodeHub.Core.GitHub.Extensions;
 
-internal static class GitHubMapperExtensions
+public static class GitHubMapperExtensions
 {
-    internal static Repository MapToRepository(this Octokit.Repository repository)
+    public static Repository MapToRepository(this Octokit.Repository repository)
     {
         return new Repository
         {
@@ -26,7 +26,7 @@ internal static class GitHubMapperExtensions
         };
     }
 
-    internal static Pipeline MapToPipeline(this Workflow workflow)
+    public static Pipeline MapToPipeline(this Workflow workflow)
     {
         return new Pipeline
         {
@@ -45,7 +45,7 @@ internal static class GitHubMapperExtensions
         };
     }
 
-    internal static Pipeline MapToPipeline((Workflow workflow, WorkflowRun run) pipeline)
+    public static Pipeline MapToPipeline((Workflow workflow, WorkflowRun run) pipeline)
     {
         return new Pipeline
         {
