@@ -30,7 +30,7 @@
                         <MudLink Target="_blank" Href="@(context.Item?.Url.ToString())">@context.Item?.Name</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
-                <PropertyColumn Property="x => x.Owner.Name" Title="Project">
+                <PropertyColumn Property="x => x.Owner.Name" Title="Owner">
                     <CellTemplate>
                         <MudLink Target="_blank"
                                  Href="@(context.Item?.Owner.Url.ToString())">@context.Item?.Owner.Name</MudLink>

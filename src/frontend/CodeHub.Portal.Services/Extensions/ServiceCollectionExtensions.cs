@@ -1,4 +1,6 @@
-﻿using CodeHub.Portal.Services.Services;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using CodeHub.Portal.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -21,10 +23,13 @@ public static class ServiceCollectionExtensions
             throw new ArgumentException("CodeHubBackendBaseUrl is not a valid URL.");
         }
 
-        services.AddHttpClient<IAzureDevOpsHttpClient, AzureDevOpsHttpClient>(client =>
+        var jsonOptions = new JsonSerializerOptions
         {
-            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/azure-devops");
-        });
+            PropertyNameCaseInsensitive = true,
+            Converters = { new JsonStringEnumConverter() }
+        };
+
+        services.AddSingleton(jsonOptions);
 
         services.AddHttpClient<IAzureHttpClient, AzureHttpClient>(client =>
         {
@@ -36,7 +41,6 @@ public static class ServiceCollectionExtensions
             client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/resources/");
         });
 
-        services.TryAddTransient<IAzureDevOpsHttpClient, AzureDevOpsHttpClient>();
         services.TryAddTransient<IAzureHttpClient, AzureHttpClient>();
         services.TryAddTransient<IResourceHttpClient, ResourceHttpClient>();
     }

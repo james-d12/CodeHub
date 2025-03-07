@@ -60,7 +60,7 @@ public static class GitLabMapperExtensions
                 Name = project.Owner.Name,
                 Description = project.Owner.Bio,
                 Url = new Uri(project.Owner.WebURL),
-                Platform = OwnerPlatform.AzureDevOps
+                Platform = OwnerPlatform.GitLab
             },
             Platform = RepositoryPlatform.GitLab
         };

@@ -19,7 +19,7 @@ public static class GitHubMapperExtensions
                 Id = new OwnerId(repository.Owner.Id.ToString()),
                 Name = repository.Owner.Login,
                 Description = repository.Owner.Bio,
-                Url = new Uri(repository.Owner.Url),
+                Url = new Uri(repository.Owner.HtmlUrl),
                 Platform = OwnerPlatform.GitHub,
             },
             Platform = RepositoryPlatform.GitHub
