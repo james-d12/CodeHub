@@ -1,7 +1,7 @@
-using CodeHub.Shared.Validation;
+using CodeHub.Module.Shared.Validation;
 using Microsoft.Extensions.Configuration;
 
-namespace CodeHub.Shared.Tests.Validation;
+namespace CodeHub.Module.Tests.Shared.Validation;
 
 public sealed class ValidationBuilderTests
 {

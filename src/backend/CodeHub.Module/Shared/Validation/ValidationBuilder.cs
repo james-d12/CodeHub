@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.Extensions.Configuration;
 
-namespace CodeHub.Shared.Validation;
+namespace CodeHub.Module.Shared.Validation;
 
 public sealed class ValidationBuilder<T> where T : Settings, new()
 {

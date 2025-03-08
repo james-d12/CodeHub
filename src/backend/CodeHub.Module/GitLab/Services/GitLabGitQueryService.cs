@@ -1,7 +1,7 @@
 using CodeHub.Domain.Git;
 using CodeHub.Module.GitLab.Constants;
 using CodeHub.Module.GitLab.Models;
-using CodeHub.Shared.Query;
+using CodeHub.Module.Shared.Query;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 

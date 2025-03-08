@@ -1,5 +1,5 @@
 using CodeHub.Module.GitLab.Models;
-using CodeHub.Shared.Validation;
+using CodeHub.Module.Shared.Validation;
 using Microsoft.Extensions.Configuration;
 
 namespace CodeHub.Module.GitLab.Validator;

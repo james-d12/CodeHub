@@ -1,7 +1,7 @@
 using AutoFixture;
-using CodeHub.Shared.Query;
+using CodeHub.Module.Shared.Query;
 
-namespace CodeHub.Shared.Tests.Query;
+namespace CodeHub.Module.Tests.Shared.Query;
 
 public sealed class QueryBuilderTests
 {

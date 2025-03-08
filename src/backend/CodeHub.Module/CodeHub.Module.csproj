@@ -18,6 +18,5 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\CodeHub.Domain\CodeHub.Domain.csproj" />
-      <ProjectReference Include="..\CodeHub.Shared\CodeHub.Shared.csproj" />
     </ItemGroup>
 </Project>

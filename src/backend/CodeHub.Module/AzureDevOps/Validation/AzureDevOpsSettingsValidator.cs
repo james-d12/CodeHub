@@ -1,5 +1,5 @@
 ﻿using CodeHub.Module.AzureDevOps.Models;
-using CodeHub.Shared.Validation;
+using CodeHub.Module.Shared.Validation;
 using Microsoft.Extensions.Configuration;
 
 namespace CodeHub.Module.AzureDevOps.Validation;

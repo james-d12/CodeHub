@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Shared.Query;
+﻿namespace CodeHub.Module.Shared.Query;
 
 public interface IQueryBuilder<T> where T : class
 {

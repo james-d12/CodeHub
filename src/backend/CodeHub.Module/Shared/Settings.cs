@@ -1,4 +1,4 @@
-namespace CodeHub.Shared;
+namespace CodeHub.Module.Shared;
 
 public abstract class Settings
 {

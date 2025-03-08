@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace CodeHub.Shared.Validation;
+namespace CodeHub.Module.Shared.Validation;
 
 public interface IValidationBuilder<T> where T : Settings, new()
 {

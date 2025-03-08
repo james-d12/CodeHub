@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Shared.Query;
+﻿namespace CodeHub.Module.Shared.Query;
 
 public sealed class QueryBuilder<T> : IQueryBuilder<T> where T : class
 {

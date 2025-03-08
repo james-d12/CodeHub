@@ -6,7 +6,7 @@ public sealed class NamespaceUsageTests
 {
     private static readonly string[] AllowedNamespaces =
     {
-        "CodeHub.Shared"
+        "CodeHub.Module.Shared"
     };
 
     private static string GetRootPath()

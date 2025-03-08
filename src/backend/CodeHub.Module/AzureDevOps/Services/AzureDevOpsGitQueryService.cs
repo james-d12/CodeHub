@@ -1,7 +1,7 @@
 using CodeHub.Domain.Git;
 using CodeHub.Module.AzureDevOps.Constants;
 using CodeHub.Module.AzureDevOps.Models;
-using CodeHub.Shared.Query;
+using CodeHub.Module.Shared.Query;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 

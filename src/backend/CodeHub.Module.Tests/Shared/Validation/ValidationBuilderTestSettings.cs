@@ -1,4 +1,6 @@
-namespace CodeHub.Shared.Tests.Validation;
+using CodeHub.Module.Shared;
+
+namespace CodeHub.Module.Tests.Shared.Validation;
 
 internal sealed class ValidationBuilderTestSettings : Settings
 {
