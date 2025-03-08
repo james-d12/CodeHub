@@ -31,9 +31,9 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton(jsonOptions);
 
-        services.AddHttpClient<IAzureHttpClient, AzureHttpClient>(client =>
+        services.AddHttpClient<ICloudHttpClient, CloudHttpClient>(client =>
         {
-            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/azure");
+            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/cloud/");
         });
 
         services.AddHttpClient<IResourceHttpClient, ResourceHttpClient>(client =>
@@ -41,7 +41,7 @@ public static class ServiceCollectionExtensions
             client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/resources/");
         });
 
-        services.TryAddTransient<IAzureHttpClient, AzureHttpClient>();
-        services.TryAddTransient<IResourceHttpClient, ResourceHttpClient>();
+        services.TryAddScoped<ICloudHttpClient, CloudHttpClient>();
+        services.TryAddScoped<IResourceHttpClient, ResourceHttpClient>();
     }
 }

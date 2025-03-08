@@ -1,16 +1,16 @@
 ﻿@page "/cloud"
-@using CodeHub.Module.Azure.Models
+@using CodeHub.Domain.Cloud
 
 <PageTitle>CodeHub: Cloud Resources</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
-    @if (_azureResources == null)
+    @if (_cloudResources == null)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
     }
     else
     {
-        <MudDataGrid Dense="true" T="AzureResource" Items="@_azureResources"
+        <MudDataGrid Dense="true" T="CloudResource" Items="@_cloudResources"
                      FilterMode="@DataGridFilterMode.ColumnFilterRow" Filterable="true"
                      FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
                      RowsPerPage="20">
@@ -20,7 +20,7 @@
                 </MudText>
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Name" Title="Platform" Filterable="false" Sortable="false">
+                <PropertyColumn Property="x => x.Platform" Title="Platform" Filterable="false" Sortable="false">
                     <CellTemplate>
                         <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure"/>
                     </CellTemplate>
@@ -30,48 +30,14 @@
                         <MudLink Target="_blank" Href="@(context.Item?.Url.ToString())">@context.Item?.Name</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
-                <PropertyColumn Property="x => x.ResourceGroupName" Title="Resource Group">
+                <PropertyColumn Property="x => x.Description" Title="Description" Filterable="false" Sortable="false">
                     <CellTemplate>
-                        <MudLink Target="_blank"
-                                 Href="@(context.Item?.ResourceGroupUrl?.ToString())">@context.Item?.ResourceGroupName</MudLink>
+                        @context.Item.Description
                     </CellTemplate>
                 </PropertyColumn>
-                <PropertyColumn Property="x => x.Subscription" Title="Subscription">
-                    <FilterTemplate>
-                        <MudIconButton OnClick="@OpenFilter" Icon="@Icons.Material.Outlined.FilterAlt"
-                                       Size="@Size.Small"/>
-                        <MudOverlay Visible="@_filterOpen" OnClick="@(() => _filterOpen = false)"/>
-                        <MudPopover Open="@_filterOpen" AnchorOrigin="Origin.BottomCenter"
-                                    TransformOrigin="Origin.TopCenter"
-                                    Style="width:500px">
-                            <MudStack Spacing="0">
-                                <MudCheckBox T="bool" Label="Select All" Size="@Size.Small" Value="@_selectAll"
-                                             ValueChanged="@SelectAll"/>
-                                <MudStack Spacing="0" Style="overflow-y:auto;max-height:250px">
-                                    @foreach (var item in _azureSubscriptions)
-                                    {
-                                        <MudCheckBox T="bool" Label="@($"{item.Name}")" Size="@Size.Small"
-                                                     Value="@(_selectedSubscriptions.Contains(item))"
-                                                     ValueChanged="@((value) => SelectedChanged(value, item))"/>
-                                    }
-                                </MudStack>
-                            </MudStack>
-                        </MudPopover>
-                    </FilterTemplate>
-                    <CellTemplate>
-                        <MudLink Target="_blank"
-                                 Href="@(context.Item?.SubscriptionUrl?.ToString())">@context.Item?.Subscription</MudLink>
-                    </CellTemplate>
-                </PropertyColumn>
-                <PropertyColumn Property="x => x.Location" Title="Location">
-                    <CellTemplate>
-                        @context.Item?.Location
-                    </CellTemplate>
-                </PropertyColumn>
-                <PropertyColumn Property="x => x.ResourceType" Title="Resource Type"/>
             </Columns>
             <PagerContent>
-                <MudDataGridPager T="AzureResource" PageSizeOptions=@(new[] { 10, 20, 50 })/>
+                <MudDataGridPager T="CloudResource" PageSizeOptions=@(new[] { 10, 20, 50 })/>
             </PagerContent>
         </MudDataGrid>
     }

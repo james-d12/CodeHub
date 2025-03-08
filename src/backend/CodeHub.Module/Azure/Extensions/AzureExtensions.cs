@@ -1,6 +1,9 @@
-﻿using CodeHub.Domain.Discovery;
+﻿using CodeHub.Domain.Cloud;
+using CodeHub.Domain.Discovery;
+using CodeHub.Domain.Git;
 using CodeHub.Module.Azure.Services;
 using CodeHub.Module.Azure.Validation;
+using CodeHub.Module.AzureDevOps.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -18,10 +21,16 @@ public static class AzureExtensions
             return services;
         }
 
+        services.RegisterServices();
         services.RegisterCache();
-        services.TryAddSingleton<IAzureService, AzureService>();
-        services.AddSingleton<IDiscoveryService, AzureDiscoveryService>();
         return services;
+    }
+
+    private static void RegisterServices(this IServiceCollection services)
+    {
+        services.TryAddSingleton<IAzureService, AzureService>();
+        services.AddScoped<ICloudQueryService, AzureCloudQueryService>();
+        services.AddSingleton<IDiscoveryService, AzureDiscoveryService>();
     }
 
     private static void RegisterCache(this IServiceCollection services)
