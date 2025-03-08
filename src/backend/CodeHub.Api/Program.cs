@@ -2,10 +2,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using CodeHub.Api.Jobs;
 using CodeHub.Api.Settings;
-using CodeHub.Core.Azure.Extensions;
-using CodeHub.Core.AzureDevOps.Extensions;
-using CodeHub.Core.GitHub.Extensions;
-using CodeHub.Core.GitLab.Extensions;
+using CodeHub.Module.Azure.Extensions;
+using CodeHub.Module.AzureDevOps.Extensions;
+using CodeHub.Module.GitHub.Extensions;
+using CodeHub.Module.GitLab.Extensions;
 using Microsoft.VisualStudio.Services.Common;
 
 var builder = WebApplication.CreateBuilder(args);

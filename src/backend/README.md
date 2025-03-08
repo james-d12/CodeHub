@@ -3,9 +3,9 @@
 This folder contains all the backend code for CodeHub. It includes the platform specific code for connecting with
 and querying from third parties. As well as exposing the API that is used by the frontend to get these resources.
 
-## Platforms
+## Modules
 
-Each platform is in its own folder in the CodeHub.Core project. Below is the current list of platforms that are supported:
+Each platform is in its own folder in the CodeHub.Module project. Below is the current list of platforms that are supported:
 
 - Azure
 - Azure DevOps

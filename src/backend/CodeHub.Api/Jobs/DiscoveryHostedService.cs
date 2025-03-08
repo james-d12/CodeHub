@@ -1,4 +1,4 @@
-﻿using CodeHub.Core.Shared.Services;
+﻿using CodeHub.Domain.Discovery;
 
 namespace CodeHub.Api.Jobs;
 

@@ -1,4 +1,4 @@
-﻿using CodeHub.Core.Shared.Models;
+﻿using CodeHub.Domain.Git;
 using CodeHub.Portal.Services.Services;
 
 namespace CodeHub.Portal.Components.Pages;

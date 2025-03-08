@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\backend\CodeHub.Core\CodeHub.Core.csproj" />
+      <ProjectReference Include="..\..\backend\CodeHub.Module\CodeHub.Module.csproj" />
     </ItemGroup>
 
 </Project>

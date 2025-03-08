@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
-using CodeHub.Core.Shared.Models;
+using CodeHub.Domain.Git;
 using Microsoft.Extensions.Logging;
 
 namespace CodeHub.Portal.Services.Services;

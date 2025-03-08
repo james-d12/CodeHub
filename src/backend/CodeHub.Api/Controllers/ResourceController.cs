@@ -1,6 +1,4 @@
-﻿using CodeHub.Core.Shared.Models;
-using CodeHub.Core.Shared.Query;
-using CodeHub.Core.Shared.Query.Requests;
+﻿using CodeHub.Domain.Git;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeHub.Api.Controllers;
@@ -9,9 +7,9 @@ namespace CodeHub.Api.Controllers;
 [Route("resources/")]
 public sealed class ResourceDevOpsController : ControllerBase
 {
-    private readonly IEnumerable<IQueryService> _queryServices;
+    private readonly IEnumerable<IGitQueryService> _queryServices;
 
-    public ResourceDevOpsController(IEnumerable<IQueryService> queryServices)
+    public ResourceDevOpsController(IEnumerable<IGitQueryService> queryServices)
     {
         _queryServices = queryServices;
     }
