@@ -6,12 +6,12 @@ namespace CodeHub.Module.Azure.Extensions;
 
 public static class AzureMappingExtensions
 {
-    public static AzureResource MapToAzureResource(
+    public static AzureCloudResource MapToAzureResource(
         this GenericResourceData genericResourceData,
         string tenantName,
         string subscriptionName)
     {
-        return new AzureResource
+        return new AzureCloudResource
         {
             Id = new CloudResourceId(genericResourceData.Id.Name),
             Platform = CloudPlatform.Azure,
@@ -27,21 +27,6 @@ public static class AzureMappingExtensions
             Location = GetLocationName(genericResourceData),
             ResourceGroupUrl = GetResourceGroupUrl(tenantName, genericResourceData),
             SubscriptionUrl = GetSubscriptionUrl(tenantName, genericResourceData.Id.SubscriptionId ?? string.Empty),
-        };
-    }
-
-    public static AzureSubscription MapToAzureSubscription(
-        this SubscriptionResource subscriptionResource,
-        string tenantName)
-    {
-        return new AzureSubscription
-        {
-            Id = subscriptionResource.Id.Name,
-            Name = subscriptionResource.Data.DisplayName,
-            Url = GetSubscriptionUrl(tenantName, subscriptionResource.Data.SubscriptionId),
-            Tenant = tenantName,
-            TenantId = subscriptionResource.Data.TenantId,
-            Tags = subscriptionResource.Data.Tags
         };
     }
 

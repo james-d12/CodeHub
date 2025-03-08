@@ -32,7 +32,7 @@ public sealed class AzureDiscoveryService : DiscoveryService
         _logger.LogInformation("Discovering Azure Subscription resources.");
         var subscriptions = await _azureService.GetSubscriptionsAsyncV2(cancellationToken);
 
-        var cloudResources = new List<AzureResource>();
+        var cloudResources = new List<AzureCloudResource>();
 
         foreach (var subscription in subscriptions)
         {

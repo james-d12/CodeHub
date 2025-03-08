@@ -7,7 +7,7 @@ public interface IAzureService
 {
     Task<List<TenantResource>> GetTenantsAsync(CancellationToken cancellationToken);
 
-    Task<List<AzureResource>> GetResourcesAsync(
+    Task<List<AzureCloudResource>> GetResourcesAsync(
         SubscriptionResource subscriptionResource,
         TenantResource tenantResource,
         CancellationToken cancellationToken);

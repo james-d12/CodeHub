@@ -2,7 +2,7 @@
 
 namespace CodeHub.Module.Azure.Models;
 
-public sealed record AzureResource : CloudResource
+public sealed record AzureCloudResource : CloudResource
 {
     public required string TenantName { get; init; }
     public required string Kind { get; init; }

@@ -42,12 +42,12 @@ public sealed class AzureService : IAzureService
         return subscriptionResources;
     }
 
-    public async Task<List<AzureResource>> GetResourcesAsync(
+    public async Task<List<AzureCloudResource>> GetResourcesAsync(
         SubscriptionResource subscriptionResource,
         TenantResource tenantResource,
         CancellationToken cancellationToken)
     {
-        var azureResources = new List<AzureResource>();
+        var azureResources = new List<AzureCloudResource>();
 
         await foreach (var resource in subscriptionResource.GetGenericResourcesAsync(
                            cancellationToken: cancellationToken))
