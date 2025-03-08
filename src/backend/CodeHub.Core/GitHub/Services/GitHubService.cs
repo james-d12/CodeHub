@@ -1,5 +1,5 @@
 ﻿using CodeHub.Core.GitHub.Extensions;
-using CodeHub.Core.Shared.Models;
+using CodeHub.Core.GitHub.Models;
 
 namespace CodeHub.Core.GitHub.Services;
 
@@ -12,14 +12,14 @@ public sealed class GitHubService : IGitHubService
         _gitHubConnectionService = gitHubConnectionService;
     }
 
-    public async Task<List<Repository>> GetRepositoriesAsync(CancellationToken cancellationToken)
+    public async Task<List<GitHubRepository>> GetRepositoriesAsync(CancellationToken cancellationToken)
     {
         var repositories =
             await _gitHubConnectionService.Client.Repository.GetAllForCurrent().WaitAsync(cancellationToken) ?? [];
-        return repositories.Select(r => r.MapToRepository()).ToList();
+        return repositories.Select(r => r.MapToGitHubRepository()).ToList();
     }
 
-    public async Task<List<Pipeline>> GetActionsAsync(string owner, string repository,
+    public async Task<List<GitHubPipeline>> GetActionsAsync(string owner, string repository,
         CancellationToken cancellationToken)
     {
         var pipelines = await _gitHubConnectionService.Client.Actions.Workflows.List(owner, repository);
@@ -30,6 +30,19 @@ public sealed class GitHubService : IGitHubService
             workflowRuns => workflowRuns.WorkflowId,
             (workflow, workflowRuns) => new { workflow, workflowRuns });
 
-        return pipelines.Workflows.Select(w => w.MapToPipeline()).ToList();
+        return pipelines.Workflows.Select(w => w.MapToGitHubPipeline()).ToList();
+    }
+
+    public async Task<List<GitHubPullRequest>> GetPullRequestsAsync(GitHubRepository repository)
+    {
+        var parsedId = long.TryParse(repository.Id.Value, out var repositoryId);
+
+        if (!parsedId)
+        {
+            return [];
+        }
+
+        var pullRequests = await _gitHubConnectionService.Client.PullRequest.GetAllForRepository(repositoryId);
+        return pullRequests.Select(p => p.MapToGitHubPullRequest(repository)).ToList();
     }
 }

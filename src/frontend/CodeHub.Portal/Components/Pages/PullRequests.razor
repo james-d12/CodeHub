@@ -36,12 +36,6 @@
                         <MudLink Target="_blank" Href="@(context.Item?.Url.ToString())">@context.Item?.Name</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
-                <PropertyColumn Property="x => x.LastCommit.Id" Title="Last Commit Id">
-                    <CellTemplate>
-                        <MudLink Target="_blank"
-                                 Href="@(context.Item?.LastCommit.Url.ToString())">@context.Item?.LastCommit.Id</MudLink>
-                    </CellTemplate>
-                </PropertyColumn>
                 <PropertyColumn Property="x => x.Labels" Title="Labels" Filterable="false">
                     <CellTemplate>
                         @string.Join(',', context.Item?.Labels ?? [])
@@ -52,19 +46,19 @@
                         @string.Join(',', context.Item?.Reviewers ?? [])
                     </CellTemplate>
                 </PropertyColumn>
-                <PropertyColumn Property="x => x.Status" Title="Status">
+                <PropertyColumn Property="x => x.Status" Title="Status" Filterable="false" Sortable="false">
                     <CellTemplate>
                         @context.Item?.Status.ToString()
                     </CellTemplate>
                 </PropertyColumn>
-                <PropertyColumn Property="x => x.CreatedOnDate" Title="Created At">
+                <PropertyColumn Property="x => x.CreatedOnDate" Title="Created At" Filterable="false" Sortable="false">
                     <CellTemplate>
-                        @context.Item?.CreatedOnDate.ToLongDateString()
+                        @context.Item?.CreatedOnDate.ToShortDateString()
                     </CellTemplate>
                 </PropertyColumn>
             </Columns>
             <PagerContent>
-                <MudDataGridPager T="PullRequest"/>
+                <MudDataGridPager T="PullRequest" PageSizeOptions=@(new[] { 10, 20, 50 })/>
             </PagerContent>
         </MudDataGrid>
     }

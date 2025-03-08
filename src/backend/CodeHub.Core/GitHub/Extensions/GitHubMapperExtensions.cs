@@ -1,4 +1,6 @@
-﻿using CodeHub.Core.Shared.Models;
+﻿using System.Collections.Immutable;
+using CodeHub.Core.GitHub.Models;
+using CodeHub.Core.Shared.Models;
 using Octokit;
 using Repository = CodeHub.Core.Shared.Models.Repository;
 
@@ -6,9 +8,9 @@ namespace CodeHub.Core.GitHub.Extensions;
 
 public static class GitHubMapperExtensions
 {
-    public static Repository MapToRepository(this Octokit.Repository repository)
+    public static GitHubRepository MapToGitHubRepository(this Octokit.Repository repository)
     {
-        return new Repository
+        return new GitHubRepository
         {
             Id = new RepositoryId(repository.Id.ToString()),
             Name = repository.Name,
@@ -26,9 +28,9 @@ public static class GitHubMapperExtensions
         };
     }
 
-    public static Pipeline MapToPipeline(this Workflow workflow)
+    public static GitHubPipeline MapToGitHubPipeline(this Workflow workflow)
     {
-        return new Pipeline
+        return new GitHubPipeline
         {
             Id = new PipelineId(workflow.Id.ToString()),
             Name = workflow.Name,
@@ -45,22 +47,30 @@ public static class GitHubMapperExtensions
         };
     }
 
-    public static Pipeline MapToPipeline((Workflow workflow, WorkflowRun run) pipeline)
+    public static GitHubPullRequest MapToGitHubPullRequest(this Octokit.PullRequest pullRequest,
+        GitHubRepository repository)
     {
-        return new Pipeline
+        var status = pullRequest.State.Value switch
         {
-            Id = new PipelineId(pipeline.workflow.Id.ToString()),
-            Name = pipeline.workflow.Name,
-            Url = new Uri(pipeline.workflow.HtmlUrl),
-            Owner = new Owner
-            {
-                Id = new OwnerId(string.Empty),
-                Name = string.Empty,
-                Description = string.Empty,
-                Url = new Uri(pipeline.workflow.HtmlUrl),
-                Platform = OwnerPlatform.GitHub
-            },
-            Platform = PipelinePlatform.GitHub
+            ItemState.Open => PullRequestStatus.Active,
+            ItemState.Closed => PullRequestStatus.Completed,
+            _ => PullRequestStatus.Unknown
+        };
+
+        return new GitHubPullRequest
+        {
+            Id = new PullRequestId(pullRequest.Id.ToString()),
+            Name = pullRequest.Title,
+            Description = pullRequest.Title,
+            Url = new Uri(pullRequest.HtmlUrl),
+            Labels = pullRequest.Labels.Select(l => l.Name).ToImmutableHashSet(),
+            Reviewers = pullRequest.RequestedReviewers.Select(r => r.Name).ToImmutableHashSet(),
+            Status = status,
+            Platform = PullRequestPlatform.GitHub,
+            LastCommit = null,
+            RepositoryUrl = repository.Url,
+            RepositoryName = repository.Name,
+            CreatedOnDate = DateOnly.FromDateTime(pullRequest.CreatedAt.UtcDateTime)
         };
     }
 }

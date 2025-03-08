@@ -1,4 +1,5 @@
 ﻿using CodeHub.Core.GitHub.Constants;
+using CodeHub.Core.GitHub.Models;
 using CodeHub.Core.Shared.Models;
 using CodeHub.Core.Shared.Query;
 using CodeHub.Core.Shared.Query.Requests;
@@ -21,8 +22,8 @@ public sealed class GitHubQueryService : IQueryService
     public List<Pipeline> QueryPipelines(PipelineQueryRequest request)
     {
         _logger.LogInformation("Querying pipelines from GitHub");
-        var pipelines =
-            _memoryCache.Get<List<Pipeline>>(CacheConstants.PipelineCacheKey) ?? [];
+        var githubPipelines = _memoryCache.Get<List<GitHubPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
+        var pipelines = githubPipelines.ConvertAll<Pipeline>(p => p);
 
         if (pipelines.Count <= 0)
         {
@@ -39,8 +40,8 @@ public sealed class GitHubQueryService : IQueryService
     public List<Repository> QueryRepositories(RepositoryQueryRequest request)
     {
         _logger.LogInformation("Querying repositories from GitHub");
-        var repositories =
-            _memoryCache.Get<List<Repository>>(CacheConstants.RepositoryCacheKey) ?? [];
+        var gitHubRepositories = _memoryCache.Get<List<GitHubRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
+        var repositories = gitHubRepositories.ConvertAll<Repository>(p => p);
 
         if (repositories.Count <= 0)
         {
@@ -56,6 +57,19 @@ public sealed class GitHubQueryService : IQueryService
 
     public List<PullRequest> QueryPullRequests(PullRequestQueryRequest request)
     {
-        throw new NotImplementedException();
+        _logger.LogInformation("Querying pull requests from GitHub");
+        var githubPullRequests = _memoryCache.Get<List<GitHubPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
+        var pullRequests = githubPullRequests.ConvertAll<PullRequest>(p => p);
+
+        if (pullRequests.Count <= 0)
+        {
+            return [];
+        }
+
+        return new QueryBuilder<PullRequest>(pullRequests)
+            .Where(request.Id, p => p.Id.Value == request.Id)
+            .Where(request.Title, p => p.Name.Contains(request.Title ?? string.Empty))
+            .Where(request.Platform, p => p.Platform == request.Platform)
+            .ToList();
     }
 }

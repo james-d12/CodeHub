@@ -38,7 +38,7 @@
                 </PropertyColumn>
             </Columns>
             <PagerContent>
-                <MudDataGridPager T="Pipeline"/>
+                <MudDataGridPager T="Pipeline" PageSizeOptions=@(new[] { 10, 20, 50 })/>
             </PagerContent>
         </MudDataGrid>
     }

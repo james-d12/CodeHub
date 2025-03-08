@@ -30,7 +30,7 @@ public record PullRequest
     public required ImmutableHashSet<string> Reviewers { get; init; }
     public required PullRequestStatus Status { get; init; }
     public required PullRequestPlatform Platform { get; init; }
-    public required Commit LastCommit { get; init; }
+    public required Commit? LastCommit { get; init; }
     public required Uri RepositoryUrl { get; init; }
     public required string RepositoryName { get; init; }
     public required DateOnly CreatedOnDate { get; init; }

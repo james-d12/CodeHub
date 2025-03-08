@@ -1,4 +1,5 @@
 ﻿using CodeHub.Core.GitHub.Constants;
+using CodeHub.Core.GitHub.Models;
 using CodeHub.Core.Shared.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,16 @@ public sealed class GitHubDiscoveryService : DiscoveryService
     protected override async Task StartAsync(CancellationToken cancellationToken)
     {
         var repositories = await _gitHubService.GetRepositoriesAsync(cancellationToken);
+
+        var pullRequests = new List<GitHubPullRequest>();
+
+        foreach (var repository in repositories)
+        {
+            var repositoryPullRequests = await _gitHubService.GetPullRequestsAsync(repository);
+            pullRequests.AddRange(repositoryPullRequests);
+        }
+
         _memoryCache.Set(CacheConstants.RepositoryCacheKey, repositories);
+        _memoryCache.Set(CacheConstants.PullRequestCacheKey, pullRequests);
     }
 }

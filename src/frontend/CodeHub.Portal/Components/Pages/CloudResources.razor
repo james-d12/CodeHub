@@ -71,7 +71,7 @@
                 <PropertyColumn Property="x => x.ResourceType" Title="Resource Type"/>
             </Columns>
             <PagerContent>
-                <MudDataGridPager T="AzureResource"/>
+                <MudDataGridPager T="AzureResource" PageSizeOptions=@(new[] { 10, 20, 50 })/>
             </PagerContent>
         </MudDataGrid>
     }
