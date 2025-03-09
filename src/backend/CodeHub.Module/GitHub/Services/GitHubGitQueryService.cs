@@ -26,11 +26,6 @@ public sealed class GitHubGitQueryService : IGitQueryService
         var githubPipelines = _memoryCache.Get<List<GitHubPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
         var pipelines = githubPipelines.ConvertAll<Pipeline>(p => p);
 
-        if (pipelines.Count <= 0)
-        {
-            return [];
-        }
-
         return new QueryBuilder<Pipeline>(pipelines)
             .Where(request.Id, p => p.Id.Value == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
@@ -44,11 +39,6 @@ public sealed class GitHubGitQueryService : IGitQueryService
         var gitHubRepositories = _memoryCache.Get<List<GitHubRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
         var repositories = gitHubRepositories.ConvertAll<Repository>(p => p);
 
-        if (repositories.Count <= 0)
-        {
-            return [];
-        }
-
         return new QueryBuilder<Repository>(repositories)
             .Where(request.Id, p => p.Id.Value == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
@@ -61,11 +51,6 @@ public sealed class GitHubGitQueryService : IGitQueryService
         _logger.LogInformation("Querying pull requests from GitHub");
         var githubPullRequests = _memoryCache.Get<List<GitHubPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
         var pullRequests = githubPullRequests.ConvertAll<PullRequest>(p => p);
-
-        if (pullRequests.Count <= 0)
-        {
-            return [];
-        }
 
         return new QueryBuilder<PullRequest>(pullRequests)
             .Where(request.Id, p => p.Id.Value == request.Id)

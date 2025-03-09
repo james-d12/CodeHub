@@ -28,11 +28,6 @@ public sealed class GitLabGitQueryService : IGitQueryService
         var gitLabPipelines = _memoryCache.Get<List<GitLabPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
         var pipelines = gitLabPipelines.ConvertAll<Pipeline>(p => p);
 
-        if (pipelines.Count <= 0)
-        {
-            return [];
-        }
-
         return new QueryBuilder<Pipeline>(pipelines)
             .Where(request.Id, p => p.Id.Value == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
@@ -48,11 +43,6 @@ public sealed class GitLabGitQueryService : IGitQueryService
             _memoryCache.Get<List<GitLabRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
         var repositories = gitLabRepositories.ConvertAll<Repository>(p => p);
 
-        if (repositories.Count <= 0)
-        {
-            return [];
-        }
-
         return new QueryBuilder<Repository>(repositories)
             .Where(request.Id, p => p.Id.Value == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
@@ -66,11 +56,6 @@ public sealed class GitLabGitQueryService : IGitQueryService
         var gitLabPullRequests =
             _memoryCache.Get<List<GitLabPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
         var pullRequests = gitLabPullRequests.ConvertAll<PullRequest>(p => p);
-
-        if (pullRequests.Count <= 0)
-        {
-            return [];
-        }
 
         return new QueryBuilder<PullRequest>(pullRequests)
             .Where(request.Id, p => p.Id.Value == request.Id)

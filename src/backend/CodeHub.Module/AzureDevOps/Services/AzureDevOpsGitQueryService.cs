@@ -26,11 +26,6 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
         var azureDevOpsPipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
         var pipelines = azureDevOpsPipelines.ConvertAll<Pipeline>(p => p);
 
-        if (azureDevOpsPipelines.Count <= 0)
-        {
-            return [];
-        }
-
         return new QueryBuilder<Pipeline>(pipelines)
             .Where(request.Id, p => p.Id.Value == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
@@ -46,11 +41,6 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
             _memoryCache.Get<List<AzureDevOpsRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
         var repositories = azureDevOpsRepositories.ConvertAll<Repository>(p => p);
 
-        if (repositories.Count <= 0)
-        {
-            return [];
-        }
-
         return new QueryBuilder<Repository>(repositories)
             .Where(request.Id, p => p.Id.Value == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
@@ -64,11 +54,6 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
         var azureDevOpsPullRequests =
             _memoryCache.Get<List<AzureDevOpsPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
         var pullRequests = azureDevOpsPullRequests.ConvertAll<PullRequest>(p => p);
-
-        if (pullRequests.Count <= 0)
-        {
-            return [];
-        }
 
         return new QueryBuilder<PullRequest>(pullRequests)
             .Where(request.Id, p => p.Id.Value == request.Id)
