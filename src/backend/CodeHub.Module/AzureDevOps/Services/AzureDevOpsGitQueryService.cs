@@ -1,4 +1,6 @@
 using CodeHub.Domain.Git;
+using CodeHub.Domain.Git.Request;
+using CodeHub.Domain.Git.Service;
 using CodeHub.Module.AzureDevOps.Constants;
 using CodeHub.Module.AzureDevOps.Models;
 using CodeHub.Module.Shared.Query;

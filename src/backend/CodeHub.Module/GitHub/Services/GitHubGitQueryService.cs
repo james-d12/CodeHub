@@ -1,4 +1,6 @@
 ﻿using CodeHub.Domain.Git;
+using CodeHub.Domain.Git.Request;
+using CodeHub.Domain.Git.Service;
 using CodeHub.Module.GitHub.Constants;
 using CodeHub.Module.GitHub.Models;
 using CodeHub.Module.Shared.Query;

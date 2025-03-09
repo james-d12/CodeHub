@@ -1,4 +1,5 @@
 ﻿using CodeHub.Domain.Cloud;
+using CodeHub.Domain.Cloud.Service;
 using CodeHub.Domain.Discovery;
 using CodeHub.Domain.Git;
 using CodeHub.Module.Azure.Services;

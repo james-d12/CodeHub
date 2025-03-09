@@ -1,4 +1,6 @@
 using CodeHub.Domain.Cloud;
+using CodeHub.Domain.Cloud.Request;
+using CodeHub.Domain.Cloud.Service;
 using CodeHub.Module.Azure.Constants;
 using CodeHub.Module.Azure.Models;
 using CodeHub.Module.Shared.Query;

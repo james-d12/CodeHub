@@ -1,4 +1,6 @@
-﻿namespace CodeHub.Domain.Git;
+﻿using CodeHub.Domain.Git.Request;
+
+namespace CodeHub.Domain.Git.Service;
 
 public interface IGitQueryService
 {
