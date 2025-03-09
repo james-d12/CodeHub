@@ -30,7 +30,7 @@ public sealed class AzureDiscoveryService : DiscoveryService
         var tenants = await _azureService.GetTenantsAsync(cancellationToken);
 
         _logger.LogInformation("Discovering Azure Subscription resources.");
-        var subscriptions = await _azureService.GetSubscriptionsAsyncV2(cancellationToken);
+        var subscriptions = await _azureService.GetSubscriptionsAsync(cancellationToken);
 
         var cloudResources = new List<AzureCloudResource>();
 

@@ -12,5 +12,5 @@ public interface IAzureService
         TenantResource tenantResource,
         CancellationToken cancellationToken);
 
-    Task<List<SubscriptionResource>> GetSubscriptionsAsyncV2(CancellationToken cancellationToken);
+    Task<List<SubscriptionResource>> GetSubscriptionsAsync(CancellationToken cancellationToken);
 }

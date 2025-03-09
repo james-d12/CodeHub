@@ -3,20 +3,12 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using CodeHub.Module.Azure.Extensions;
 using CodeHub.Module.Azure.Models;
-using Microsoft.Extensions.Logging;
 
 namespace CodeHub.Module.Azure.Services;
 
 public sealed class AzureService : IAzureService
 {
-    private readonly ILogger<AzureService> _logger;
     private readonly ArmClient _client = new(new DefaultAzureCredential());
-
-    public AzureService(ILogger<AzureService> logger)
-    {
-        _logger = logger;
-    }
-
 
     public async Task<List<TenantResource>> GetTenantsAsync(CancellationToken cancellationToken)
     {
@@ -29,8 +21,7 @@ public sealed class AzureService : IAzureService
         return tenants;
     }
 
-
-    public async Task<List<SubscriptionResource>> GetSubscriptionsAsyncV2(CancellationToken cancellationToken)
+    public async Task<List<SubscriptionResource>> GetSubscriptionsAsync(CancellationToken cancellationToken)
     {
         var subscriptionResources = new List<SubscriptionResource>();
 
