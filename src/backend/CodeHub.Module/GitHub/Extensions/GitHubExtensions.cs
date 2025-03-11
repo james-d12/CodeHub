@@ -1,5 +1,4 @@
 ﻿using CodeHub.Domain.Discovery;
-using CodeHub.Domain.Git;
 using CodeHub.Domain.Git.Service;
 using CodeHub.Module.GitHub.Models;
 using CodeHub.Module.GitHub.Services;

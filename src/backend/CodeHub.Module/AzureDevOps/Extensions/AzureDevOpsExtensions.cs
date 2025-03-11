@@ -1,5 +1,4 @@
 ﻿using CodeHub.Domain.Discovery;
-using CodeHub.Domain.Git;
 using CodeHub.Domain.Git.Service;
 using CodeHub.Module.AzureDevOps.Models;
 using CodeHub.Module.AzureDevOps.Services;
