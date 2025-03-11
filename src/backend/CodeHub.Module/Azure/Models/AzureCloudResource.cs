@@ -11,6 +11,5 @@ public sealed record AzureCloudResource : CloudResource
     public required Uri? SubscriptionUrl { get; init; }
     public required string? ResourceGroupName { get; init; }
     public required Uri? ResourceGroupUrl { get; init; }
-    public required string? ResourceType { get; init; }
     public required string? Location { get; init; }
 }

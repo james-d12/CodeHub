@@ -40,7 +40,14 @@ public static class GitLabMapperExtensions
             Id = new PipelineId(pipeline.Id.ToString()),
             Name = pipeline.Name,
             Url = new Uri(pipeline.WebUrl),
-            Owner = Owner.CreateEmptyOwner(),
+            Owner = new Owner
+            {
+                Id = new OwnerId(string.Empty),
+                Name = string.Empty,
+                Description = string.Empty,
+                Url = new Uri("https://gitlab.com"),
+                Platform = OwnerPlatform.GitLab
+            },
             Platform = PipelinePlatform.GitLab
         };
     }

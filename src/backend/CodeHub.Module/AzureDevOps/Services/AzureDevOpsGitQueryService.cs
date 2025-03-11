@@ -3,6 +3,7 @@ using CodeHub.Domain.Git.Request;
 using CodeHub.Domain.Git.Service;
 using CodeHub.Module.AzureDevOps.Constants;
 using CodeHub.Module.AzureDevOps.Models;
+using CodeHub.Module.Shared.Extensions;
 using CodeHub.Module.Shared.Query;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -27,9 +28,9 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
         var pipelines = azureDevOpsPipelines.ConvertAll<Pipeline>(p => p);
 
         return new QueryBuilder<Pipeline>(pipelines)
-            .Where(request.Id, p => p.Id.Value == request.Id)
-            .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
-            .Where(request.Url, p => p.Url == new Uri(request.Url ?? string.Empty))
+            .Where(request.Id, p => p.Id.Value.EqualsCaseInsensitive(request.Id))
+            .Where(request.Name, p => p.Name.ContainsCaseInsensitive(request.Name))
+            .Where(request.Url, p => p.Url.ToString().ContainsCaseInsensitive(request.Url))
             .Where(request.Platform, p => p.Platform == request.Platform)
             .ToList();
     }
@@ -42,9 +43,11 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
         var repositories = azureDevOpsRepositories.ConvertAll<Repository>(p => p);
 
         return new QueryBuilder<Repository>(repositories)
-            .Where(request.Id, p => p.Id.Value == request.Id)
-            .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
+            .Where(request.Id, p => p.Id.Value.EqualsCaseInsensitive(request.Id))
+            .Where(request.Name, p => p.Name.ContainsCaseInsensitive(request.Name))
             .Where(request.Platform, p => p.Platform == request.Platform)
+            .Where(request.Url, p => p.Url.ToString().ContainsCaseInsensitive(request.Url))
+            .Where(request.DefaultBranch, p => p.DefaultBranch.EqualsCaseInsensitive(request.DefaultBranch))
             .ToList();
     }
 
@@ -56,8 +59,8 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
         var pullRequests = azureDevOpsPullRequests.ConvertAll<PullRequest>(p => p);
 
         return new QueryBuilder<PullRequest>(pullRequests)
-            .Where(request.Id, p => p.Id.Value == request.Id)
-            .Where(request.Title, p => p.Name.Contains(request.Title ?? string.Empty))
+            .Where(request.Id, p => p.Id.Value.EqualsCaseInsensitive(request.Id))
+            .Where(request.Title, p => p.Name.ContainsCaseInsensitive(request.Title))
             .Where(request.Platform, p => p.Platform == request.Platform)
             .ToList();
     }

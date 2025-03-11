@@ -23,7 +23,6 @@ public static class AzureMappingExtensions
             Subscription = subscriptionName,
             SubscriptionId = genericResourceData.Id.SubscriptionId,
             ResourceGroupName = genericResourceData.Id.ResourceGroupName,
-            ResourceType = genericResourceData.Id.ResourceType,
             Url = GetUrl(tenantName,
                 genericResourceData),
             Location = GetLocationName(genericResourceData),
