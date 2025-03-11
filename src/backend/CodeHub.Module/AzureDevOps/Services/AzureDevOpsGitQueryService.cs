@@ -31,6 +31,7 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
             .Where(request.Id, p => p.Id.Value.EqualsCaseInsensitive(request.Id))
             .Where(request.Name, p => p.Name.ContainsCaseInsensitive(request.Name))
             .Where(request.Url, p => p.Url.ToString().ContainsCaseInsensitive(request.Url))
+            .Where(request.OwnerName, p => p.Owner.Name.EqualsCaseInsensitive(request.OwnerName))
             .Where(request.Platform, p => p.Platform == request.Platform)
             .ToList();
     }
@@ -47,6 +48,7 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
             .Where(request.Name, p => p.Name.ContainsCaseInsensitive(request.Name))
             .Where(request.Platform, p => p.Platform == request.Platform)
             .Where(request.Url, p => p.Url.ToString().ContainsCaseInsensitive(request.Url))
+            .Where(request.OwnerName, p => p.Owner.Name.EqualsCaseInsensitive(request.OwnerName))
             .Where(request.DefaultBranch, p => p.DefaultBranch.EqualsCaseInsensitive(request.DefaultBranch))
             .ToList();
     }
@@ -60,7 +62,9 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
 
         return new QueryBuilder<PullRequest>(pullRequests)
             .Where(request.Id, p => p.Id.Value.EqualsCaseInsensitive(request.Id))
-            .Where(request.Title, p => p.Name.ContainsCaseInsensitive(request.Title))
+            .Where(request.Name, p => p.Name.ContainsCaseInsensitive(request.Name))
+            .Where(request.Description, p => p.Description.ContainsCaseInsensitive(request.Description))
+            .Where(request.Url, p => p.Url.ToString().ContainsCaseInsensitive(request.Url))
             .Where(request.Platform, p => p.Platform == request.Platform)
             .ToList();
     }
