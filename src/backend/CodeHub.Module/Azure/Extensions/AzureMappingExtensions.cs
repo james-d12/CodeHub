@@ -16,6 +16,7 @@ public static class AzureMappingExtensions
             Id = new CloudResourceId(genericResourceData.Id.Name),
             Platform = CloudPlatform.Azure,
             Name = genericResourceData.Name,
+            Type = genericResourceData.ResourceType.Type,
             Description = string.Empty,
             TenantName = tenantName,
             Kind = genericResourceData.Kind,
@@ -29,7 +30,7 @@ public static class AzureMappingExtensions
             ResourceGroupUrl = GetResourceGroupUrl(tenantName,
                 genericResourceData),
             SubscriptionUrl = GetSubscriptionUrl(tenantName,
-                genericResourceData.Id.SubscriptionId ?? string.Empty)
+                genericResourceData.Id.SubscriptionId ?? string.Empty),
         };
     }
 
