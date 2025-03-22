@@ -1,6 +1,8 @@
 ﻿using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.Security.KeyVault.Secrets;
+using CodeHub.Domain.Cloud;
 using CodeHub.Module.Azure.Extensions;
 using CodeHub.Module.Azure.Models;
 
@@ -50,5 +52,21 @@ public sealed class AzureService : IAzureService
         }
 
         return azureResources;
+    }
+
+    public List<CloudSecret> GetKeyVaultSecrets(List<AzureCloudResource> resources, CancellationToken cancellationToken)
+    {
+        var cloudSecrets = new List<CloudSecret>();
+
+        foreach (var resource in resources.Where(r =>
+                     r.Type.Equals("Microsoft.KeyVault/vaults", StringComparison.OrdinalIgnoreCase)))
+        {
+            var client = new SecretClient(vaultUri: resource.Url, credential: new DefaultAzureCredential());
+            var secrets = client.GetPropertiesOfSecrets(cancellationToken);
+            cloudSecrets.AddRange(secrets.Select(secret => new CloudSecret
+                { Name = secret.Name, Location = resource.Name, Url = secret.VaultUri }));
+        }
+
+        return cloudSecrets;
     }
 }

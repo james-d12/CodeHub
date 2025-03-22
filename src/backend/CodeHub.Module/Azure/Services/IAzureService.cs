@@ -1,4 +1,5 @@
 ﻿using Azure.ResourceManager.Resources;
+using CodeHub.Domain.Cloud;
 using CodeHub.Module.Azure.Models;
 
 namespace CodeHub.Module.Azure.Services;
@@ -13,4 +14,6 @@ public interface IAzureService
         CancellationToken cancellationToken);
 
     Task<List<SubscriptionResource>> GetSubscriptionsAsync(CancellationToken cancellationToken);
+
+    List<CloudSecret> GetKeyVaultSecrets(List<AzureCloudResource> resources, CancellationToken cancellationToken);
 }

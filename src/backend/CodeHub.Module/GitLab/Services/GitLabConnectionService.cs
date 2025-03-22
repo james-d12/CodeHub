@@ -4,12 +4,7 @@ using NGitLab;
 
 namespace CodeHub.Module.GitLab.Services;
 
-public sealed class GitLabConnectionService : IGitLabConnectionService
+public sealed class GitLabConnectionService(IOptions<GitLabSettings> options) : IGitLabConnectionService
 {
-    public GitLabClient Client { get; }
-
-    public GitLabConnectionService(IOptions<GitLabSettings> options)
-    {
-        Client = new GitLabClient(options.Value.HostUrl, options.Value.Token);
-    }
+    public GitLabClient Client { get; } = new(options.Value.HostUrl, options.Value.Token);
 }
