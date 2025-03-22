@@ -1,4 +1,5 @@
-﻿using CodeHub.Domain.Discovery;
+﻿using CodeHub.Domain.Cloud.Service;
+using CodeHub.Domain.Discovery;
 using CodeHub.Module.Azure.Extensions;
 using CodeHub.Module.Azure.Services;
 using Microsoft.Extensions.Caching.Memory;
@@ -15,7 +16,7 @@ public sealed class AzureExtensionsTests
         // Arrange
         var serviceCollection = new ServiceCollection();
         var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(GetValidAzureConfiguration())
+            .AddInMemoryCollection(GetAzureConfiguration(true))
             .Build();
 
         // Act
@@ -31,15 +32,36 @@ public sealed class AzureExtensionsTests
                        service.Lifetime == ServiceLifetime.Singleton &&
                        service.ImplementationType == typeof(AzureService));
         Assert.Contains(serviceCollection,
+            service => service.ServiceType == typeof(ICloudQueryService) &&
+                       service.Lifetime == ServiceLifetime.Scoped &&
+                       service.ImplementationType == typeof(AzureCloudQueryService));
+        Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(IMemoryCache) &&
                        service.ImplementationType == typeof(MemoryCache));
     }
 
-    private static Dictionary<string, string?> GetValidAzureConfiguration()
+    [Fact]
+    public void RegisterAzureServices_WhenCalledButAzureIsDisabled_DoesNotRegisterServices()
+    {
+        // Arrange
+        var serviceCollection = new ServiceCollection();
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(GetAzureConfiguration(false))
+            .Build();
+
+        // Act
+        var beforeCount = serviceCollection.Count;
+        serviceCollection.RegisterAzure(configuration);
+
+        // Assert
+        Assert.Equal(beforeCount, serviceCollection.Count);
+    }
+
+    private static Dictionary<string, string?> GetAzureConfiguration(bool isEnabled)
     {
         return new Dictionary<string, string?>
         {
-            { "AzureSettings:IsEnabled", "true" }
+            { "AzureSettings:IsEnabled", isEnabled.ToString() }
         };
     }
 }

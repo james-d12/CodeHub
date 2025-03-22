@@ -10,18 +10,17 @@ namespace CodeHub.Module.Azure.Extensions;
 
 public static class AzureExtensions
 {
-    public static IServiceCollection RegisterAzure(this IServiceCollection services, IConfiguration configuration)
+    public static void RegisterAzure(this IServiceCollection services, IConfiguration configuration)
     {
         var settings = AzureSettingsValidator.GetValidSettings(configuration);
 
         if (!settings.IsEnabled)
         {
-            return services;
+            return;
         }
 
         services.RegisterServices();
         services.RegisterCache();
-        return services;
     }
 
     private static void RegisterServices(this IServiceCollection services)
