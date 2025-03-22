@@ -2,27 +2,6 @@ namespace CodeHub.Domain.Ticketing;
 
 public readonly record struct WorkItemId(string Value);
 
-public enum WorkItemType
-{
-    Epic,
-    Story,
-    Task,
-    Bug,
-    Feature,
-    Subtask
-}
-
-public enum WorkItemState
-{
-    New,
-    Active,
-    InProgress,
-    Resolved,
-    Closed,
-    Done,
-    Reopened
-}
-
 public enum WorkItemPlatform
 {
     AzureDevOps,

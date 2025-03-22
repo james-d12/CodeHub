@@ -12,6 +12,7 @@ public sealed class CloudHttpClient : ICloudHttpClient
     private readonly ILogger<CloudHttpClient> _logger;
 
     private const string CloudResourcesUrl = "resources";
+    private const string CloudSecretsUrl = "secrets";
 
     public CloudHttpClient(
         HttpClient httpClient,
@@ -34,6 +35,20 @@ public sealed class CloudHttpClient : ICloudHttpClient
         catch (Exception exception)
         {
             _logger.LogError(exception, "Could not get list of cloud resources from {Url}", CloudResourcesUrl);
+            return [];
+        }
+    }
+
+    public async Task<List<CloudSecret>> GetCloudSecretsAsync()
+    {
+        try
+        {
+            _logger.LogInformation("Getting cloud secrets from: {Url}", CloudSecretsUrl);
+            return await _httpClient.GetFromJsonAsync<List<CloudSecret>>(CloudSecretsUrl, _jsonOptions) ?? [];
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Could not get list of cloud secrets from {Url}", CloudSecretsUrl);
             return [];
         }
     }

@@ -64,7 +64,12 @@ public sealed class AzureService : IAzureService
             var client = new SecretClient(vaultUri: resource.Url, credential: new DefaultAzureCredential());
             var secrets = client.GetPropertiesOfSecrets(cancellationToken);
             cloudSecrets.AddRange(secrets.Select(secret => new CloudSecret
-            { Name = secret.Name, Location = resource.Name, Url = secret.VaultUri }));
+            {
+                Name = secret.Name,
+                Location = resource.Name,
+                Url = secret.VaultUri,
+                Platform = CloudSecretPlatform.Azure
+            }));
         }
 
         return cloudSecrets;

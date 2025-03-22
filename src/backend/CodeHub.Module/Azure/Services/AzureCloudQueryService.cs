@@ -25,7 +25,8 @@ public sealed class AzureCloudQueryService : ICloudQueryService
     public List<CloudResource> QueryCloudResources(CloudResourceQueryRequest request)
     {
         _logger.LogInformation("Querying cloud resources from Azure");
-        var azureCloudResources = _memoryCache.Get<List<AzureCloudResource>>(AzureCacheConstants.CloudResourceCacheKey) ?? [];
+        var azureCloudResources =
+            _memoryCache.Get<List<AzureCloudResource>>(AzureCacheConstants.CloudResourceCacheKey) ?? [];
         var cloudResources = azureCloudResources.ConvertAll<CloudResource>(p => p);
 
         if (azureCloudResources.Count <= 0)
@@ -37,6 +38,24 @@ public sealed class AzureCloudQueryService : ICloudQueryService
             .Where(request.Id, p => p.Id.Value == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
             .Where(request.Platform, p => p.Platform == request.Platform)
+            .ToList();
+    }
+
+    public List<CloudSecret> QueryCloudSecrets(CloudSecretQueryRequest request)
+    {
+        _logger.LogInformation("Querying cloud secrets from Azure");
+        var azureCloudSecrets =
+            _memoryCache.Get<List<CloudSecret>>(AzureCacheConstants.CloudResourceCacheKey) ?? [];
+        var cloudSecrets = azureCloudSecrets.ConvertAll<CloudSecret>(p => p);
+
+        if (azureCloudSecrets.Count <= 0)
+        {
+            return [];
+        }
+
+        return new QueryBuilder<CloudSecret>(cloudSecrets)
+            .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
+            .Where(request.Location, p => p.Location.Contains(request.Location ?? string.Empty))
             .ToList();
     }
 }

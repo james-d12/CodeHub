@@ -33,4 +33,18 @@ public sealed class CloudController : ControllerBase
 
         return cloudResources;
     }
+
+    [HttpGet, Route("secrets")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public List<CloudSecret> GetCloudSecrets([FromQuery] CloudSecretQueryRequest request)
+    {
+        _logger.LogInformation("Querying cloud secrets");
+        var cloudSecrets = new List<CloudSecret>();
+        foreach (var queryService in _cloudQueryServices)
+        {
+            cloudSecrets.AddRange(queryService.QueryCloudSecrets(request));
+        }
+
+        return cloudSecrets;
+    }
 }
