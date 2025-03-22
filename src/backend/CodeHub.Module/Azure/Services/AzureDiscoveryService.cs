@@ -50,7 +50,7 @@ public sealed class AzureDiscoveryService : DiscoveryService
 
         var secrets = _azureService.GetKeyVaultSecrets(cloudResources, cancellationToken);
 
-        _memoryCache.Set(CacheConstants.CloudResourceCacheKey, cloudResources);
-        _memoryCache.Set(CacheConstants.CloudSecretCacheKey, secrets);
+        _memoryCache.Set(AzureCacheConstants.CloudResourceCacheKey, cloudResources);
+        _memoryCache.Set(AzureCacheConstants.CloudSecretCacheKey, secrets);
     }
 }

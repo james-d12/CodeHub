@@ -24,7 +24,7 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
     public List<Pipeline> QueryPipelines(PipelineQueryRequest request)
     {
         _logger.LogInformation("Querying pipelines from Azure DevOps");
-        var azureDevOpsPipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
+        var azureDevOpsPipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(AzureDevOpsCacheConstants.PipelineCacheKey) ?? [];
         var pipelines = azureDevOpsPipelines.ConvertAll<Pipeline>(p => p);
 
         return new QueryBuilder<Pipeline>(pipelines)
@@ -40,7 +40,7 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
     {
         _logger.LogInformation("Querying repositories from Azure DevOps");
         var azureDevOpsRepositories =
-            _memoryCache.Get<List<AzureDevOpsRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
+            _memoryCache.Get<List<AzureDevOpsRepository>>(AzureDevOpsCacheConstants.RepositoryCacheKey) ?? [];
         var repositories = azureDevOpsRepositories.ConvertAll<Repository>(p => p);
 
         return new QueryBuilder<Repository>(repositories)
@@ -57,7 +57,7 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
     {
         _logger.LogInformation("Querying pull requests from Azure DevOps");
         var azureDevOpsPullRequests =
-            _memoryCache.Get<List<AzureDevOpsPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
+            _memoryCache.Get<List<AzureDevOpsPullRequest>>(AzureDevOpsCacheConstants.PullRequestCacheKey) ?? [];
         var pullRequests = azureDevOpsPullRequests.ConvertAll<PullRequest>(p => p);
 
         return new QueryBuilder<PullRequest>(pullRequests)

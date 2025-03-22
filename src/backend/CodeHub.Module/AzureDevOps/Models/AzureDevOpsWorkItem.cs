@@ -1,11 +1,11 @@
 ﻿using System.Collections.Frozen;
 using System.Collections.Immutable;
+using CodeHub.Domain.Ticketing;
 
 namespace CodeHub.Module.AzureDevOps.Models;
 
-public sealed record AzureDevOpsWorkItem
+public sealed record AzureDevOpsWorkItem : WorkItem
 {
-    public required int Id { get; init; }
     public required string Url { get; init; }
     public required int Revision { get; init; }
     public required FrozenDictionary<string, object> Fields { get; init; }

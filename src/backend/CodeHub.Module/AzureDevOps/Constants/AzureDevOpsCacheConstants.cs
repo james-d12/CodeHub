@@ -1,6 +1,6 @@
 ﻿namespace CodeHub.Module.AzureDevOps.Constants;
 
-internal static class CacheConstants
+internal static class AzureDevOpsCacheConstants
 {
     internal const string RepositoryCacheKey = "azure-devops-repositories";
     internal const string PipelineCacheKey = "azure-devops-pipelines";

@@ -26,7 +26,7 @@ public sealed class GitLabGitQueryService : IGitQueryService
     public List<Pipeline> QueryPipelines(PipelineQueryRequest request)
     {
         _logger.LogInformation("Querying pipelines from GitLab");
-        var gitLabPipelines = _memoryCache.Get<List<GitLabPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
+        var gitLabPipelines = _memoryCache.Get<List<GitLabPipeline>>(GitLabCacheConstants.PipelineCacheKey) ?? [];
         var pipelines = gitLabPipelines.ConvertAll<Pipeline>(p => p);
 
         return new QueryBuilder<Pipeline>(pipelines)
@@ -42,7 +42,7 @@ public sealed class GitLabGitQueryService : IGitQueryService
     {
         _logger.LogInformation("Querying repositories from GitLab");
         var gitLabRepositories =
-            _memoryCache.Get<List<GitLabRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
+            _memoryCache.Get<List<GitLabRepository>>(GitLabCacheConstants.RepositoryCacheKey) ?? [];
         var repositories = gitLabRepositories.ConvertAll<Repository>(p => p);
 
         return new QueryBuilder<Repository>(repositories)
@@ -59,7 +59,7 @@ public sealed class GitLabGitQueryService : IGitQueryService
     {
         _logger.LogInformation("Querying pull requests from GitLab");
         var gitLabPullRequests =
-            _memoryCache.Get<List<GitLabPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
+            _memoryCache.Get<List<GitLabPullRequest>>(GitLabCacheConstants.PullRequestCacheKey) ?? [];
         var pullRequests = gitLabPullRequests.ConvertAll<PullRequest>(p => p);
 
         return new QueryBuilder<PullRequest>(pullRequests)

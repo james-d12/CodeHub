@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using AutoFixture;
 using CodeHub.Domain.Git;
+using CodeHub.Domain.Ticketing;
 using CodeHub.Module.AzureDevOps.Extensions;
 using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.SourceControl.WebApi;
@@ -171,16 +172,33 @@ public sealed class AzureDevOpsMappingExtensionsTests
     public void MapToAzureDevOpsWorkItem_WhenGivenValidWorkItem_ReturnsAzureDevOpsWorkItem()
     {
         // Arrange
-        var from = _fixture.Create<WorkItem>();
+        var fields = new Dictionary<string, object>()
+        {
+            { "System.Id", "" },
+            { "System.Title", "TestThing" },
+            { "System.State", "To Do" },
+            { "System.WorkItemType", "User Story" },
+            { "System.Description", "TestThing" }
+        };
+
+        var from = _fixture
+            .Build<WorkItem>()
+            .With(w => w.Fields, fields)
+            .Create();
 
         // Act
         var to = from.MapToAzureDevOpsWorkItem();
 
         // Assert
-        Assert.Equal(from.Id, to.Id);
+        Assert.Equal(from.Id.ToString(), to.Id.Value);
         Assert.Equal(from.Url, to.Url);
+        Assert.Equal(from.Fields["System.Title"], to.Title);
+        Assert.Equal(string.Empty, to.Description);
+        Assert.Equal(from.Fields["System.State"], to.State);
+        Assert.Equal(from.Fields["System.WorkItemType"], to.Type);
         Assert.Equal(from.Fields, to.Fields);
         Assert.Equal(from.Relations.Select(r => r.Title).ToImmutableHashSet(), to.Relations);
         Assert.Equal(from.Rev, to.Revision);
+        Assert.Equal(WorkItemPlatform.AzureDevOps, to.Platform);
     }
 }

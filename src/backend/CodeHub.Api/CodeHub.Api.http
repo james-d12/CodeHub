@@ -1,5 +1,5 @@
 ### Get list of all pipelines
-GET {{BaseAddress}}/resources/pipelines/
+GET {{BaseAddress}}/git/pipelines/
 Accept: application/json
 
 > {%
@@ -9,7 +9,7 @@ Accept: application/json
 %}
 
 ### Get list of all pull requests
-GET {{BaseAddress}}/resources/pull-requests/
+GET {{BaseAddress}}/git/pull-requests/
 Accept: application/json
 
 > {%
@@ -19,7 +19,7 @@ Accept: application/json
 %}
 
 ### Get list of all repositories
-GET {{BaseAddress}}/resources/repositories/
+GET {{BaseAddress}}/git/repositories/
 Accept: application/json
 
 > {%

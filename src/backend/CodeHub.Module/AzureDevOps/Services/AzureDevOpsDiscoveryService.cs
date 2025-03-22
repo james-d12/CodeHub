@@ -35,6 +35,7 @@ public sealed class AzureDevOpsDiscoveryService : DiscoveryService
         var pipelines = new List<AzureDevOpsPipeline>();
         var repositories = new List<AzureDevOpsRepository>();
         var pullRequests = new List<AzureDevOpsPullRequest>();
+        var workItems = new List<AzureDevOpsWorkItem>();
 
         foreach (var project in projects)
         {
@@ -51,14 +52,16 @@ public sealed class AzureDevOpsDiscoveryService : DiscoveryService
             var projectPullRequests = await _azureDevOpsService.GetPullRequestsAsync(project.Id, cancellationToken);
             pullRequests.AddRange(projectPullRequests);
 
-            //_logger.LogInformation("Discovering Azure DevOps Work Item resources for {ProjectName}", project.Name);
-            //await _azureDevOpsService.GetWorkItemsAsync(project.Name, cancellationToken);
+            _logger.LogInformation("Discovering Azure DevOps Work Item resources for {ProjectName}", project.Name);
+            var projectWorkItems = await _azureDevOpsService.GetWorkItemsAsync(project.Name, cancellationToken);
+            workItems.AddRange(projectWorkItems);
         }
 
-        _memoryCache.Set(CacheConstants.ProjectCacheKey, projects);
-        _memoryCache.Set(CacheConstants.TeamCacheKey, teams);
-        _memoryCache.Set(CacheConstants.PipelineCacheKey, pipelines);
-        _memoryCache.Set(CacheConstants.RepositoryCacheKey, repositories);
-        _memoryCache.Set(CacheConstants.PullRequestCacheKey, pullRequests);
+        _memoryCache.Set(AzureDevOpsCacheConstants.ProjectCacheKey, projects);
+        _memoryCache.Set(AzureDevOpsCacheConstants.TeamCacheKey, teams);
+        _memoryCache.Set(AzureDevOpsCacheConstants.PipelineCacheKey, pipelines);
+        _memoryCache.Set(AzureDevOpsCacheConstants.RepositoryCacheKey, repositories);
+        _memoryCache.Set(AzureDevOpsCacheConstants.PullRequestCacheKey, pullRequests);
+        _memoryCache.Set(AzureDevOpsCacheConstants.WorkItemsCacheKey, workItems);
     }
 }

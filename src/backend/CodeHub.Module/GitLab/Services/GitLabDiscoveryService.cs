@@ -37,9 +37,9 @@ public sealed class GitLabDiscoveryService : DiscoveryService
             pipelines.AddRange(projectPipelines);
         }
 
-        _memoryCache.Set(CacheConstants.PipelineCacheKey, pipelines);
-        _memoryCache.Set(CacheConstants.PullRequestCacheKey, pullRequests);
-        _memoryCache.Set(CacheConstants.RepositoryCacheKey, repositories);
+        _memoryCache.Set(GitLabCacheConstants.PipelineCacheKey, pipelines);
+        _memoryCache.Set(GitLabCacheConstants.PullRequestCacheKey, pullRequests);
+        _memoryCache.Set(GitLabCacheConstants.RepositoryCacheKey, repositories);
 
         return Task.FromResult(true);
     }

@@ -34,7 +34,7 @@ public sealed class GitHubDiscoveryService : DiscoveryService
             pullRequests.AddRange(repositoryPullRequests);
         }
 
-        _memoryCache.Set(CacheConstants.RepositoryCacheKey, repositories);
-        _memoryCache.Set(CacheConstants.PullRequestCacheKey, pullRequests);
+        _memoryCache.Set(GitHubCacheConstants.RepositoryCacheKey, repositories);
+        _memoryCache.Set(GitHubCacheConstants.PullRequestCacheKey, pullRequests);
     }
 }

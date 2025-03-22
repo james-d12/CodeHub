@@ -5,16 +5,16 @@ using Microsoft.Extensions.Logging;
 
 namespace CodeHub.Portal.Services.Services;
 
-public sealed class ResourceHttpClient : IResourceHttpClient
+public sealed class GitHttpClient : IGitHttpClient
 {
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _jsonOptions;
-    private readonly ILogger<ResourceHttpClient> _logger;
+    private readonly ILogger<GitHttpClient> _logger;
 
-    public ResourceHttpClient(
+    public GitHttpClient(
         HttpClient httpClient,
         JsonSerializerOptions jsonOptions,
-        ILogger<ResourceHttpClient> logger)
+        ILogger<GitHttpClient> logger)
     {
         _httpClient = httpClient;
         _jsonOptions = jsonOptions;
@@ -25,7 +25,7 @@ public sealed class ResourceHttpClient : IResourceHttpClient
     private const string PipelineUrl = "pipelines";
     private const string PullRequestUrl = "pull-requests";
 
-    public async Task<List<Pipeline>> GetPipelines()
+    public async Task<List<Pipeline>> GetPipelinesAsync()
     {
         try
         {
@@ -39,7 +39,7 @@ public sealed class ResourceHttpClient : IResourceHttpClient
         }
     }
 
-    public async Task<List<Repository>> GetRepositories()
+    public async Task<List<Repository>> GetRepositoriesAsync()
     {
         try
         {
@@ -53,7 +53,7 @@ public sealed class ResourceHttpClient : IResourceHttpClient
         }
     }
 
-    public async Task<List<PullRequest>> GetPullRequests()
+    public async Task<List<PullRequest>> GetPullRequestsAsync()
     {
         try
         {

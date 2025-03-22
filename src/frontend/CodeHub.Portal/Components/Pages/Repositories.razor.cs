@@ -6,19 +6,19 @@ namespace CodeHub.Portal.Components.Pages;
 public partial class Repositories
 {
     private readonly ILogger<Repositories> _logger;
-    private readonly IResourceHttpClient _resourceHttpClient;
+    private readonly IGitHttpClient _gitHttpClient;
     private List<Repository>? _repositories;
 
-    public Repositories(ILogger<Repositories> logger, IResourceHttpClient resourceHttpClient)
+    public Repositories(ILogger<Repositories> logger, IGitHttpClient gitHttpClient)
     {
         _logger = logger;
-        _resourceHttpClient = resourceHttpClient;
+        _gitHttpClient = gitHttpClient;
     }
 
     protected override async Task OnInitializedAsync()
     {
         _logger.LogInformation("Initializing Repositories component");
-        _repositories = await _resourceHttpClient.GetRepositories();
+        _repositories = await _gitHttpClient.GetRepositoriesAsync();
     }
 
     private static string GetPlatformIcon(Repository repository)

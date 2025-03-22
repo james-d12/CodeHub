@@ -1,0 +1,49 @@
+﻿@page "/work-items"
+@using CodeHub.Domain.Ticketing
+
+<PageTitle>CodeHub: Work Items</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+    @if (_workItems == null)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+    }
+    else
+    {
+        <MudDataGrid Dense="true" T="WorkItem" Items="@_workItems"
+                     FilterMode="@DataGridFilterMode.ColumnFilterRow" Filterable="true"
+                     FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
+                     RowsPerPage="20">
+            <ToolBarContent>
+                <MudText Typo="Typo.h4">
+                    <MudElement HtmlTag="b">Work Items</MudElement>
+                </MudText>
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Platform" Title="Platform" Filterable="false" Sortable="false">
+                    <CellTemplate>
+                        <MudIcon Icon="@GetPlatformIcon(context.Item)"/>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Title" Title="Title">
+                    <CellTemplate>
+                        <MudLink Target="_blank" Href="@(context.Item?.Title.ToString())">@context.Item?.Title</MudLink>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.State" Title="State">
+                    <CellTemplate>
+                        @context.Item?.State
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Type" Title="Type">
+                    <CellTemplate>
+                        @context.Item?.Type
+                    </CellTemplate>
+                </PropertyColumn>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="WorkItem" PageSizeOptions=@(new[] { 10, 20, 50 })/>
+            </PagerContent>
+        </MudDataGrid>
+    }
+</MudContainer>

@@ -59,9 +59,15 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
         var wiql = new Wiql
         {
             Query = $@"
-                    SELECT [System.Id], [System.Title], [System.State]
+                    SELECT 
+                        [System.Id],
+                        [System.Title],
+                        [System.State],
+                        [System.WorkItemType]
                     FROM WorkItems
-                    WHERE [System.TeamProject] = '{projectName}'"
+                    WHERE 
+                        [System.TeamProject] = '{projectName}' AND
+                        [System.State] NOT IN ('Done', 'Completed', 'Closed', 'Resolved')"
         };
 
         var queryResult = await workItemTrackingClient.QueryByWiqlAsync(wiql, cancellationToken: cancellationToken);
@@ -79,7 +85,11 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
         {
             var batchIds = workItemIds.Skip(i).Take(batchSize).ToArray();
             var batchWorkItems =
-                await workItemTrackingClient.GetWorkItemsAsync(batchIds, cancellationToken: cancellationToken);
+                await workItemTrackingClient.GetWorkItemsAsync(batchIds,
+                    fields:
+                    [
+                        "System.Title", "System.WorkItemType", "System.State"
+                    ], cancellationToken: cancellationToken);
             workItems.AddRange(batchWorkItems);
         }
 

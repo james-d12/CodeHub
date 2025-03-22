@@ -25,7 +25,7 @@ public sealed class AzureCloudQueryService : ICloudQueryService
     public List<CloudResource> QueryCloudResources(CloudResourceQueryRequest request)
     {
         _logger.LogInformation("Querying cloud resources from Azure");
-        var azureCloudResources = _memoryCache.Get<List<AzureCloudResource>>(CacheConstants.CloudResourceCacheKey) ?? [];
+        var azureCloudResources = _memoryCache.Get<List<AzureCloudResource>>(AzureCacheConstants.CloudResourceCacheKey) ?? [];
         var cloudResources = azureCloudResources.ConvertAll<CloudResource>(p => p);
 
         if (azureCloudResources.Count <= 0)

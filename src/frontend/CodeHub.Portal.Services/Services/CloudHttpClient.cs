@@ -9,14 +9,14 @@ public sealed class CloudHttpClient : ICloudHttpClient
 {
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _jsonOptions;
-    private readonly ILogger<ResourceHttpClient> _logger;
+    private readonly ILogger<CloudHttpClient> _logger;
 
     private const string CloudResourcesUrl = "resources";
 
     public CloudHttpClient(
         HttpClient httpClient,
         JsonSerializerOptions jsonOptions,
-        ILogger<ResourceHttpClient> logger)
+        ILogger<CloudHttpClient> logger)
     {
         _httpClient = httpClient;
         _jsonOptions = jsonOptions;

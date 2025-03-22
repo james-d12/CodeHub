@@ -1,5 +1,6 @@
 ﻿using CodeHub.Domain.Discovery;
 using CodeHub.Domain.Git.Service;
+using CodeHub.Domain.Ticketing.Service;
 using CodeHub.Module.AzureDevOps.Models;
 using CodeHub.Module.AzureDevOps.Services;
 using CodeHub.Module.AzureDevOps.Validation;
@@ -37,6 +38,7 @@ public static class AzureDevOpsExtensions
         services.TryAddSingleton<IAzureDevOpsService, AzureDevOpsService>();
         services.TryAddSingleton<IAzureDevOpsConnectionService, AzureDevOpsConnectionService>();
         services.AddScoped<IGitQueryService, AzureDevOpsGitQueryService>();
+        services.AddScoped<ITicketingQueryService, AzureDevOpsTicketingQueryService>();
         services.AddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
     }
 

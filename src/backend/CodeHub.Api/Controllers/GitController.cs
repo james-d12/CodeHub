@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace CodeHub.Api.Controllers;
 
 [ApiController]
-[Route("resources/")]
-public sealed class ResourceDevOpsController : ControllerBase
+[Route("git/")]
+public sealed class GitController : ControllerBase
 {
     private readonly IEnumerable<IGitQueryService> _queryServices;
 
-    public ResourceDevOpsController(IEnumerable<IGitQueryService> queryServices)
+    public GitController(IEnumerable<IGitQueryService> queryServices)
     {
         _queryServices = queryServices;
     }

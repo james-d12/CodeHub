@@ -1,4 +1,6 @@
 ﻿using CodeHub.Domain.Discovery;
+using CodeHub.Domain.Git.Service;
+using CodeHub.Domain.Ticketing.Service;
 using CodeHub.Module.AzureDevOps.Extensions;
 using CodeHub.Module.AzureDevOps.Services;
 using Microsoft.Extensions.Caching.Memory;
@@ -34,6 +36,14 @@ public sealed class AzureDevOpsExtensionsTests
             service => service.ServiceType == typeof(IAzureDevOpsConnectionService) &&
                        service.Lifetime == ServiceLifetime.Singleton &&
                        service.ImplementationType == typeof(AzureDevOpsConnectionService));
+        Assert.Contains(serviceCollection,
+            service => service.ServiceType == typeof(IGitQueryService) &&
+                       service.Lifetime == ServiceLifetime.Scoped &&
+                       service.ImplementationType == typeof(AzureDevOpsGitQueryService));
+        Assert.Contains(serviceCollection,
+            service => service.ServiceType == typeof(ITicketingQueryService) &&
+                       service.Lifetime == ServiceLifetime.Scoped &&
+                       service.ImplementationType == typeof(AzureDevOpsTicketingQueryService));
         Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(IMemoryCache) &&
                        service.ImplementationType == typeof(MemoryCache));

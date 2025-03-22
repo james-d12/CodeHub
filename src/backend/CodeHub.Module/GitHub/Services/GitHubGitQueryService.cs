@@ -24,7 +24,7 @@ public sealed class GitHubGitQueryService : IGitQueryService
     public List<Pipeline> QueryPipelines(PipelineQueryRequest request)
     {
         _logger.LogInformation("Querying pipelines from GitHub");
-        var githubPipelines = _memoryCache.Get<List<GitHubPipeline>>(CacheConstants.PipelineCacheKey) ?? [];
+        var githubPipelines = _memoryCache.Get<List<GitHubPipeline>>(GitHubCacheConstants.PipelineCacheKey) ?? [];
         var pipelines = githubPipelines.ConvertAll<Pipeline>(p => p);
 
         return new QueryBuilder<Pipeline>(pipelines)
@@ -39,7 +39,7 @@ public sealed class GitHubGitQueryService : IGitQueryService
     public List<Repository> QueryRepositories(RepositoryQueryRequest request)
     {
         _logger.LogInformation("Querying repositories from GitHub");
-        var gitHubRepositories = _memoryCache.Get<List<GitHubRepository>>(CacheConstants.RepositoryCacheKey) ?? [];
+        var gitHubRepositories = _memoryCache.Get<List<GitHubRepository>>(GitHubCacheConstants.RepositoryCacheKey) ?? [];
         var repositories = gitHubRepositories.ConvertAll<Repository>(p => p);
 
         return new QueryBuilder<Repository>(repositories)
@@ -55,7 +55,7 @@ public sealed class GitHubGitQueryService : IGitQueryService
     public List<PullRequest> QueryPullRequests(PullRequestQueryRequest request)
     {
         _logger.LogInformation("Querying pull requests from GitHub");
-        var githubPullRequests = _memoryCache.Get<List<GitHubPullRequest>>(CacheConstants.PullRequestCacheKey) ?? [];
+        var githubPullRequests = _memoryCache.Get<List<GitHubPullRequest>>(GitHubCacheConstants.PullRequestCacheKey) ?? [];
         var pullRequests = githubPullRequests.ConvertAll<PullRequest>(p => p);
 
         return new QueryBuilder<PullRequest>(pullRequests)

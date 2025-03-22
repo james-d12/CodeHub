@@ -6,19 +6,19 @@ namespace CodeHub.Portal.Components.Pages;
 public partial class PullRequests
 {
     private readonly ILogger<PullRequest> _logger;
-    private readonly IResourceHttpClient _resourceHttpClient;
+    private readonly IGitHttpClient _gitHttpClient;
     private List<PullRequest>? _pullRequests;
 
-    public PullRequests(ILogger<PullRequest> logger, IResourceHttpClient resourceHttpClient)
+    public PullRequests(ILogger<PullRequest> logger, IGitHttpClient gitHttpClient)
     {
         _logger = logger;
-        _resourceHttpClient = resourceHttpClient;
+        _gitHttpClient = gitHttpClient;
     }
 
     protected override async Task OnInitializedAsync()
     {
         _logger.LogInformation("Initializing Pull Requests component");
-        _pullRequests = await _resourceHttpClient.GetPullRequests();
+        _pullRequests = await _gitHttpClient.GetPullRequestsAsync();
     }
 
     private static string GetPlatformIcon(PullRequest pullRequest)

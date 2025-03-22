@@ -1,12 +1,13 @@
 ﻿using System.Collections.Frozen;
 using System.Collections.Immutable;
 using CodeHub.Domain.Git;
+using CodeHub.Domain.Ticketing;
 using CodeHub.Module.AzureDevOps.Models;
 using Microsoft.TeamFoundation.Build.WebApi;
 using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.SourceControl.WebApi;
-using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
 using PullRequestStatus = Microsoft.TeamFoundation.SourceControl.WebApi.PullRequestStatus;
+using WorkItem = Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models.WorkItem;
 
 namespace CodeHub.Module.AzureDevOps.Extensions;
 
@@ -118,11 +119,18 @@ public static class AzureDevOpsMappingExtensions
     {
         return new AzureDevOpsWorkItem
         {
-            Id = workItem.Id ?? 0,
+            Id = new WorkItemId(workItem.Id?.ToString() ?? string.Empty),
+            Title = workItem.Fields["System.Title"]?.ToString() ?? string.Empty,
+            Description = string.Empty,
+            Type = workItem.Fields["System.WorkItemType"]?.ToString() ?? string.Empty,
+            State = workItem.Fields["System.State"]?.ToString() ?? string.Empty,
             Url = workItem.Url,
             Revision = workItem.Rev ?? 0,
             Fields = workItem.Fields?.ToFrozenDictionary() ?? FrozenDictionary<string, object>.Empty,
-            Relations = workItem.Relations?.Select(r => r.Title).ToImmutableHashSet() ?? []
+            Relations = workItem.Relations?.Select(r => r.Title)
+                            .ToImmutableHashSet() ??
+                        [],
+            Platform = WorkItemPlatform.AzureDevOps
         };
     }
 }

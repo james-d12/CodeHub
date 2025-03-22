@@ -36,12 +36,18 @@ public static class ServiceCollectionExtensions
             client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/cloud/");
         });
 
-        services.AddHttpClient<IResourceHttpClient, ResourceHttpClient>(client =>
+        services.AddHttpClient<IGitHttpClient, GitHttpClient>(client =>
         {
-            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/resources/");
+            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/git/");
+        });
+
+        services.AddHttpClient<ITicketingClient, TicketingClient>(client =>
+        {
+            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/ticketing/");
         });
 
         services.TryAddScoped<ICloudHttpClient, CloudHttpClient>();
-        services.TryAddScoped<IResourceHttpClient, ResourceHttpClient>();
+        services.TryAddScoped<IGitHttpClient, GitHttpClient>();
+        services.TryAddScoped<ITicketingClient, TicketingClient>();
     }
 }

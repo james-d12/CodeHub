@@ -5,20 +5,20 @@ namespace CodeHub.Portal.Components.Pages;
 
 public partial class Pipelines
 {
-    private readonly ILogger<Pipeline> _logger;
-    private readonly IResourceHttpClient _resourceHttpClient;
+    private readonly ILogger<Pipelines> _logger;
+    private readonly IGitHttpClient _gitHttpClient;
     private List<Pipeline>? _pipelines;
 
-    public Pipelines(ILogger<Pipeline> logger, IResourceHttpClient resourceHttpClient)
+    public Pipelines(ILogger<Pipelines> logger, IGitHttpClient gitHttpClient)
     {
         _logger = logger;
-        _resourceHttpClient = resourceHttpClient;
+        _gitHttpClient = gitHttpClient;
     }
 
     protected override async Task OnInitializedAsync()
     {
         _logger.LogInformation("Initializing Pipelines component");
-        _pipelines = await _resourceHttpClient.GetPipelines();
+        _pipelines = await _gitHttpClient.GetPipelinesAsync();
     }
 
     private static string GetPlatformIcon(Pipeline pipeline)
