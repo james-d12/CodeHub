@@ -12,3 +12,4 @@ riderModule.iml
 /src/frontend/CodeHub.Portal/CodeHub.Portal.csproj.user
 /src/backend/CodeHub.Api/CodeHub.Api.csproj.user
 coverage-report
+**/StrykerOutput/

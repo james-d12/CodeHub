@@ -1,0 +1,23 @@
+{
+  "stryker-config": {
+    "concurrency": 8,
+    "mutation-level": "Complete",
+    "language-version": "latest",
+    "additional-timeout": 5000,
+    "mutate": [
+      "**/*"
+    ],
+    "solution": "CodeHub.sln",
+    "coverage-analysis": "perTest",
+    "thresholds": {
+      "high": 80,
+      "low": 60,
+      "break": 0
+    },
+    "verbosity": "info",
+    "reporters": [
+      "Progress",
+      "Html"
+    ]
+  }
+}
