@@ -59,17 +59,25 @@ public sealed class AzureService : IAzureService
         var cloudSecrets = new List<CloudSecret>();
 
         foreach (var resource in resources.Where(r =>
-                     r.Type.Equals("Microsoft.KeyVault/vaults", StringComparison.OrdinalIgnoreCase)))
+                     r.Type.Equals("vaults", StringComparison.OrdinalIgnoreCase)))
         {
-            var client = new SecretClient(vaultUri: resource.Url, credential: new DefaultAzureCredential());
-            var secrets = client.GetPropertiesOfSecrets(cancellationToken);
-            cloudSecrets.AddRange(secrets.Select(secret => new CloudSecret
+            try
             {
-                Name = secret.Name,
-                Location = resource.Name,
-                Url = secret.VaultUri,
-                Platform = CloudSecretPlatform.Azure
-            }));
+                var vaultUri = new Uri($"https://{resource.Id.Value}.vault.azure.net/");
+                var client = new SecretClient(vaultUri, new DefaultAzureCredential());
+                var secrets = client.GetPropertiesOfSecrets(cancellationToken);
+                cloudSecrets.AddRange(secrets.Select(secret => new CloudSecret
+                {
+                    Name = secret.Name,
+                    Location = resource.Name,
+                    Url = secret.VaultUri,
+                    Platform = CloudSecretPlatform.Azure
+                }));
+            }
+            catch (Exception)
+            {
+                // Ignore
+            }
         }
 
         return cloudSecrets;

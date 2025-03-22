@@ -3,6 +3,7 @@ using CodeHub.Domain.Cloud.Request;
 using CodeHub.Domain.Cloud.Service;
 using CodeHub.Module.Azure.Constants;
 using CodeHub.Module.Azure.Models;
+using CodeHub.Module.Shared.Extensions;
 using CodeHub.Module.Shared.Query;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -37,6 +38,9 @@ public sealed class AzureCloudQueryService : ICloudQueryService
         return new QueryBuilder<CloudResource>(cloudResources)
             .Where(request.Id, p => p.Id.Value == request.Id)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
+            .Where(request.Description, p => p.Description.Contains(request.Description ?? string.Empty))
+            .Where(request.Url, p => p.Url.ToString().Contains(request.Url ?? string.Empty))
+            .Where(request.Type, p => p.Type.EqualsCaseInsensitive(request.Type))
             .Where(request.Platform, p => p.Platform == request.Platform)
             .ToList();
     }
@@ -45,7 +49,7 @@ public sealed class AzureCloudQueryService : ICloudQueryService
     {
         _logger.LogInformation("Querying cloud secrets from Azure");
         var azureCloudSecrets =
-            _memoryCache.Get<List<CloudSecret>>(AzureCacheConstants.CloudResourceCacheKey) ?? [];
+            _memoryCache.Get<List<CloudSecret>>(AzureCacheConstants.CloudSecretCacheKey) ?? [];
         var cloudSecrets = azureCloudSecrets.ConvertAll<CloudSecret>(p => p);
 
         if (azureCloudSecrets.Count <= 0)
@@ -56,6 +60,8 @@ public sealed class AzureCloudQueryService : ICloudQueryService
         return new QueryBuilder<CloudSecret>(cloudSecrets)
             .Where(request.Name, p => p.Name.Contains(request.Name ?? string.Empty))
             .Where(request.Location, p => p.Location.Contains(request.Location ?? string.Empty))
+            .Where(request.Url, p => p.Url.ToString().Contains(request.Url ?? string.Empty))
+            .Where(request.Platform, p => p.Platform == request.Platform)
             .ToList();
     }
 }

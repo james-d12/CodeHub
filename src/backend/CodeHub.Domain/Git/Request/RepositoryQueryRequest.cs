@@ -1,4 +1,6 @@
-﻿namespace CodeHub.Domain.Git.Request;
+﻿using CodeHub.Domain.Shared;
+
+namespace CodeHub.Domain.Git.Request;
 
 public sealed record RepositoryQueryRequest(
     string? Id,
@@ -6,4 +8,4 @@ public sealed record RepositoryQueryRequest(
     string? Url,
     string? DefaultBranch,
     string? OwnerName,
-    RepositoryPlatform? Platform);
+    RepositoryPlatform? Platform) : BaseRequest;
