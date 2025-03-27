@@ -27,14 +27,19 @@ public sealed class GitHubDiscoveryService : DiscoveryService
         var repositories = await _gitHubService.GetRepositoriesAsync(cancellationToken);
 
         var pullRequests = new List<GitHubPullRequest>();
+        var pipelines = new List<GitHubPipeline>();
 
         foreach (var repository in repositories)
         {
             var repositoryPullRequests = await _gitHubService.GetPullRequestsAsync(repository);
             pullRequests.AddRange(repositoryPullRequests);
+
+            var repositoryPipelines = await _gitHubService.GetPipelinesAsync(repository, cancellationToken);
+            pipelines.AddRange(repositoryPipelines);
         }
 
         _memoryCache.Set(GitHubCacheConstants.RepositoryCacheKey, repositories);
+        _memoryCache.Set(GitHubCacheConstants.PipelineCacheKey, pipelines);
         _memoryCache.Set(GitHubCacheConstants.PullRequestCacheKey, pullRequests);
     }
 }

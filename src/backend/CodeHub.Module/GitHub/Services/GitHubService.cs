@@ -19,18 +19,13 @@ public sealed class GitHubService : IGitHubService
         return repositories.Select(r => r.MapToGitHubRepository()).ToList();
     }
 
-    public async Task<List<GitHubPipeline>> GetActionsAsync(string owner, string repository,
+    public async Task<List<GitHubPipeline>> GetPipelinesAsync(
+        GitHubRepository repository,
         CancellationToken cancellationToken)
     {
-        var pipelines = await _gitHubConnectionService.Client.Actions.Workflows.List(owner, repository);
-        var jobs = await _gitHubConnectionService.Client.Actions.Workflows.Runs.List(owner, repository);
-
-        var workflows = pipelines.Workflows.GroupJoin(jobs.WorkflowRuns,
-            workflow => workflow.Id,
-            workflowRuns => workflowRuns.WorkflowId,
-            (workflow, workflowRuns) => new { workflow, workflowRuns });
-
-        return pipelines.Workflows.Select(w => w.MapToGitHubPipeline()).ToList();
+        var pipelines =
+            await _gitHubConnectionService.Client.Actions.Workflows.List(repository.Owner.Name, repository.Name);
+        return pipelines.Workflows.Select(w => w.MapToGitHubPipeline(repository)).ToList();
     }
 
     public async Task<List<GitHubPullRequest>> GetPullRequestsAsync(GitHubRepository repository)

@@ -1,10 +1,12 @@
-﻿using Azure.Identity;
+﻿using System.Collections.Concurrent;
+using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.Security.KeyVault.Secrets;
 using CodeHub.Domain.Cloud;
 using CodeHub.Module.Azure.Extensions;
 using CodeHub.Module.Azure.Models;
+using CodeHub.Module.Shared.Extensions;
 
 namespace CodeHub.Module.Azure.Services;
 
@@ -54,32 +56,41 @@ public sealed class AzureService : IAzureService
         return azureResources;
     }
 
-    public List<CloudSecret> GetKeyVaultSecrets(List<AzureCloudResource> resources, CancellationToken cancellationToken)
+    public async Task<List<CloudSecret>> GetKeyVaultSecretsAsync(List<AzureCloudResource> resources,
+        CancellationToken cancellationToken)
     {
-        var cloudSecrets = new List<CloudSecret>();
+        var cloudSecrets = new ConcurrentBag<CloudSecret>();
+        var vaults = resources.Where(r => r.Type.EqualsCaseInsensitive("vaults")).ToList();
 
-        foreach (var resource in resources.Where(r =>
-                     r.Type.Equals("vaults", StringComparison.OrdinalIgnoreCase)))
+        var tasks = vaults.Select(async vault =>
         {
             try
             {
-                var vaultUri = new Uri($"https://{resource.Id.Value}.vault.azure.net/");
+                var vaultUri = new Uri($"https://{vault.Id.Value}.vault.azure.net/");
                 var client = new SecretClient(vaultUri, new DefaultAzureCredential());
-                var secrets = client.GetPropertiesOfSecrets(cancellationToken);
-                cloudSecrets.AddRange(secrets.Select(secret => new CloudSecret
+
+                foreach (var secret in client.GetPropertiesOfSecrets())
                 {
-                    Name = secret.Name,
-                    Location = resource.Name,
-                    Url = secret.VaultUri,
-                    Platform = CloudSecretPlatform.Azure
-                }));
+                    cloudSecrets.Add(new CloudSecret
+                    {
+                        Name = secret.Name,
+                        Location = vault.Name,
+                        Url = secret.VaultUri,
+                        Platform = CloudSecretPlatform.Azure
+                    });
+                }
+
+                await Task.CompletedTask;
             }
             catch (Exception)
             {
-                // Ignore
+                // Log exception if necessary
+                // Log.Error(ex, "Error fetching secrets for vault: {VaultName}", vault.Name);
             }
-        }
+        }).ToList();
 
-        return cloudSecrets;
+        await Task.WhenAll(tasks);
+
+        return cloudSecrets.ToList();
     }
 }

@@ -26,6 +26,8 @@ public partial class Pipelines
         return pipeline.Platform switch
         {
             PipelinePlatform.AzureDevOps => PlatformIcons.AzureDevOps,
+            PipelinePlatform.GitHub => PlatformIcons.GitHub,
+            PipelinePlatform.GitLab => PlatformIcons.GitLab,
             _ => string.Empty
         };
     }
