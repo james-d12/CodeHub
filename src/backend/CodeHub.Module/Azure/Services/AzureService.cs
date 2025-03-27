@@ -69,7 +69,7 @@ public sealed class AzureService : IAzureService
                 var vaultUri = new Uri($"https://{vault.Id.Value}.vault.azure.net/");
                 var client = new SecretClient(vaultUri, new DefaultAzureCredential());
 
-                await foreach (var secret in client.GetPropertiesOfSecretsAsync(cancellationToken))
+                foreach (var secret in client.GetPropertiesOfSecrets())
                 {
                     cloudSecrets.Add(new CloudSecret
                     {
@@ -79,6 +79,8 @@ public sealed class AzureService : IAzureService
                         Platform = CloudSecretPlatform.Azure
                     });
                 }
+
+                await Task.CompletedTask;
             }
             catch (Exception)
             {
