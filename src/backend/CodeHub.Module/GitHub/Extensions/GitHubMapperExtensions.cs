@@ -27,21 +27,17 @@ public static class GitHubMapperExtensions
         };
     }
 
-    public static GitHubPipeline MapToGitHubPipeline(this Workflow workflow)
+    public static GitHubPipeline MapToGitHubPipeline(this Workflow workflow, GitHubRepository repository)
     {
+        var name = new Uri(workflow.HtmlUrl).Segments[^1];
+        var fullUrl = $"{repository.Url}/actions/workflows/{name}";
+
         return new GitHubPipeline
         {
             Id = new PipelineId(workflow.Id.ToString()),
-            Name = workflow.Name,
-            Url = new Uri(workflow.HtmlUrl),
-            Owner = new Owner
-            {
-                Id = new OwnerId(string.Empty),
-                Name = string.Empty,
-                Description = string.Empty,
-                Url = new Uri(workflow.HtmlUrl),
-                Platform = OwnerPlatform.GitHub
-            },
+            Name = $"{repository.Name}-{workflow.Name}",
+            Url = new Uri(fullUrl),
+            Owner = repository.Owner,
             Platform = PipelinePlatform.GitHub
         };
     }
