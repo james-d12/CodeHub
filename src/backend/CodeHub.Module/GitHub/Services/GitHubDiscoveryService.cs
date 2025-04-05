@@ -24,7 +24,7 @@ public sealed class GitHubDiscoveryService : DiscoveryService
 
     protected override async Task StartAsync(CancellationToken cancellationToken)
     {
-        var repositories = await _gitHubService.GetRepositoriesAsync(cancellationToken);
+        var repositories = await _gitHubService.GetRepositoriesAsync();
 
         var pullRequests = new List<GitHubPullRequest>();
         var pipelines = new List<GitHubPipeline>();
@@ -34,7 +34,7 @@ public sealed class GitHubDiscoveryService : DiscoveryService
             var repositoryPullRequests = await _gitHubService.GetPullRequestsAsync(repository);
             pullRequests.AddRange(repositoryPullRequests);
 
-            var repositoryPipelines = await _gitHubService.GetPipelinesAsync(repository, cancellationToken);
+            var repositoryPipelines = await _gitHubService.GetPipelinesAsync(repository);
             pipelines.AddRange(repositoryPipelines);
         }
 

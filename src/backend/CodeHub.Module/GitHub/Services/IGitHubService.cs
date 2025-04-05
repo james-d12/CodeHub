@@ -4,8 +4,8 @@ namespace CodeHub.Module.GitHub.Services;
 
 public interface IGitHubService
 {
-    Task<List<GitHubRepository>> GetRepositoriesAsync(CancellationToken cancellationToken);
-    Task<List<GitHubPipeline>> GetPipelinesAsync(GitHubRepository repository, CancellationToken cancellationToken);
+    Task<List<GitHubRepository>> GetRepositoriesAsync();
+    Task<List<GitHubPipeline>> GetPipelinesAsync(GitHubRepository repository);
 
     Task<List<GitHubPullRequest>> GetPullRequestsAsync(GitHubRepository repository);
 }

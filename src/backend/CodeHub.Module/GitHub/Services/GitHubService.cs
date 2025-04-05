@@ -12,16 +12,14 @@ public sealed class GitHubService : IGitHubService
         _gitHubConnectionService = gitHubConnectionService;
     }
 
-    public async Task<List<GitHubRepository>> GetRepositoriesAsync(CancellationToken cancellationToken)
+    public async Task<List<GitHubRepository>> GetRepositoriesAsync()
     {
         var repositories =
-            await _gitHubConnectionService.Client.Repository.GetAllForCurrent().WaitAsync(cancellationToken) ?? [];
+            await _gitHubConnectionService.Client.Repository.GetAllForCurrent() ?? [];
         return repositories.Select(r => r.MapToGitHubRepository()).ToList();
     }
 
-    public async Task<List<GitHubPipeline>> GetPipelinesAsync(
-        GitHubRepository repository,
-        CancellationToken cancellationToken)
+    public async Task<List<GitHubPipeline>> GetPipelinesAsync(GitHubRepository repository)
     {
         var pipelines =
             await _gitHubConnectionService.Client.Actions.Workflows.List(repository.Owner.Name, repository.Name);
@@ -30,9 +28,9 @@ public sealed class GitHubService : IGitHubService
 
     public async Task<List<GitHubPullRequest>> GetPullRequestsAsync(GitHubRepository repository)
     {
-        var parsedId = long.TryParse(repository.Id.Value, out var repositoryId);
+        var isParsed = long.TryParse(repository.Id.Value, out var repositoryId);
 
-        if (!parsedId)
+        if (!isParsed)
         {
             return [];
         }
