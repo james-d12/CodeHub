@@ -31,17 +31,15 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
     {
         var buildClient = await _azureDevOpsConnectionService.GetClientAsync<BuildHttpClient>(cancellationToken);
         var pipelines = await buildClient.GetDefinitionsAsync(projectId, cancellationToken: cancellationToken);
-        var azureDevopsPipelines =
-            pipelines.Select(p => p.MapToAzureDevOpsPipeline()).ToList();
-        return azureDevopsPipelines;
+        return pipelines.Select(p => p.MapToAzureDevOpsPipeline()).ToList();
     }
 
     public async Task<List<AzureDevOpsProject>> GetProjectsAsync(CancellationToken cancellationToken)
     {
         var projectClient =
             await _azureDevOpsConnectionService.GetClientAsync<ProjectHttpClient>(cancellationToken);
-        var results = await projectClient.GetProjects();
-        return results.Select(pr => pr.MapToAzureDevOpsProject()).ToList();
+        var projects = await projectClient.GetProjects();
+        return projects.Select(pr => pr.MapToAzureDevOpsProject()).ToList();
     }
 
     public async Task<List<AzureDevOpsTeam>> GetTeamsAsync(CancellationToken cancellationToken)
@@ -99,10 +97,10 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
     public async Task<List<AzureDevOpsPullRequest>> GetPullRequestsAsync(Guid projectId,
         CancellationToken cancellationToken)
     {
-        var buildClient = await _azureDevOpsConnectionService.GetClientAsync<GitHttpClient>(cancellationToken);
+        var gitHttpClient = await _azureDevOpsConnectionService.GetClientAsync<GitHttpClient>(cancellationToken);
         var criteria = new GitPullRequestSearchCriteria() { Status = PullRequestStatus.Active };
-        var pipelines = await buildClient.GetPullRequestsByProjectAsync(projectId, criteria,
+        var pullRequests = await gitHttpClient.GetPullRequestsByProjectAsync(projectId, criteria,
             cancellationToken: cancellationToken);
-        return pipelines.Select(p => p.MapToAzureDevOpsPullRequest()).ToList();
+        return pullRequests.Select(p => p.MapToAzureDevOpsPullRequest()).ToList();
     }
 }
