@@ -6,9 +6,13 @@
         <Features>strict</Features>
         <WarningLevel>4</WarningLevel>
         <Nullable>enable</Nullable>
-        <AnalyzeMode>all</AnalyzeMode>
+        <AnalysisMode>Default</AnalysisMode>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <EnableRoslynAnalyzers>true</EnableRoslynAnalyzers>
         <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+        <RunAnalyzersDuringBuildOnly>true</RunAnalyzersDuringBuildOnly>
     </PropertyGroup>
 </Project>

@@ -2,8 +2,8 @@ name: codehub
 services:
   backend:
     build:
-      context: ./src/backend
-      dockerfile: Backend.Dockerfile
+      context: ./src
+      dockerfile: backend/Backend.Dockerfile
     ports:
       - "8080:8080"
     develop:
@@ -14,10 +14,10 @@ services:
   
   frontend:
     build:
-      context: ./src/frontend
+      context: ./src
       additional_contexts:
         backend: ./src/backend
-      dockerfile: Frontend.Dockerfile
+      dockerfile: frontend/Frontend.Dockerfile
     depends_on:
       - backend
     ports:
