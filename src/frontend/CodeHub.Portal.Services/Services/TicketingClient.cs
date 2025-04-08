@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using CodeHub.Domain.Ticketing;
+using CodeHub.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace CodeHub.Portal.Services.Services;
@@ -25,6 +26,7 @@ public sealed class TicketingClient : ITicketingClient
 
     public async Task<List<WorkItem>> GetWorkItemsAsync()
     {
+        using var activity = Tracing.StartActivity();
         try
         {
             _logger.LogInformation("Getting work items from: {Url}", WorkItemUrl);
@@ -32,6 +34,7 @@ public sealed class TicketingClient : ITicketingClient
         }
         catch (Exception exception)
         {
+            activity?.RecordException(exception);
             _logger.LogError(exception, "Could not get list of work items from {Url}", WorkItemUrl);
             return [];
         }

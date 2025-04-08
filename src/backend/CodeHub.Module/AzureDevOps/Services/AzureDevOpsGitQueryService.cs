@@ -5,6 +5,7 @@ using CodeHub.Module.AzureDevOps.Constants;
 using CodeHub.Module.AzureDevOps.Models;
 using CodeHub.Module.Shared.Extensions;
 using CodeHub.Module.Shared.Query;
+using CodeHub.Shared;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
@@ -23,6 +24,7 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
 
     public List<Pipeline> QueryPipelines(PipelineQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying pipelines from Azure DevOps");
         var azureDevOpsPipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(AzureDevOpsCacheConstants.PipelineCacheKey) ?? [];
         var pipelines = azureDevOpsPipelines.ConvertAll<Pipeline>(p => p);
@@ -38,6 +40,7 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
 
     public List<Repository> QueryRepositories(RepositoryQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying repositories from Azure DevOps");
         var azureDevOpsRepositories =
             _memoryCache.Get<List<AzureDevOpsRepository>>(AzureDevOpsCacheConstants.RepositoryCacheKey) ?? [];
@@ -55,6 +58,7 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
 
     public List<PullRequest> QueryPullRequests(PullRequestQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying pull requests from Azure DevOps");
         var azureDevOpsPullRequests =
             _memoryCache.Get<List<AzureDevOpsPullRequest>>(AzureDevOpsCacheConstants.PullRequestCacheKey) ?? [];

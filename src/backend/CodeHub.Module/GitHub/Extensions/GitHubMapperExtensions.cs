@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using CodeHub.Domain.Git;
 using CodeHub.Module.GitHub.Models;
+using CodeHub.Shared;
 using Octokit;
 
 namespace CodeHub.Module.GitHub.Extensions;
@@ -9,6 +10,7 @@ public static class GitHubMapperExtensions
 {
     public static GitHubRepository MapToGitHubRepository(this Octokit.Repository repository)
     {
+        using var activity = Tracing.StartActivity();
         return new GitHubRepository
         {
             Id = new RepositoryId(repository.Id.ToString()),
@@ -29,6 +31,7 @@ public static class GitHubMapperExtensions
 
     public static GitHubPipeline MapToGitHubPipeline(this Workflow workflow, GitHubRepository repository)
     {
+        using var activity = Tracing.StartActivity();
         var name = new Uri(workflow.HtmlUrl).Segments[^1];
         var fullUrl = $"{repository.Url}/actions/workflows/{name}";
 
@@ -45,6 +48,7 @@ public static class GitHubMapperExtensions
     public static GitHubPullRequest MapToGitHubPullRequest(this Octokit.PullRequest pullRequest,
         GitHubRepository repository)
     {
+        using var activity = Tracing.StartActivity();
         var status = pullRequest.State.Value switch
         {
             ItemState.Open => PullRequestStatus.Active,

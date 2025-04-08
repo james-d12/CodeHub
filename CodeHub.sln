@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Aspire.AppHost", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Aspire.ServiceDefaults", "src\aspire\CodeHub.Aspire.ServiceDefaults\CodeHub.Aspire.ServiceDefaults.csproj", "{84B671D3-7D39-4B07-BB9E-3B59F173DB08}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Shared", "src\backend\CodeHub.Shared\CodeHub.Shared.csproj", "{8FE7B37C-FD8F-45D5-9758-6CA8FA526890}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{84B671D3-7D39-4B07-BB9E-3B59F173DB08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84B671D3-7D39-4B07-BB9E-3B59F173DB08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84B671D3-7D39-4B07-BB9E-3B59F173DB08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE7B37C-FD8F-45D5-9758-6CA8FA526890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE7B37C-FD8F-45D5-9758-6CA8FA526890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE7B37C-FD8F-45D5-9758-6CA8FA526890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE7B37C-FD8F-45D5-9758-6CA8FA526890}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,5 +112,6 @@ Global
 		{2B8AEA40-107F-4360-8CF8-540513CCBF54} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
 		{D010727D-C478-4753-A0E2-5BE4302E21EE} = {E7CC82DA-5BDD-4492-8730-28EABBE305DB}
 		{84B671D3-7D39-4B07-BB9E-3B59F173DB08} = {E7CC82DA-5BDD-4492-8730-28EABBE305DB}
+		{8FE7B37C-FD8F-45D5-9758-6CA8FA526890} = {6BBAFA79-C6EC-4415-8249-3AF0BF69A8F8}
 	EndGlobalSection
 EndGlobal

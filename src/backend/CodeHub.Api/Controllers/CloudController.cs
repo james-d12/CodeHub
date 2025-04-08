@@ -1,6 +1,7 @@
 using CodeHub.Domain.Cloud;
 using CodeHub.Domain.Cloud.Request;
 using CodeHub.Domain.Cloud.Service;
+using CodeHub.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeHub.Api.Controllers;
@@ -24,6 +25,7 @@ public sealed class CloudController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public List<CloudResource> GetCloudResources([FromQuery] CloudResourceQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying cloud resources");
         var cloudResources = new List<CloudResource>();
         foreach (var queryService in _cloudQueryServices)
@@ -38,6 +40,7 @@ public sealed class CloudController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public List<CloudSecret> GetCloudSecrets([FromQuery] CloudSecretQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying cloud secrets");
         var cloudSecrets = new List<CloudSecret>();
         foreach (var queryService in _cloudQueryServices)

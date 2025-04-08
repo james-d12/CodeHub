@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using CodeHub.Domain.Cloud;
+using CodeHub.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace CodeHub.Portal.Services.Services;
@@ -27,6 +28,7 @@ public sealed class CloudHttpClient : ICloudHttpClient
 
     public async Task<List<CloudResource>> GetCloudResourcesAsync()
     {
+        using var activity = Tracing.StartActivity();
         try
         {
             _logger.LogInformation("Getting cloud resources from: {Url}", CloudResourcesUrl);
@@ -34,6 +36,7 @@ public sealed class CloudHttpClient : ICloudHttpClient
         }
         catch (Exception exception)
         {
+            activity?.RecordException(exception);
             _logger.LogError(exception, "Could not get list of cloud resources from {Url}", CloudResourcesUrl);
             return [];
         }
@@ -41,6 +44,7 @@ public sealed class CloudHttpClient : ICloudHttpClient
 
     public async Task<List<CloudSecret>> GetCloudSecretsAsync()
     {
+        using var activity = Tracing.StartActivity();
         try
         {
             _logger.LogInformation("Getting cloud secrets from: {Url}", CloudSecretsUrl);
@@ -48,6 +52,7 @@ public sealed class CloudHttpClient : ICloudHttpClient
         }
         catch (Exception exception)
         {
+            activity?.RecordException(exception);
             _logger.LogError(exception, "Could not get list of cloud secrets from {Url}", CloudSecretsUrl);
             return [];
         }

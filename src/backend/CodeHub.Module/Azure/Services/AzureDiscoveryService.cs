@@ -1,6 +1,7 @@
 ﻿using CodeHub.Domain.Discovery;
 using CodeHub.Module.Azure.Constants;
 using CodeHub.Module.Azure.Models;
+using CodeHub.Shared;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
@@ -26,6 +27,7 @@ public sealed class AzureDiscoveryService : DiscoveryService
 
     protected override async Task StartAsync(CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Discovering Azure Tenant resources...");
         var tenants = await _azureService.GetTenantsAsync(cancellationToken);
 

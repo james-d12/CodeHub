@@ -5,6 +5,7 @@ using CodeHub.Module.GitHub.Constants;
 using CodeHub.Module.GitHub.Models;
 using CodeHub.Module.Shared.Extensions;
 using CodeHub.Module.Shared.Query;
+using CodeHub.Shared;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
@@ -23,6 +24,7 @@ public sealed class GitHubGitQueryService : IGitQueryService
 
     public List<Pipeline> QueryPipelines(PipelineQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying pipelines from GitHub");
         var githubPipelines = _memoryCache.Get<List<GitHubPipeline>>(GitHubCacheConstants.PipelineCacheKey) ?? [];
         var pipelines = githubPipelines.ConvertAll<Pipeline>(p => p);
@@ -38,6 +40,7 @@ public sealed class GitHubGitQueryService : IGitQueryService
 
     public List<Repository> QueryRepositories(RepositoryQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying repositories from GitHub");
         var gitHubRepositories = _memoryCache.Get<List<GitHubRepository>>(GitHubCacheConstants.RepositoryCacheKey) ?? [];
         var repositories = gitHubRepositories.ConvertAll<Repository>(p => p);
@@ -54,6 +57,7 @@ public sealed class GitHubGitQueryService : IGitQueryService
 
     public List<PullRequest> QueryPullRequests(PullRequestQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying pull requests from GitHub");
         var githubPullRequests = _memoryCache.Get<List<GitHubPullRequest>>(GitHubCacheConstants.PullRequestCacheKey) ?? [];
         var pullRequests = githubPullRequests.ConvertAll<PullRequest>(p => p);

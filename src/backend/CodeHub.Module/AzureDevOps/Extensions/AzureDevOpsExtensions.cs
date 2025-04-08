@@ -4,6 +4,7 @@ using CodeHub.Domain.Ticketing.Service;
 using CodeHub.Module.AzureDevOps.Models;
 using CodeHub.Module.AzureDevOps.Services;
 using CodeHub.Module.AzureDevOps.Validation;
+using CodeHub.Shared;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -15,6 +16,7 @@ public static class AzureDevOpsExtensions
     public static IServiceCollection RegisterAzureDevOps(this IServiceCollection services,
         IConfiguration configuration)
     {
+        using var activity = Tracing.StartActivity();
         var settings = AzureDevOpsSettingsValidator.GetValidSettings(configuration);
 
         if (!settings.IsEnabled)

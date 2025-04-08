@@ -1,5 +1,6 @@
 using CodeHub.Module.GitLab.Extensions;
 using CodeHub.Module.GitLab.Models;
+using CodeHub.Shared;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
 
@@ -18,6 +19,7 @@ public sealed class GitLabService : IGitLabService
 
     public List<Project> GetProjects()
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Getting GitLab Projects.");
 
         return _connectionService.Client.Projects.Get(new ProjectQuery
@@ -28,6 +30,7 @@ public sealed class GitLabService : IGitLabService
 
     public List<GitLabPullRequest> GetPullRequests()
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Getting GitLab Pull Requests.");
 
         return _connectionService.Client.MergeRequests.Get(new MergeRequestQuery
@@ -38,6 +41,7 @@ public sealed class GitLabService : IGitLabService
 
     public List<GitLabPipeline> GetPipelines(Project project)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Getting GitLab Pipelines.");
 
         return _connectionService.Client

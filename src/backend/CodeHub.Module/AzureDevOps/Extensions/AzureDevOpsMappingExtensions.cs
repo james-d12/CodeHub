@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using CodeHub.Domain.Git;
 using CodeHub.Domain.Ticketing;
 using CodeHub.Module.AzureDevOps.Models;
+using CodeHub.Shared;
 using Microsoft.TeamFoundation.Build.WebApi;
 using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.SourceControl.WebApi;
@@ -15,6 +16,7 @@ public static class AzureDevOpsMappingExtensions
 {
     public static AzureDevOpsPipeline MapToAzureDevOpsPipeline(this BuildDefinitionReference buildDefinitionReference)
     {
+        using var activity = Tracing.StartActivity();
         return new AzureDevOpsPipeline
         {
             Id = new PipelineId(buildDefinitionReference.Id.ToString()),
@@ -35,6 +37,7 @@ public static class AzureDevOpsMappingExtensions
 
     public static AzureDevOpsProject MapToAzureDevOpsProject(this TeamProjectReference teamProjectReference)
     {
+        using var activity = Tracing.StartActivity();
         var teamProject = new TeamProject(teamProjectReference);
 
         return new AzureDevOpsProject
@@ -48,6 +51,7 @@ public static class AzureDevOpsMappingExtensions
 
     public static AzureDevOpsRepository MapToAzureDevOpsRepository(this GitRepository gitRepository)
     {
+        using var activity = Tracing.StartActivity();
         return new AzureDevOpsRepository
         {
             Id = new RepositoryId(gitRepository.Id.ToString()),
@@ -70,6 +74,7 @@ public static class AzureDevOpsMappingExtensions
 
     public static AzureDevOpsTeam MapToAzureDevOpsTeam(this WebApiTeam webApiTeam)
     {
+        using var activity = Tracing.StartActivity();
         return new AzureDevOpsTeam
         {
             Id = webApiTeam.Id,
@@ -81,6 +86,7 @@ public static class AzureDevOpsMappingExtensions
 
     public static AzureDevOpsPullRequest MapToAzureDevOpsPullRequest(this GitPullRequest gitPullRequest)
     {
+        using var activity = Tracing.StartActivity();
         var status = gitPullRequest.Status switch
         {
             PullRequestStatus.NotSet => Domain.Git.PullRequestStatus.Draft,
@@ -117,6 +123,7 @@ public static class AzureDevOpsMappingExtensions
 
     public static AzureDevOpsWorkItem MapToAzureDevOpsWorkItem(this WorkItem workItem)
     {
+        using var activity = Tracing.StartActivity();
         return new AzureDevOpsWorkItem
         {
             Id = new WorkItemId(workItem.Id?.ToString() ?? string.Empty),

@@ -2,6 +2,7 @@
 using CodeHub.Domain.Discovery;
 using CodeHub.Module.Azure.Services;
 using CodeHub.Module.Azure.Validation;
+using CodeHub.Shared;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -12,6 +13,7 @@ public static class AzureExtensions
 {
     public static void RegisterAzure(this IServiceCollection services, IConfiguration configuration)
     {
+        using var activity = Tracing.StartActivity();
         var settings = AzureSettingsValidator.GetValidSettings(configuration);
 
         if (!settings.IsEnabled)

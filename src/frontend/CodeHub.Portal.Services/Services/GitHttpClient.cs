@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
 using CodeHub.Domain.Git;
+using CodeHub.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace CodeHub.Portal.Services.Services;
@@ -27,6 +28,7 @@ public sealed class GitHttpClient : IGitHttpClient
 
     public async Task<List<Pipeline>> GetPipelinesAsync()
     {
+        using var activity = Tracing.StartActivity();
         try
         {
             _logger.LogInformation("Getting pipelines from: {Url}", PipelineUrl);
@@ -34,6 +36,7 @@ public sealed class GitHttpClient : IGitHttpClient
         }
         catch (Exception exception)
         {
+            activity?.RecordException(exception);
             _logger.LogError(exception, "Could not get list of pipelines from {Url}", PullRequestUrl);
             return [];
         }
@@ -41,6 +44,7 @@ public sealed class GitHttpClient : IGitHttpClient
 
     public async Task<List<Repository>> GetRepositoriesAsync()
     {
+        using var activity = Tracing.StartActivity();
         try
         {
             _logger.LogInformation("Getting repositories from: {Url}", RepositoryUrl);
@@ -48,6 +52,7 @@ public sealed class GitHttpClient : IGitHttpClient
         }
         catch (Exception exception)
         {
+            activity?.RecordException(exception);
             _logger.LogError(exception, "Could not get list of repositories from {Url}", RepositoryUrl);
             return [];
         }
@@ -55,6 +60,7 @@ public sealed class GitHttpClient : IGitHttpClient
 
     public async Task<List<PullRequest>> GetPullRequestsAsync()
     {
+        using var activity = Tracing.StartActivity();
         try
         {
             _logger.LogInformation("Getting pull requests from: {Url}", PullRequestUrl);
@@ -62,6 +68,7 @@ public sealed class GitHttpClient : IGitHttpClient
         }
         catch (Exception exception)
         {
+            activity?.RecordException(exception);
             _logger.LogError(exception, "Could not get list of pull requests from {Url}", PullRequestUrl);
             return [];
         }

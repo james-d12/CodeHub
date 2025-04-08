@@ -3,6 +3,7 @@ using CodeHub.Domain.Git.Service;
 using CodeHub.Module.GitLab.Models;
 using CodeHub.Module.GitLab.Services;
 using CodeHub.Module.GitLab.Validator;
+using CodeHub.Shared;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -14,6 +15,7 @@ public static class GitLabExtensions
     public static IServiceCollection RegisterGitLab(this IServiceCollection services,
         IConfiguration configuration)
     {
+        using var activity = Tracing.StartActivity();
         var settings = GitLabSettingsValidator.GetValidSettings(configuration);
 
         if (!settings.IsEnabled)

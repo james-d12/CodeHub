@@ -3,6 +3,7 @@ using CodeHub.Domain.Git.Service;
 using CodeHub.Module.GitHub.Models;
 using CodeHub.Module.GitHub.Services;
 using CodeHub.Module.GitHub.Validator;
+using CodeHub.Shared;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -14,6 +15,7 @@ public static class GitHubExtensions
     public static IServiceCollection RegisterGitHub(this IServiceCollection services,
         IConfiguration configuration)
     {
+        using var activity = Tracing.StartActivity();
         var settings = GitHubSettingsValidator.GetValidSettings(configuration);
 
         if (!settings.IsEnabled)
