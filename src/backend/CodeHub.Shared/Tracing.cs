@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace CodeHub.Shared;
 
-public struct Tracing
+public readonly struct Tracing
 {
     private static readonly ActivitySource ActivitySource = new(AppDomain.CurrentDomain.FriendlyName);
 
