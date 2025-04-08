@@ -2,6 +2,7 @@ using CodeHub.Domain.Discovery;
 using CodeHub.Module.GitLab.Extensions;
 using CodeHub.Module.GitLab.Constants;
 using CodeHub.Module.GitLab.Models;
+using CodeHub.Shared;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
@@ -25,6 +26,7 @@ public sealed class GitLabDiscoveryService : DiscoveryService
 
     protected override Task StartAsync(CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var projects = _gitLabService.GetProjects();
 
         var repositories = projects.Select(p => p.MapToGitLabRepository()).ToList();

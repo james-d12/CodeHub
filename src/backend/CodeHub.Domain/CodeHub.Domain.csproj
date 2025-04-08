@@ -4,4 +4,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder"/>
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\CodeHub.Shared\CodeHub.Shared.csproj" />
+    </ItemGroup>
 </Project>

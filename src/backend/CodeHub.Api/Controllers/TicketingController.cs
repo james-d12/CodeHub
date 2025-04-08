@@ -1,6 +1,7 @@
 using CodeHub.Domain.Ticketing;
 using CodeHub.Domain.Ticketing.Request;
 using CodeHub.Domain.Ticketing.Service;
+using CodeHub.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeHub.Api.Controllers;
@@ -20,6 +21,7 @@ public sealed class TicketingController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public List<WorkItem> GetPipelines([FromQuery] WorkItemQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         var workItems = new List<WorkItem>();
         foreach (var queryService in _queryServices)
         {

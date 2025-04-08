@@ -1,5 +1,6 @@
 ﻿using CodeHub.Module.AzureDevOps.Extensions;
 using CodeHub.Module.AzureDevOps.Models;
+using CodeHub.Shared;
 using Microsoft.TeamFoundation.Build.WebApi;
 using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.SourceControl.WebApi;
@@ -20,6 +21,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
     public async Task<List<AzureDevOpsRepository>> GetRepositoriesAsync(Guid projectId,
         CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var gitClient = await _azureDevOpsConnectionService.GetClientAsync<GitHttpClient>(cancellationToken);
         var repositories =
             await gitClient.GetRepositoriesAsync(projectId, cancellationToken: cancellationToken) ?? [];
@@ -29,6 +31,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
     public async Task<List<AzureDevOpsPipeline>> GetPipelinesAsync(Guid projectId,
         CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var buildClient = await _azureDevOpsConnectionService.GetClientAsync<BuildHttpClient>(cancellationToken);
         var pipelines = await buildClient.GetDefinitionsAsync(projectId, cancellationToken: cancellationToken);
         return pipelines.Select(p => p.MapToAzureDevOpsPipeline()).ToList();
@@ -36,6 +39,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
 
     public async Task<List<AzureDevOpsProject>> GetProjectsAsync(CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var projectClient =
             await _azureDevOpsConnectionService.GetClientAsync<ProjectHttpClient>(cancellationToken);
         var projects = await projectClient.GetProjects();
@@ -44,6 +48,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
 
     public async Task<List<AzureDevOpsTeam>> GetTeamsAsync(CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var teamClient = await _azureDevOpsConnectionService.GetClientAsync<TeamHttpClient>(cancellationToken);
         var teams = await teamClient.GetAllTeamsAsync(cancellationToken: cancellationToken);
         return teams.Select(t => t.MapToAzureDevOpsTeam()).ToList();
@@ -52,6 +57,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
     public async Task<List<AzureDevOpsWorkItem>> GetWorkItemsAsync(string projectName,
         CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var workItemTrackingClient =
             await _azureDevOpsConnectionService.GetClientAsync<WorkItemTrackingHttpClient>(cancellationToken);
         var wiql = new Wiql
@@ -97,6 +103,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
     public async Task<List<AzureDevOpsPullRequest>> GetPullRequestsAsync(Guid projectId,
         CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var gitHttpClient = await _azureDevOpsConnectionService.GetClientAsync<GitHttpClient>(cancellationToken);
         var criteria = new GitPullRequestSearchCriteria() { Status = PullRequestStatus.Active };
         var pullRequests = await gitHttpClient.GetPullRequestsByProjectAsync(projectId, criteria,

@@ -7,6 +7,7 @@ using CodeHub.Domain.Cloud;
 using CodeHub.Module.Azure.Extensions;
 using CodeHub.Module.Azure.Models;
 using CodeHub.Module.Shared.Extensions;
+using CodeHub.Shared;
 
 namespace CodeHub.Module.Azure.Services;
 
@@ -16,6 +17,7 @@ public sealed class AzureService : IAzureService
 
     public async Task<List<TenantResource>> GetTenantsAsync(CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var tenants = new List<TenantResource>();
         await foreach (var tenant in _client.GetTenants().GetAllAsync(cancellationToken))
         {
@@ -27,6 +29,7 @@ public sealed class AzureService : IAzureService
 
     public async Task<List<SubscriptionResource>> GetSubscriptionsAsync(CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var subscriptionResources = new List<SubscriptionResource>();
 
         await foreach (var subscription in _client.GetSubscriptions().GetAllAsync(cancellationToken))
@@ -42,6 +45,7 @@ public sealed class AzureService : IAzureService
         TenantResource tenantResource,
         CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var azureResources = new List<AzureCloudResource>();
 
         await foreach (var resource in subscriptionResource.GetGenericResourcesAsync(
@@ -59,6 +63,7 @@ public sealed class AzureService : IAzureService
     public async Task<List<CloudSecret>> GetKeyVaultSecretsAsync(List<AzureCloudResource> resources,
         CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         var cloudSecrets = new ConcurrentBag<CloudSecret>();
         var vaults = resources.Where(r => r.Type.EqualsCaseInsensitive("vaults")).ToList();
 

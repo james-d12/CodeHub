@@ -5,6 +5,7 @@ using CodeHub.Module.Azure.Constants;
 using CodeHub.Module.Azure.Models;
 using CodeHub.Module.Shared.Extensions;
 using CodeHub.Module.Shared.Query;
+using CodeHub.Shared;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
@@ -25,6 +26,7 @@ public sealed class AzureCloudQueryService : ICloudQueryService
 
     public List<CloudResource> QueryCloudResources(CloudResourceQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying cloud resources from Azure");
         var azureCloudResources =
             _memoryCache.Get<List<AzureCloudResource>>(AzureCacheConstants.CloudResourceCacheKey) ?? [];
@@ -47,6 +49,7 @@ public sealed class AzureCloudQueryService : ICloudQueryService
 
     public List<CloudSecret> QueryCloudSecrets(CloudSecretQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying cloud secrets from Azure");
         var azureCloudSecrets =
             _memoryCache.Get<List<CloudSecret>>(AzureCacheConstants.CloudSecretCacheKey) ?? [];

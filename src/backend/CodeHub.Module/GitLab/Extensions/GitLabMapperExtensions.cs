@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using CodeHub.Domain.Git;
 using CodeHub.Module.GitLab.Models;
+using CodeHub.Shared;
 using NGitLab.Models;
 
 namespace CodeHub.Module.GitLab.Extensions;
@@ -9,6 +10,7 @@ public static class GitLabMapperExtensions
 {
     public static GitLabPullRequest MapToGitLabPullRequest(this MergeRequest mergeRequest)
     {
+        using var activity = Tracing.StartActivity();
         return new GitLabPullRequest
         {
             Id = new PullRequestId(mergeRequest.Id.ToString()),
@@ -35,6 +37,7 @@ public static class GitLabMapperExtensions
 
     public static GitLabPipeline MapToGitLabPipeline(this PipelineBasic pipeline)
     {
+        using var activity = Tracing.StartActivity();
         return new GitLabPipeline
         {
             Id = new PipelineId(pipeline.Id.ToString()),
@@ -54,6 +57,7 @@ public static class GitLabMapperExtensions
 
     public static GitLabRepository MapToGitLabRepository(this Project project)
     {
+        using var activity = Tracing.StartActivity();
         return new GitLabRepository
         {
             Id = new RepositoryId(project.Id.ToString()),

@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using CodeHub.Portal.Services.Services;
+using CodeHub.Shared;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -11,6 +12,7 @@ public static class ServiceCollectionExtensions
 {
     public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
+        using var activity = Tracing.StartActivity();
         var codeHubBackendBaseUrl = configuration.GetValue<string>("CodeHubBackendBaseUrl");
 
         if (string.IsNullOrEmpty(codeHubBackendBaseUrl))

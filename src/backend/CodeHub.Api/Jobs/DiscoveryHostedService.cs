@@ -1,4 +1,5 @@
 ﻿using CodeHub.Domain.Discovery;
+using CodeHub.Shared;
 
 namespace CodeHub.Api.Jobs;
 
@@ -17,6 +18,7 @@ public sealed class DiscoveryHostedService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        using var activity = Tracing.StartActivity();
         _logger.LogDebug("Worker running at: {time}", DateTimeOffset.Now);
 
         foreach (var discoveryService in _discoveryServices)

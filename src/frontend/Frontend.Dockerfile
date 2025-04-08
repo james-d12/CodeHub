@@ -3,9 +3,9 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
 WORKDIR /app
 
+COPY ./aspire ./aspire
 COPY --from=backend . ./backend
-COPY . ./frontend
-COPY ./Directory.Build.props ./frontend
+COPY ./frontend ./frontend
 
 WORKDIR frontend/CodeHub.Portal
 

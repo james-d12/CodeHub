@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\aspire\CodeHub.Aspire.ServiceDefaults\CodeHub.Aspire.ServiceDefaults.csproj" />
     <ProjectReference Include="..\CodeHub.Module\CodeHub.Module.csproj" />
   </ItemGroup>
 

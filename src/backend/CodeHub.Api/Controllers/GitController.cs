@@ -1,6 +1,7 @@
 ﻿using CodeHub.Domain.Git;
 using CodeHub.Domain.Git.Request;
 using CodeHub.Domain.Git.Service;
+using CodeHub.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeHub.Api.Controllers;
@@ -20,6 +21,7 @@ public sealed class GitController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public List<Pipeline> GetPipelines([FromQuery] PipelineQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         var pipelines = new List<Pipeline>();
         foreach (var queryService in _queryServices)
         {
@@ -33,6 +35,7 @@ public sealed class GitController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public List<Repository> GetRepositories([FromQuery] RepositoryQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         var repositories = new List<Repository>();
         foreach (var queryService in _queryServices)
         {
@@ -46,6 +49,7 @@ public sealed class GitController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public List<PullRequest> GetPullRequests([FromQuery] PullRequestQueryRequest request)
     {
+        using var activity = Tracing.StartActivity();
         var pullRequests = new List<PullRequest>();
         foreach (var queryService in _queryServices)
         {

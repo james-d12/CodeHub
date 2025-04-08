@@ -1,6 +1,7 @@
 ﻿using Azure.ResourceManager.Resources;
 using CodeHub.Module.Azure.Models;
 using CodeHub.Domain.Cloud;
+using CodeHub.Shared;
 
 namespace CodeHub.Module.Azure.Extensions;
 
@@ -11,6 +12,7 @@ public static class AzureMappingExtensions
         string tenantName,
         string subscriptionName)
     {
+        using var activity = Tracing.StartActivity();
         return new AzureCloudResource
         {
             Id = new CloudResourceId(genericResourceData.Id.Name),

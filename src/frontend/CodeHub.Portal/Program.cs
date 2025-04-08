@@ -1,3 +1,4 @@
+using CodeHub.Aspire.ServiceDefaults;
 using CodeHub.Portal.Components;
 using CodeHub.Portal.Services.Extensions;
 using MudBlazor.Services;
@@ -18,16 +19,13 @@ try
 {
     logger.LogInformation("Starting up: {ApplicationName}", applicationName);
 
+    builder.AddServiceDefaults();
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
 
     builder.Services.RegisterServices(builder.Configuration);
     builder.Services.AddMudServices();
-    builder.Services.AddHttpsRedirection(options =>
-    {
-        options.RedirectStatusCode = 307;
-        options.HttpsPort = 5001;
-    });
+    builder.Services.AddHttpsRedirection(_ => { });
 
     var app = builder.Build();
 

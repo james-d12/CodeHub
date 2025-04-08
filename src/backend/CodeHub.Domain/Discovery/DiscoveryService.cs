@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using CodeHub.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace CodeHub.Domain.Discovery;
@@ -16,6 +17,7 @@ public abstract class DiscoveryService : IDiscoveryService
 
     public async Task DiscoveryAsync(CancellationToken cancellationToken)
     {
+        using var activity = Tracing.StartActivity();
         try
         {
             _logger.LogInformation("{Platform} Discovery Service started.", Platform);
@@ -31,7 +33,9 @@ public abstract class DiscoveryService : IDiscoveryService
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, $"Error occurred whilst trying to discover the latest {Platform} resources.");
+            activity?.RecordException(exception);
+            _logger.LogError(exception, "Error occurred whilst trying to discover the latest {Platform} resources.",
+                Platform);
             throw;
         }
     }

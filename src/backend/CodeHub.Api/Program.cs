@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using CodeHub.Api.Jobs;
 using CodeHub.Api.Settings;
+using CodeHub.Aspire.ServiceDefaults;
 using CodeHub.Module.Azure.Extensions;
 using CodeHub.Module.AzureDevOps.Extensions;
 using CodeHub.Module.GitHub.Extensions;
@@ -26,6 +27,7 @@ try
         JsonSerializer.Serialize(builder.Configuration.GetSection("CorsSettings").Value));
     logger.LogInformation("Starting up: {ApplicationName}", applicationName);
 
+    builder.AddServiceDefaults();
     builder.Services.AddLogging();
     builder.Services.AddControllers().AddJsonOptions(options =>
     {
