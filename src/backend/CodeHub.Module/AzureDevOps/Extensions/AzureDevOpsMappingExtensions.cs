@@ -103,13 +103,15 @@ public static class AzureDevOpsMappingExtensions
             _ => Domain.Git.PullRequestStatus.Unknown
         };
 
+        var url = $"{projectUri}/_git/{gitPullRequest.Repository.Name}/pullrequest/{gitPullRequest.PullRequestId}";
+        var repoUrl = $"{projectUri}/_git/{gitPullRequest.Repository.Name}";
+
         return new AzureDevOpsPullRequest
         {
             Id = new PullRequestId(gitPullRequest.PullRequestId.ToString()),
             Name = gitPullRequest.Title,
             Description = gitPullRequest.Description,
-            Url = new Uri(
-                $"{projectUri}_git/{gitPullRequest.Repository.Name}/pullrequest/{gitPullRequest.PullRequestId}"),
+            Url = new Uri(url),
             Labels = gitPullRequest.Labels?.Select(l => l.Name).ToImmutableHashSet() ?? [],
             Reviewers = gitPullRequest.Reviewers?.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
             Status = status,
@@ -123,7 +125,7 @@ public static class AzureDevOpsMappingExtensions
                 ChangeCount = gitPullRequest.LastMergeCommit?.ChangeCounts?.Count ?? 0
             },
             RepositoryName = gitPullRequest.Repository?.Name ?? string.Empty,
-            RepositoryUrl = new Uri(gitPullRequest.Repository?.WebUrl ?? string.Empty),
+            RepositoryUrl = new Uri(repoUrl),
             CreatedOnDate = DateOnly.FromDateTime(gitPullRequest.CreationDate),
         };
     }

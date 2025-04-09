@@ -167,7 +167,8 @@ public sealed class AzureDevOpsMappingExtensionsTests
         Assert.Equal(from.PullRequestId.ToString(), to.Id.Value);
         Assert.Equal(from.Title, to.Name);
         Assert.Equal(from.Description, to.Description);
-        Assert.Equal($"{projectUri}_git/{from.Repository.Name}/pullrequest/{from.PullRequestId}", to.Url.ToString());
+        Assert.Equal($"{projectUri}/_git/{from.Repository.Name}/pullrequest/{from.PullRequestId}", to.Url.ToString());
+        Assert.Equal($"{projectUri}/_git/{from.Repository.Name}", to.RepositoryUrl.ToString());
         Assert.NotNull(from.Labels);
         Assert.Equal(from.Labels.Select(l => l.Name).ToImmutableHashSet(), to.Labels);
     }
