@@ -39,7 +39,7 @@ public sealed class NamespaceUsageTests
             {
                 if (!usedNamespace.StartsWith("CodeHub.Module")) continue;
 
-                var isAllowed = usedNamespace.StartsWith($"CodeHub.Module.{moduleName}") ||
+                var isAllowed = usedNamespace.StartsWith($"CodeHub.Module.{moduleName}.") ||
                                 AllowedNamespaces.Any(n => usedNamespace.StartsWith(n));
                 Assert.True(isAllowed, $"Disallowed namespace '{usedNamespace}' found in file '{file}'");
             }

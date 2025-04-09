@@ -1,5 +1,6 @@
 ﻿using CodeHub.Domain.Cloud.Service;
 using CodeHub.Domain.Discovery;
+using CodeHub.Module.Azure.Models;
 using CodeHub.Module.Azure.Services;
 using CodeHub.Module.Azure.Validation;
 using CodeHub.Shared;
@@ -23,6 +24,7 @@ public static class AzureExtensions
 
         services.RegisterServices();
         services.RegisterCache();
+        services.RegisterOptions(configuration);
     }
 
     private static void RegisterServices(this IServiceCollection services)
@@ -35,5 +37,11 @@ public static class AzureExtensions
     private static void RegisterCache(this IServiceCollection services)
     {
         services.AddMemoryCache(options => options.TrackStatistics = true);
+    }
+
+    private static void RegisterOptions(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddOptions<AzureSettings>()
+            .Bind(configuration.GetRequiredSection(nameof(AzureSettings)));
     }
 }
