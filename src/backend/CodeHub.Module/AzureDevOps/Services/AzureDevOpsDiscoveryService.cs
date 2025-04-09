@@ -37,7 +37,8 @@ public sealed class AzureDevOpsDiscoveryService : DiscoveryService
 
         _logger.LogInformation("Discovering Azure DevOps project resources...");
         var projects =
-            await _azureDevOpsService.GetProjectsAsync(_azureDevOpsSettings.ProjectFilters, cancellationToken);
+            await _azureDevOpsService.GetProjectsAsync(_azureDevOpsSettings.Organization,
+                _azureDevOpsSettings.ProjectFilters, cancellationToken);
 
         var pipelines = new List<AzureDevOpsPipeline>();
         var repositories = new List<AzureDevOpsRepository>();

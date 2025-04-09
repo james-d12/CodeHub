@@ -58,19 +58,20 @@ public sealed class AzureDevOpsMappingExtensionsTests
     public void MapToAzureDevOpsProject_WhenGivenValidTeamProjectReference_ReturnsAzureDevOpsProject()
     {
         // Arrange
+        const string organisation = "MyOrganisation";
         var from = _fixture
             .Build<TeamProjectReference>()
             .With(t => t.Url, _fixture.Create<Uri>().ToString())
             .Create();
 
         // Act
-        var to = from.MapToAzureDevOpsProject();
+        var to = from.MapToAzureDevOpsProject(organisation);
 
         // Assert
         Assert.Equal(from.Id, to.Id);
         Assert.Equal(from.Name, to.Name);
         Assert.Equal(from.Description, to.Description);
-        Assert.Equal(from.Url, to.Url.ToString());
+        Assert.Equal($"https://dev.azure.com/MyOrganisation/{from.Name}", to.Url.ToString());
     }
 
     [Fact]

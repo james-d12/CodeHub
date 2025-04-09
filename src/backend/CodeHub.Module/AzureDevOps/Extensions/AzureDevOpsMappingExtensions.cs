@@ -17,6 +17,7 @@ public static class AzureDevOpsMappingExtensions
     public static AzureDevOpsPipeline MapToAzureDevOpsPipeline(this BuildDefinitionReference buildDefinitionReference)
     {
         using var activity = Tracing.StartActivity();
+
         return new AzureDevOpsPipeline
         {
             Id = new PipelineId(buildDefinitionReference.Id.ToString()),
@@ -35,7 +36,8 @@ public static class AzureDevOpsMappingExtensions
         };
     }
 
-    public static AzureDevOpsProject MapToAzureDevOpsProject(this TeamProjectReference teamProjectReference)
+    public static AzureDevOpsProject MapToAzureDevOpsProject(this TeamProjectReference teamProjectReference,
+        string organisation)
     {
         using var activity = Tracing.StartActivity();
         var teamProject = new TeamProject(teamProjectReference);
@@ -45,7 +47,7 @@ public static class AzureDevOpsMappingExtensions
             Id = teamProjectReference.Id,
             Name = teamProject.Name,
             Description = teamProject.Description,
-            Url = new Uri(teamProject.Url),
+            Url = new Uri($"https://dev.azure.com/{organisation}/{teamProject.Name}"),
         };
     }
 

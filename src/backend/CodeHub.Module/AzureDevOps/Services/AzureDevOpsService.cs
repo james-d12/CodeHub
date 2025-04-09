@@ -38,6 +38,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
     }
 
     public async Task<List<AzureDevOpsProject>> GetProjectsAsync(
+        string organisation,
         List<string> projectsFilter,
         CancellationToken cancellationToken)
     {
@@ -49,13 +50,13 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
         if (projectsFilter.Count <= 0)
         {
             return projects
-                .Select(pr => pr.MapToAzureDevOpsProject())
+                .Select(pr => pr.MapToAzureDevOpsProject(organisation))
                 .ToList();
         }
 
         return projects
             .Where(p => projectsFilter.Contains(p.Name, StringComparer.OrdinalIgnoreCase))
-            .Select(pr => pr.MapToAzureDevOpsProject())
+            .Select(pr => pr.MapToAzureDevOpsProject(organisation))
             .ToList();
     }
 
