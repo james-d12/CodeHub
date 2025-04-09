@@ -58,7 +58,8 @@ public sealed class AzureDevOpsDiscoveryService : DiscoveryService
             pipelines.AddRange(projectPipelines);
 
             _logger.LogInformation("Discovering Azure DevOps Pull Request resources for {ProjectName}", project.Name);
-            var projectPullRequests = await _azureDevOpsService.GetPullRequestsAsync(project.Id, cancellationToken);
+            var projectPullRequests =
+                await _azureDevOpsService.GetPullRequestsAsync(project.Id, project.Url, cancellationToken);
             pullRequests.AddRange(projectPullRequests);
 
             _logger.LogInformation("Discovering Azure DevOps Work Item resources for {ProjectName}", project.Name);

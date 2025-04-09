@@ -89,7 +89,8 @@ public static class AzureDevOpsMappingExtensions
         };
     }
 
-    public static AzureDevOpsPullRequest MapToAzureDevOpsPullRequest(this GitPullRequest gitPullRequest)
+    public static AzureDevOpsPullRequest MapToAzureDevOpsPullRequest(this GitPullRequest gitPullRequest,
+        Uri projectUri)
     {
         using var activity = Tracing.StartActivity();
         var status = gitPullRequest.Status switch
@@ -107,7 +108,8 @@ public static class AzureDevOpsMappingExtensions
             Id = new PullRequestId(gitPullRequest.PullRequestId.ToString()),
             Name = gitPullRequest.Title,
             Description = gitPullRequest.Description,
-            Url = new Uri(gitPullRequest.Url.Replace("_apis/", "").Replace("git/", "_git/")),
+            Url = new Uri(
+                $"{projectUri}_git/{gitPullRequest.Repository.Name}/pullrequest/{gitPullRequest.PullRequestId}"),
             Labels = gitPullRequest.Labels?.Select(l => l.Name).ToImmutableHashSet() ?? [],
             Reviewers = gitPullRequest.Reviewers?.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
             Status = status,
@@ -121,7 +123,7 @@ public static class AzureDevOpsMappingExtensions
                 ChangeCount = gitPullRequest.LastMergeCommit?.ChangeCounts?.Count ?? 0
             },
             RepositoryName = gitPullRequest.Repository?.Name ?? string.Empty,
-            RepositoryUrl = new Uri(gitPullRequest.Repository?.Url ?? string.Empty),
+            RepositoryUrl = new Uri(gitPullRequest.Repository?.WebUrl ?? string.Empty),
             CreatedOnDate = DateOnly.FromDateTime(gitPullRequest.CreationDate),
         };
     }

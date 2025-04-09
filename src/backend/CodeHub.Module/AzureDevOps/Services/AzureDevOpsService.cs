@@ -116,7 +116,9 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
         return workItems.Select(w => w.MapToAzureDevOpsWorkItem()).ToList();
     }
 
-    public async Task<List<AzureDevOpsPullRequest>> GetPullRequestsAsync(Guid projectId,
+    public async Task<List<AzureDevOpsPullRequest>> GetPullRequestsAsync(
+        Guid projectId,
+        Uri projectUri,
         CancellationToken cancellationToken)
     {
         using var activity = Tracing.StartActivity();
@@ -124,6 +126,6 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
         var criteria = new GitPullRequestSearchCriteria() { Status = PullRequestStatus.Active };
         var pullRequests = await gitHttpClient.GetPullRequestsByProjectAsync(projectId, criteria,
             cancellationToken: cancellationToken);
-        return pullRequests.Select(p => p.MapToAzureDevOpsPullRequest()).ToList();
+        return pullRequests.Select(p => p.MapToAzureDevOpsPullRequest(projectUri)).ToList();
     }
 }

@@ -27,7 +27,7 @@ public sealed class AzureDevOpsMappingExtensionsTests
     public void MapToAzureDevOpsPipeline_WhenGivenValidBuildDefinitionReference_ReturnsAzureDevOpsPipeline()
     {
         // Arrange
-        var projectUrl = _fixture.Create<Uri>();
+        var projectUrl = new Uri("https://test.com");
         var project = _fixture
             .Build<TeamProjectReference>()
             .With(t => t.Url, _fixture.Create<Uri>().ToString)
@@ -131,6 +131,8 @@ public sealed class AzureDevOpsMappingExtensionsTests
     public void MapToAzureDevOpsPullRequest_WhenGivenValidGitPullRequest_ReturnsAzureDevOpsPullRequest()
     {
         // Arrange
+        var projectUri = new Uri("https://test.com");
+
         var lastMergeCommit = _fixture
             .Build<GitCommitRef>()
             .With(g => g.Url, _fixture.Create<Uri>().ToString())
@@ -140,7 +142,7 @@ public sealed class AzureDevOpsMappingExtensionsTests
 
         var repository = _fixture
             .Build<GitRepository>()
-            .With(g => g.Url, _fixture.Create<Uri>().ToString())
+            .With(g => g.WebUrl, _fixture.Create<Uri>().ToString())
             .Create();
 
         var from = _fixture
@@ -159,13 +161,13 @@ public sealed class AzureDevOpsMappingExtensionsTests
             .Create();
 
         // Act
-        var to = from.MapToAzureDevOpsPullRequest();
+        var to = from.MapToAzureDevOpsPullRequest(projectUri);
 
         // Assert
         Assert.Equal(from.PullRequestId.ToString(), to.Id.Value);
         Assert.Equal(from.Title, to.Name);
         Assert.Equal(from.Description, to.Description);
-        Assert.Equal(from.Url, to.Url.ToString());
+        Assert.Equal($"{projectUri}_git/{from.Repository.Name}/pullrequest/{from.PullRequestId}", to.Url.ToString());
         Assert.NotNull(from.Labels);
         Assert.Equal(from.Labels.Select(l => l.Name).ToImmutableHashSet(), to.Labels);
     }
