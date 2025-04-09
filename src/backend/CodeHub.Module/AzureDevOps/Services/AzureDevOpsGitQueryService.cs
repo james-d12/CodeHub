@@ -26,7 +26,8 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
     {
         using var activity = Tracing.StartActivity();
         _logger.LogInformation("Querying pipelines from Azure DevOps");
-        var azureDevOpsPipelines = _memoryCache.Get<List<AzureDevOpsPipeline>>(AzureDevOpsCacheConstants.PipelineCacheKey) ?? [];
+        var azureDevOpsPipelines =
+            _memoryCache.Get<List<AzureDevOpsPipeline>>(AzureDevOpsCacheConstants.PipelineCacheKey) ?? [];
         var pipelines = azureDevOpsPipelines.ConvertAll<Pipeline>(p => p);
 
         return new QueryBuilder<Pipeline>(pipelines)
@@ -70,6 +71,7 @@ public sealed class AzureDevOpsGitQueryService : IGitQueryService
             .Where(request.Description, p => p.Description.ContainsCaseInsensitive(request.Description))
             .Where(request.Url, p => p.Url.ToString().ContainsCaseInsensitive(request.Url))
             .Where(request.Platform, p => p.Platform == request.Platform)
+            .Where(request.Labels, p => p.Labels.Select(l => l).Intersect(request.Labels ?? []).Any())
             .ToList();
     }
 }

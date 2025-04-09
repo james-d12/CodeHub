@@ -7,4 +7,5 @@ public sealed record PullRequestQueryRequest(
     string? Name,
     string? Description,
     string? Url,
+    List<string>? Labels,
     PullRequestPlatform? Platform) : BaseRequest;

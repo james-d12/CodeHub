@@ -1,4 +1,6 @@
-﻿namespace CodeHub.Module.Shared.Query;
+﻿using Microsoft.TeamFoundation.Common;
+
+namespace CodeHub.Module.Shared.Query;
 
 public sealed class QueryBuilder<T> : IQueryBuilder<T> where T : class
 {
@@ -12,6 +14,16 @@ public sealed class QueryBuilder<T> : IQueryBuilder<T> where T : class
     public QueryBuilder<T> Where(string? value, Func<T, bool> predicate)
     {
         if (!string.IsNullOrWhiteSpace(value))
+        {
+            _query = _query.AsEnumerable().Where(predicate).AsQueryable();
+        }
+
+        return this;
+    }
+
+    public QueryBuilder<T> Where(IEnumerable<string>? value, Func<T, bool> predicate)
+    {
+        if (!value.IsNullOrEmpty())
         {
             _query = _query.AsEnumerable().Where(predicate).AsQueryable();
         }
