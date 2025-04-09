@@ -33,7 +33,8 @@ public static class AzureDevOpsMappingExtensions
                 Id = new OwnerId(buildDefinitionReference.Project.Id.ToString()),
                 Name = buildDefinitionReference.Project.Name,
                 Description = buildDefinitionReference.Project.Description,
-                Url = new Uri(buildDefinitionReference.Project.Url.Replace("_apis/", string.Empty)),
+                Url = new Uri(buildDefinitionReference.Project.Url.Replace("_apis/", string.Empty)
+                    .Replace("projects/", string.Empty)),
                 Platform = OwnerPlatform.AzureDevOps,
             }
         };
@@ -71,7 +72,8 @@ public static class AzureDevOpsMappingExtensions
                 Id = new OwnerId(gitRepository.ProjectReference.Id.ToString()),
                 Name = gitRepository.ProjectReference.Name,
                 Description = gitRepository.ProjectReference.Description,
-                Url = new Uri(gitRepository.ProjectReference.Url.Replace("_apis/", string.Empty)),
+                Url = new Uri(gitRepository.ProjectReference.Url.Replace("_apis/", string.Empty)
+                    .Replace("projects/", string.Empty)),
                 Platform = OwnerPlatform.AzureDevOps,
             }
         };
@@ -140,7 +142,7 @@ public static class AzureDevOpsMappingExtensions
             Description = string.Empty,
             Type = workItem.Fields["System.WorkItemType"]?.ToString() ?? string.Empty,
             State = workItem.Fields["System.State"]?.ToString() ?? string.Empty,
-            Url = workItem.Url,
+            Url = new Uri(workItem.Url),
             Revision = workItem.Rev ?? 0,
             Fields = workItem.Fields?.ToFrozenDictionary() ?? FrozenDictionary<string, object>.Empty,
             Relations = workItem.Relations?.Select(r => r.Title)

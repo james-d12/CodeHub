@@ -189,6 +189,7 @@ public sealed class AzureDevOpsMappingExtensionsTests
         var from = _fixture
             .Build<WorkItem>()
             .With(w => w.Fields, fields)
+            .With(w => w.Url, _fixture.Create<Uri>().ToString())
             .Create();
 
         // Act
@@ -196,7 +197,7 @@ public sealed class AzureDevOpsMappingExtensionsTests
 
         // Assert
         Assert.Equal(from.Id.ToString(), to.Id.Value);
-        Assert.Equal(from.Url, to.Url);
+        Assert.Equal(from.Url, to.Url.ToString());
         Assert.Equal(from.Fields["System.Title"], to.Title);
         Assert.Equal(string.Empty, to.Description);
         Assert.Equal(from.Fields["System.State"], to.State);

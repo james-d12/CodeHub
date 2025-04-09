@@ -27,7 +27,7 @@
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.Title" Title="Title">
                     <CellTemplate>
-                        <MudLink Target="_blank" Href="@(context.Item?.Title.ToString())">@context.Item?.Title</MudLink>
+                        <MudLink Target="_blank" Href="@(context.Item?.Url.ToString())">@context.Item?.Title</MudLink>
                     </CellTemplate>
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.State" Title="State">
