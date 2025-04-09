@@ -45,7 +45,7 @@ public sealed class AzureService : IAzureService
         }
 
         return subscriptionResources
-            .Where(p => subscriptionFilters.Contains(p.Id.Name, StringComparer.OrdinalIgnoreCase))
+            .Where(p => subscriptionFilters.Contains(p.Data.DisplayName, StringComparer.OrdinalIgnoreCase))
             .ToList();
     }
 

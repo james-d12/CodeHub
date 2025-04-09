@@ -38,7 +38,8 @@ here: https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecr
 ```json
 {
   "AzureSettings": {
-    "IsEnabled": true
+    "IsEnabled": true,
+    "SubscriptionFilters": []
   }
 }
 ```
