@@ -4,6 +4,7 @@ using CodeHub.Module.AzureDevOps.Models;
 using CodeHub.Shared;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace CodeHub.Module.AzureDevOps.Services;
 
@@ -11,15 +12,18 @@ public sealed class AzureDevOpsDiscoveryService : DiscoveryService
 {
     private readonly IAzureDevOpsService _azureDevOpsService;
     private readonly ILogger<AzureDevOpsDiscoveryService> _logger;
+    private readonly AzureDevOpsSettings _azureDevOpsSettings;
     private readonly IMemoryCache _memoryCache;
 
     public AzureDevOpsDiscoveryService(
         ILogger<AzureDevOpsDiscoveryService> logger,
         IAzureDevOpsService azureDevOpsService,
+        IOptions<AzureDevOpsSettings> azureDevOpsSettings,
         IMemoryCache memoryCache) : base(logger)
     {
         _logger = logger;
         _azureDevOpsService = azureDevOpsService;
+        _azureDevOpsSettings = azureDevOpsSettings.Value;
         _memoryCache = memoryCache;
     }
 
@@ -32,7 +36,8 @@ public sealed class AzureDevOpsDiscoveryService : DiscoveryService
         var teams = await _azureDevOpsService.GetTeamsAsync(cancellationToken);
 
         _logger.LogInformation("Discovering Azure DevOps project resources...");
-        var projects = await _azureDevOpsService.GetProjectsAsync(cancellationToken);
+        var projects =
+            await _azureDevOpsService.GetProjectsAsync(_azureDevOpsSettings.ProjectsFilter, cancellationToken);
 
         var pipelines = new List<AzureDevOpsPipeline>();
         var repositories = new List<AzureDevOpsRepository>();
@@ -50,7 +55,7 @@ public sealed class AzureDevOpsDiscoveryService : DiscoveryService
             var projectPipelines = await _azureDevOpsService.GetPipelinesAsync(project.Id, cancellationToken);
             pipelines.AddRange(projectPipelines);
 
-            _logger.LogInformation("Discovering Azure DevOps Pipeline resources for {ProjectName}", project.Name);
+            _logger.LogInformation("Discovering Azure DevOps Pull Request resources for {ProjectName}", project.Name);
             var projectPullRequests = await _azureDevOpsService.GetPullRequestsAsync(project.Id, cancellationToken);
             pullRequests.AddRange(projectPullRequests);
 
