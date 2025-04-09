@@ -5,9 +5,15 @@ namespace CodeHub.Module.AzureDevOps.Services;
 public interface IAzureDevOpsService
 {
     Task<List<AzureDevOpsRepository>> GetRepositoriesAsync(Guid projectId, CancellationToken cancellationToken);
-    Task<List<AzureDevOpsPipeline>> GetPipelinesAsync(Guid projectId, CancellationToken cancellationToken);
 
-    Task<List<AzureDevOpsProject>> GetProjectsAsync(string organisation, List<string> projectFilters,
+    Task<List<AzureDevOpsPipeline>> GetPipelinesAsync(
+        Guid projectId,
+        Uri projectUri,
+        CancellationToken cancellationToken);
+
+    Task<List<AzureDevOpsProject>> GetProjectsAsync(
+        string organisation,
+        List<string> projectFilters,
         CancellationToken cancellationToken);
 
     Task<List<AzureDevOpsTeam>> GetTeamsAsync(CancellationToken cancellationToken);

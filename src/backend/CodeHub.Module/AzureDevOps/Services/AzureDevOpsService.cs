@@ -28,13 +28,15 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
         return repositories.Select(r => r.MapToAzureDevOpsRepository()).ToList();
     }
 
-    public async Task<List<AzureDevOpsPipeline>> GetPipelinesAsync(Guid projectId,
+    public async Task<List<AzureDevOpsPipeline>> GetPipelinesAsync(
+        Guid projectId,
+        Uri projectUri,
         CancellationToken cancellationToken)
     {
         using var activity = Tracing.StartActivity();
         var buildClient = await _azureDevOpsConnectionService.GetClientAsync<BuildHttpClient>(cancellationToken);
         var pipelines = await buildClient.GetDefinitionsAsync(projectId, cancellationToken: cancellationToken);
-        return pipelines.Select(p => p.MapToAzureDevOpsPipeline()).ToList();
+        return pipelines.Select(p => p.MapToAzureDevOpsPipeline(projectUri)).ToList();
     }
 
     public async Task<List<AzureDevOpsProject>> GetProjectsAsync(

@@ -14,15 +14,18 @@ namespace CodeHub.Module.AzureDevOps.Extensions;
 
 public static class AzureDevOpsMappingExtensions
 {
-    public static AzureDevOpsPipeline MapToAzureDevOpsPipeline(this BuildDefinitionReference buildDefinitionReference)
+    public static AzureDevOpsPipeline MapToAzureDevOpsPipeline(this BuildDefinitionReference buildDefinitionReference,
+        Uri projectUri)
     {
         using var activity = Tracing.StartActivity();
+
+        var url = new Uri($"{projectUri}/_build?definitionId={buildDefinitionReference.Id}");
 
         return new AzureDevOpsPipeline
         {
             Id = new PipelineId(buildDefinitionReference.Id.ToString()),
             Name = buildDefinitionReference.Name,
-            Url = new Uri(buildDefinitionReference.Url),
+            Url = url,
             Path = buildDefinitionReference.Path,
             Platform = PipelinePlatform.AzureDevOps,
             Owner = new Owner
@@ -104,7 +107,7 @@ public static class AzureDevOpsMappingExtensions
             Id = new PullRequestId(gitPullRequest.PullRequestId.ToString()),
             Name = gitPullRequest.Title,
             Description = gitPullRequest.Description,
-            Url = new Uri(gitPullRequest.Url),
+            Url = new Uri(gitPullRequest.Url.Replace("_apis/", "").Replace("git/", "_git/")),
             Labels = gitPullRequest.Labels?.Select(l => l.Name).ToImmutableHashSet() ?? [],
             Reviewers = gitPullRequest.Reviewers?.Select(r => r.DisplayName).ToImmutableHashSet() ?? [],
             Status = status,

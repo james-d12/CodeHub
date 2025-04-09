@@ -27,6 +27,7 @@ public sealed class AzureDevOpsMappingExtensionsTests
     public void MapToAzureDevOpsPipeline_WhenGivenValidBuildDefinitionReference_ReturnsAzureDevOpsPipeline()
     {
         // Arrange
+        var projectUrl = _fixture.Create<Uri>();
         var project = _fixture
             .Build<TeamProjectReference>()
             .With(t => t.Url, _fixture.Create<Uri>().ToString)
@@ -39,12 +40,12 @@ public sealed class AzureDevOpsMappingExtensionsTests
             .Create();
 
         // Act
-        var to = from.MapToAzureDevOpsPipeline();
+        var to = from.MapToAzureDevOpsPipeline(projectUrl);
 
         // Assert
         Assert.Equal(from.Id.ToString(), to.Id.Value);
         Assert.Equal(from.Name, to.Name);
-        Assert.Equal(from.Url, to.Url.ToString());
+        Assert.Equal($"{projectUrl}/_build?definitionId={from.Id}", to.Url.ToString());
         Assert.Equal(from.Path, to.Path);
         Assert.Equal(PipelinePlatform.AzureDevOps, to.Platform);
         Assert.Equal(from.Project.Id.ToString(), to.Owner.Id.Value);
