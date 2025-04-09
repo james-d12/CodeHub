@@ -186,6 +186,8 @@ public sealed class AzureDevOpsMappingExtensionsTests
             { "System.Description", "TestThing" }
         };
 
+        var projectUri = new Uri("https://test.com");
+
         var from = _fixture
             .Build<WorkItem>()
             .With(w => w.Fields, fields)
@@ -193,11 +195,11 @@ public sealed class AzureDevOpsMappingExtensionsTests
             .Create();
 
         // Act
-        var to = from.MapToAzureDevOpsWorkItem();
+        var to = from.MapToAzureDevOpsWorkItem(projectUri);
 
         // Assert
         Assert.Equal(from.Id.ToString(), to.Id.Value);
-        Assert.Equal(from.Url, to.Url.ToString());
+        Assert.Equal($"{projectUri}/_workitems/edit/{from.Id}", to.Url.ToString());
         Assert.Equal(from.Fields["System.Title"], to.Title);
         Assert.Equal(string.Empty, to.Description);
         Assert.Equal(from.Fields["System.State"], to.State);

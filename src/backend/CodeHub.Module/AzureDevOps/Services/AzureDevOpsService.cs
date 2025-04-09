@@ -70,7 +70,9 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
         return teams.Select(t => t.MapToAzureDevOpsTeam()).ToList();
     }
 
-    public async Task<List<AzureDevOpsWorkItem>> GetWorkItemsAsync(string projectName,
+    public async Task<List<AzureDevOpsWorkItem>> GetWorkItemsAsync(
+        string projectName,
+        Uri projectUri,
         CancellationToken cancellationToken)
     {
         using var activity = Tracing.StartActivity();
@@ -113,7 +115,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
             workItems.AddRange(batchWorkItems);
         }
 
-        return workItems.Select(w => w.MapToAzureDevOpsWorkItem()).ToList();
+        return workItems.Select(w => w.MapToAzureDevOpsWorkItem(projectUri)).ToList();
     }
 
     public async Task<List<AzureDevOpsPullRequest>> GetPullRequestsAsync(

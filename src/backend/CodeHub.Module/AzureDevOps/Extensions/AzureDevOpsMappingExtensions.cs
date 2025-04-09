@@ -132,9 +132,12 @@ public static class AzureDevOpsMappingExtensions
         };
     }
 
-    public static AzureDevOpsWorkItem MapToAzureDevOpsWorkItem(this WorkItem workItem)
+    public static AzureDevOpsWorkItem MapToAzureDevOpsWorkItem(this WorkItem workItem, Uri projectUri)
     {
         using var activity = Tracing.StartActivity();
+
+        var url = $"{projectUri}/_workitems/edit/{workItem.Id}";
+
         return new AzureDevOpsWorkItem
         {
             Id = new WorkItemId(workItem.Id?.ToString() ?? string.Empty),
@@ -142,7 +145,7 @@ public static class AzureDevOpsMappingExtensions
             Description = string.Empty,
             Type = workItem.Fields["System.WorkItemType"]?.ToString() ?? string.Empty,
             State = workItem.Fields["System.State"]?.ToString() ?? string.Empty,
-            Url = new Uri(workItem.Url),
+            Url = new Uri(url),
             Revision = workItem.Rev ?? 0,
             Fields = workItem.Fields?.ToFrozenDictionary() ?? FrozenDictionary<string, object>.Empty,
             Relations = workItem.Relations?.Select(r => r.Title)
