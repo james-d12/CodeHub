@@ -37,14 +37,24 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
         return pipelines.Select(p => p.MapToAzureDevOpsPipeline()).ToList();
     }
 
-    public async Task<List<AzureDevOpsProject>> GetProjectsAsync(CancellationToken cancellationToken)
+    public async Task<List<AzureDevOpsProject>> GetProjectsAsync(
+        List<string> projectsFilter,
+        CancellationToken cancellationToken)
     {
         using var activity = Tracing.StartActivity();
         var projectClient =
             await _azureDevOpsConnectionService.GetClientAsync<ProjectHttpClient>(cancellationToken);
         var projects = await projectClient.GetProjects();
 
+        if (projectsFilter.Count <= 0)
+        {
+            return projects
+                .Select(pr => pr.MapToAzureDevOpsProject())
+                .ToList();
+        }
+
         return projects
+            .Where(p => projectsFilter.Contains(p.Name, StringComparer.OrdinalIgnoreCase))
             .Select(pr => pr.MapToAzureDevOpsProject())
             .ToList();
     }

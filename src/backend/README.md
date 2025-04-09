@@ -5,7 +5,8 @@ and querying from third parties. As well as exposing the API that is used by the
 
 ## Modules
 
-Each platform is in its own folder in the CodeHub.Module project. Below is the current list of platforms that are supported:
+Each platform is in its own folder in the CodeHub.Module project. Below is the current list of platforms that are
+supported:
 
 - Azure
 - Azure DevOps
@@ -52,7 +53,8 @@ For Azure DevOps below is an example. This example will enable the Azure DevOps 
   "AzureDevOpsSettings": {
     "Organization": "<INSERT YOUR ORGANIZATION NAME HERE>",
     "PersonalAccessToken": "<INSERT YOUR PERSONAL ACCESS TOKEN HERE>",
-    "IsEnabled": true
+    "IsEnabled": true,
+    "ProjectFilters": []
   }
 }
 ```

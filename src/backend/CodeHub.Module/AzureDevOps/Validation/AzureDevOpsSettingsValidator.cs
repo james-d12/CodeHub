@@ -15,6 +15,7 @@ public static class AzureDevOpsSettingsValidator
             .CheckEnabled(x => x.IsEnabled, nameof(AzureDevOpsSettings.IsEnabled))
             .CheckValue(x => x.Organization, nameof(AzureDevOpsSettings.Organization))
             .CheckValue(x => x.PersonalAccessToken, nameof(AzureDevOpsSettings.PersonalAccessToken))
+            .CheckValue(x => x.ProjectFilters, nameof(AzureDevOpsSettings.ProjectFilters))
             .Build();
     }
 }

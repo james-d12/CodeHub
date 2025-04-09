@@ -103,7 +103,10 @@ public sealed class AzureDevOpsExtensionsTests
         {
             { "AzureDevOpsSettings:Organization", "TestOrganization" },
             { "AzureDevOpsSettings:PersonalAccessToken", "TestPersonalAccessToken" },
-            { "AzureDevOpsSettings:IsEnabled", enabled.ToString() }
+            { "AzureDevOpsSettings:IsEnabled", enabled.ToString() },
+            { "AzureDevOpsSettings:ProjectFilters:0", "Project1" },
+            { "AzureDevOpsSettings:ProjectFilters:1", "Project2" },
+            { "AzureDevOpsSettings:ProjectFilters:2", "Project3" }
         };
     }
 

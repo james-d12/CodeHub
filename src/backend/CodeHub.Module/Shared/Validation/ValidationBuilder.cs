@@ -67,6 +67,26 @@ public sealed class ValidationBuilder<T> where T : Settings, new()
         return this;
     }
 
+    public ValidationBuilder<T> CheckValue<TProp>(Expression<Func<T, List<TProp>>> property, string valueKey)
+    {
+        ArgumentNullException.ThrowIfNull(_settingsSection, "Settings Section is missing.");
+
+        if (!_settings.IsEnabled)
+        {
+            return this;
+        }
+
+        var value = _settingsSection.GetSection(valueKey).Get<List<TProp>>();
+
+        if (value == null || value.Count == 0)
+        {
+            throw new InvalidOperationException($"{valueKey} configuration is missing or empty");
+        }
+
+        SetProperty(property, value);
+        return this;
+    }
+
     private void SetProperty<TProp>(Expression<Func<T, TProp>> propertyExpression, TProp value)
     {
         if (propertyExpression.Body is MemberExpression { Member: System.Reflection.PropertyInfo propertyInfo })

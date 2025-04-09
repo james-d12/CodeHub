@@ -132,6 +132,46 @@ public sealed class ValidationBuilderTests
         Assert.Equal("RandomTestValue", settings.TestProperty);
     }
 
+    [Fact]
+    public void CheckValue_ListOfStrings_WhenIsEnabledButListIsMissing_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var configuration = new ConfigurationBuilder().AddInMemoryCollection(GetIsEnabledOnlyTestSettings(true))
+            .Build();
+        var sut = new ValidationBuilder<ValidationBuilderTestSettings>(configuration);
+
+        // Act + Assert
+        Assert.Throws<InvalidOperationException>(() =>
+            sut
+                .SectionExists("TestSettings")
+                .CheckEnabled(x => x.IsEnabled, nameof(ValidationBuilderTestSettings.IsEnabled))
+                .CheckValue(x => x.TestList, nameof(ValidationBuilderTestSettings.TestList))
+                .Build());
+    }
+
+    [Fact]
+    public void CheckValue_ListOfStrings_WhenSettingsAreValid_SetsListCorrectly()
+    {
+        // Arrange
+        var configData = GetValidTestSettings(true);
+        configData.Add("TestSettings:TestList:0", "Value1");
+        configData.Add("TestSettings:TestList:1", "Value2");
+
+        var configuration = new ConfigurationBuilder().AddInMemoryCollection(configData).Build();
+        var sut = new ValidationBuilder<ValidationBuilderTestSettings>(configuration);
+
+        // Act
+        var result = sut
+            .SectionExists("TestSettings")
+            .CheckEnabled(x => x.IsEnabled, nameof(ValidationBuilderTestSettings.IsEnabled))
+            .CheckValue(x => x.TestList, nameof(ValidationBuilderTestSettings.TestList))
+            .Build();
+
+        // Assert
+        Assert.True(result.IsEnabled);
+        Assert.Equal(new[] { "Value1", "Value2" }, result.TestList);
+    }
+
     private static Dictionary<string, string?> GetTestSettingsWithSection()
     {
         return new Dictionary<string, string?>
@@ -145,7 +185,8 @@ public sealed class ValidationBuilderTests
         return new Dictionary<string, string?>
         {
             { "TestSettings:IsEnabled", enabled.ToString() },
-            { "TestSettings:TestProperty", "RandomTestValue" }
+            { "TestSettings:TestProperty", "RandomTestValue" },
+            { "TestSettings:TestList", "['Test']" }
         };
     }
 
