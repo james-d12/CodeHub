@@ -41,7 +41,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
 
     public async Task<List<AzureDevOpsProject>> GetProjectsAsync(
         string organisation,
-        List<string> projectsFilter,
+        List<string> projectFilters,
         CancellationToken cancellationToken)
     {
         using var activity = Tracing.StartActivity();
@@ -49,7 +49,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
             await _azureDevOpsConnectionService.GetClientAsync<ProjectHttpClient>(cancellationToken);
         var projects = await projectClient.GetProjects();
 
-        if (projectsFilter.Count <= 0)
+        if (projectFilters.Count <= 0)
         {
             return projects
                 .Select(pr => pr.MapToAzureDevOpsProject(organisation))
@@ -57,7 +57,7 @@ public sealed class AzureDevOpsService : IAzureDevOpsService
         }
 
         return projects
-            .Where(p => projectsFilter.Contains(p.Name, StringComparer.OrdinalIgnoreCase))
+            .Where(p => projectFilters.Contains(p.Name, StringComparer.OrdinalIgnoreCase))
             .Select(pr => pr.MapToAzureDevOpsProject(organisation))
             .ToList();
     }

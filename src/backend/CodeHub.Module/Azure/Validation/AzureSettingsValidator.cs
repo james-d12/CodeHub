@@ -11,6 +11,7 @@ public static class AzureSettingsValidator
         return new ValidationBuilder<AzureSettings>(configuration)
             .SectionExists(nameof(AzureSettings))
             .CheckEnabled(x => x.IsEnabled, nameof(AzureSettings.IsEnabled))
+            .CheckValue(x => x.SubscriptionFilters, nameof(AzureSettings.SubscriptionFilters))
             .Build();
     }
 }

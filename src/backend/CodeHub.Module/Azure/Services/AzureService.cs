@@ -27,7 +27,9 @@ public sealed class AzureService : IAzureService
         return tenants;
     }
 
-    public async Task<List<SubscriptionResource>> GetSubscriptionsAsync(CancellationToken cancellationToken)
+    public async Task<List<SubscriptionResource>> GetSubscriptionsAsync(
+        List<string> subscriptionFilters,
+        CancellationToken cancellationToken)
     {
         using var activity = Tracing.StartActivity();
         var subscriptionResources = new List<SubscriptionResource>();
@@ -37,7 +39,14 @@ public sealed class AzureService : IAzureService
             subscriptionResources.Add(subscription);
         }
 
-        return subscriptionResources;
+        if (subscriptionFilters.Count <= 0)
+        {
+            return subscriptionResources;
+        }
+
+        return subscriptionResources
+            .Where(p => subscriptionFilters.Contains(p.Id.Name, StringComparer.OrdinalIgnoreCase))
+            .ToList();
     }
 
     public async Task<List<AzureCloudResource>> GetResourcesAsync(

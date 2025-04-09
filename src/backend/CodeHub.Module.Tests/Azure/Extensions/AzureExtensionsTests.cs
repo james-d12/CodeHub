@@ -61,7 +61,8 @@ public sealed class AzureExtensionsTests
     {
         return new Dictionary<string, string?>
         {
-            { "AzureSettings:IsEnabled", isEnabled.ToString() }
+            { "AzureSettings:IsEnabled", isEnabled.ToString() },
+            { "AzureSettings:SubscriptionFilters:1", "TestSubscription" }
         };
     }
 }
