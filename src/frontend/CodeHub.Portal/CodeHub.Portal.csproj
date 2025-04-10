@@ -12,9 +12,9 @@
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <EnableRoslynAnalyzers>true</EnableRoslynAnalyzers>
         <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
         <RunAnalyzersDuringBuildOnly>true</RunAnalyzersDuringBuildOnly>
+        <UserSecretsId>b74f861f-7e46-483e-8502-e62ed2525ad1</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -33,20 +33,6 @@
         <Content Update="appsettings.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-        <_ContentIncludedByDefault Remove="Features\Repositories\Repositories.razor"/>
-        <_ContentIncludedByDefault Remove="Features\AzureDevOps\AzureDevOpsPipelineDialog.razor"/>
-        <_ContentIncludedByDefault Remove="Features\AzureDevOps\AzureDevOpsRepositoryDialog.razor"/>
-        <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor"/>
-        <_ContentIncludedByDefault Remove="Components\Layout\NavMenu.razor"/>
-        <_ContentIncludedByDefault Remove="Components\_Imports.razor"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <AdditionalFiles Include="Features\Layout\MainLayout.razor"/>
-        <AdditionalFiles Include="Features\Layout\NavMenu.razor"/>
     </ItemGroup>
 
 </Project>
