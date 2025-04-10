@@ -1,6 +1,6 @@
 using CodeHub.Module.AzureDevOps.Models;
 
-namespace CodeHub.Portal.Services.Services;
+namespace CodeHub.Portal.Features.Git.AzureDevOps;
 
 public interface IAzureDevOpsClient
 {

@@ -1,9 +1,8 @@
 using CodeHub.Module.AzureDevOps.Models;
-using CodeHub.Portal.Services.Services;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace CodeHub.Portal.Components.Dialogs;
+namespace CodeHub.Portal.Features.Git.AzureDevOps;
 
 public partial class AzureDevOpsPipelineDialog
 {

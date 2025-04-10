@@ -1,6 +1,6 @@
 using CodeHub.Aspire.ServiceDefaults;
-using CodeHub.Portal.Components;
-using CodeHub.Portal.Services.Extensions;
+using CodeHub.Portal.Extensions;
+using CodeHub.Portal.Features;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);

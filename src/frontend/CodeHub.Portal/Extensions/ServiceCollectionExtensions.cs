@@ -1,12 +1,12 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using CodeHub.Portal.Services.Services;
+using CodeHub.Portal.Features.Cloud;
+using CodeHub.Portal.Features.Git.AzureDevOps;
+using CodeHub.Portal.Features.Git.Client;
+using CodeHub.Portal.Features.Ticketing;
 using CodeHub.Shared;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace CodeHub.Portal.Services.Extensions;
+namespace CodeHub.Portal.Extensions;
 
 public static class ServiceCollectionExtensions
 {

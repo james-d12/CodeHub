@@ -1,6 +1,6 @@
 ﻿using MudBlazor;
 
-namespace CodeHub.Portal.Components.Layout;
+namespace CodeHub.Portal.Features.Layout;
 
 public partial class MainLayout
 {

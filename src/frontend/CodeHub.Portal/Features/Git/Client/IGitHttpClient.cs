@@ -1,6 +1,6 @@
 ﻿using CodeHub.Domain.Git;
 
-namespace CodeHub.Portal.Services.Services;
+namespace CodeHub.Portal.Features.Git.Client;
 
 public interface IGitHttpClient
 {

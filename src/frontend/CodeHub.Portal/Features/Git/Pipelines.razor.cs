@@ -1,10 +1,11 @@
 ﻿using System.Text.Json;
 using CodeHub.Domain.Git;
-using CodeHub.Portal.Components.Dialogs;
-using CodeHub.Portal.Services.Services;
+using CodeHub.Portal.Features.Git.AzureDevOps;
+using CodeHub.Portal.Features.Git.Client;
+using CodeHub.Portal.Features.Shared;
 using MudBlazor;
 
-namespace CodeHub.Portal.Components.Pages;
+namespace CodeHub.Portal.Features.Git;
 
 public partial class Pipelines
 {

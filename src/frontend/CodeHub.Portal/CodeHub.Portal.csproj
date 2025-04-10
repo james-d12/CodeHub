@@ -1,29 +1,52 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-      <UserSecretsId>6f4253a7-27d8-4923-8cfa-291a93425f24</UserSecretsId>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
+        <Features>strict</Features>
+        <WarningLevel>4</WarningLevel>
+        <Nullable>enable</Nullable>
+        <AnalysisMode>Default</AnalysisMode>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <EnableRoslynAnalyzers>true</EnableRoslynAnalyzers>
+        <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+        <RunAnalyzersDuringBuildOnly>true</RunAnalyzersDuringBuildOnly>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MudBlazor" Version="8.5.1" />
+        <PackageReference Include="MudBlazor" Version="8.5.1"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\aspire\CodeHub.Aspire.ServiceDefaults\CodeHub.Aspire.ServiceDefaults.csproj" />
-        <ProjectReference Include="..\CodeHub.Portal.Services\CodeHub.Portal.Services.csproj"/>
+        <ProjectReference Include="..\..\aspire\CodeHub.Aspire.ServiceDefaults\CodeHub.Aspire.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\..\backend\CodeHub.Module\CodeHub.Module.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Update="appsettings.Development.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Update="appsettings.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+        <Content Update="appsettings.Development.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="Features\Repositories\Repositories.razor" />
+        <_ContentIncludedByDefault Remove="Features\Repositories\Repositories.razor"/>
+        <_ContentIncludedByDefault Remove="Features\AzureDevOps\AzureDevOpsPipelineDialog.razor"/>
+        <_ContentIncludedByDefault Remove="Features\AzureDevOps\AzureDevOpsRepositoryDialog.razor"/>
+        <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor"/>
+        <_ContentIncludedByDefault Remove="Components\Layout\NavMenu.razor"/>
+        <_ContentIncludedByDefault Remove="Components\_Imports.razor"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="Features\Layout\MainLayout.razor"/>
+        <AdditionalFiles Include="Features\Layout\NavMenu.razor"/>
     </ItemGroup>
 
 </Project>

@@ -1,10 +1,8 @@
-using System.Net.Http.Json;
 using System.Text.Json;
 using CodeHub.Module.AzureDevOps.Models;
 using CodeHub.Shared;
-using Microsoft.Extensions.Logging;
 
-namespace CodeHub.Portal.Services.Services;
+namespace CodeHub.Portal.Features.Git.AzureDevOps;
 
 public sealed class AzureDevOpsClient : IAzureDevOpsClient
 {
