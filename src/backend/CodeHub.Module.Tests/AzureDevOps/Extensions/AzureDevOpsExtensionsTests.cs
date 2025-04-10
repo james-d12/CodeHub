@@ -41,6 +41,10 @@ public sealed class AzureDevOpsExtensionsTests
                        service.Lifetime == ServiceLifetime.Scoped &&
                        service.ImplementationType == typeof(AzureDevOpsGitQueryService));
         Assert.Contains(serviceCollection,
+            service => service.ServiceType == typeof(IAzureDevOpsQueryService) &&
+                       service.Lifetime == ServiceLifetime.Scoped &&
+                       service.ImplementationType == typeof(AzureDevOpsQueryService));
+        Assert.Contains(serviceCollection,
             service => service.ServiceType == typeof(ITicketingQueryService) &&
                        service.Lifetime == ServiceLifetime.Scoped &&
                        service.ImplementationType == typeof(AzureDevOpsTicketingQueryService));

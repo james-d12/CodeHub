@@ -13,7 +13,7 @@
         <MudDataGrid Dense="true" T="Repository" Items="@_repositories"
                      FilterMode="@DataGridFilterMode.ColumnFilterRow" Filterable="true"
                      FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
-                     RowsPerPage="20">
+                     RowsPerPage="20" RowClick="OnRowClick" Hover="true">
             <ToolBarContent>
                 <MudText Typo="Typo.h4">
                     <MudElement HtmlTag="b">Repositories</MudElement>

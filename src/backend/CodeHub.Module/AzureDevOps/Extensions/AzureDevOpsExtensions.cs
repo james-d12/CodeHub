@@ -41,6 +41,7 @@ public static class AzureDevOpsExtensions
         services.TryAddSingleton<IAzureDevOpsConnectionService, AzureDevOpsConnectionService>();
         services.AddScoped<IGitQueryService, AzureDevOpsGitQueryService>();
         services.AddScoped<ITicketingQueryService, AzureDevOpsTicketingQueryService>();
+        services.AddScoped<IAzureDevOpsQueryService, AzureDevOpsQueryService>();
         services.AddSingleton<IDiscoveryService, AzureDevOpsDiscoveryService>();
     }
 

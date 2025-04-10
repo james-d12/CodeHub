@@ -48,8 +48,9 @@ public static class ServiceCollectionExtensions
             client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/ticketing/");
         });
 
-        services.TryAddScoped<ICloudHttpClient, CloudHttpClient>();
-        services.TryAddScoped<IGitHttpClient, GitHttpClient>();
-        services.TryAddScoped<ITicketingClient, TicketingClient>();
+        services.AddHttpClient<IAzureDevOpsClient, AzureDevOpsClient>(client =>
+        {
+            client.BaseAddress = new Uri($"{codeHubBackendBaseUrl}/azure-devops/");
+        });
     }
 }
