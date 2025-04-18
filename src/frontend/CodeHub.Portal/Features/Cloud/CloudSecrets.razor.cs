@@ -1,7 +1,6 @@
 ﻿using CodeHub.Domain.Cloud;
-using CodeHub.Portal.Services.Services;
 
-namespace CodeHub.Portal.Components.Pages;
+namespace CodeHub.Portal.Features.Cloud;
 
 public partial class CloudSecrets
 {

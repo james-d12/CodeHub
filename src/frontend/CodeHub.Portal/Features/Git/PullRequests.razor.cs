@@ -1,7 +1,8 @@
 ﻿using CodeHub.Domain.Git;
-using CodeHub.Portal.Services.Services;
+using CodeHub.Portal.Features.Git.Client;
+using CodeHub.Portal.Features.Shared;
 
-namespace CodeHub.Portal.Components.Pages;
+namespace CodeHub.Portal.Features.Git;
 
 public partial class PullRequests
 {

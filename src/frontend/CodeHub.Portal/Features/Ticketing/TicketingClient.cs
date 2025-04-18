@@ -1,10 +1,8 @@
-using System.Net.Http.Json;
 using System.Text.Json;
 using CodeHub.Domain.Ticketing;
 using CodeHub.Shared;
-using Microsoft.Extensions.Logging;
 
-namespace CodeHub.Portal.Services.Services;
+namespace CodeHub.Portal.Features.Ticketing;
 
 public sealed class TicketingClient : ITicketingClient
 {

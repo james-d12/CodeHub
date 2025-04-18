@@ -1,6 +1,6 @@
 using CodeHub.Domain.Cloud;
 
-namespace CodeHub.Portal.Services.Services;
+namespace CodeHub.Portal.Features.Cloud;
 
 public interface ICloudHttpClient
 {

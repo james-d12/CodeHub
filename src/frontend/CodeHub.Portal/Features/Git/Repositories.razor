@@ -1,26 +1,26 @@
-﻿@page "/pipelines"
+﻿@page "/repositories"
 @using CodeHub.Domain.Git
 
-<PageTitle>CodeHub: Pipelines</PageTitle>
+<PageTitle>CodeHub: Repositories</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
-    @if (_pipelines == null)
+    @if (_repositories == null)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
     }
     else
     {
-        <MudDataGrid Dense="true" T="Pipeline" Items="@_pipelines"
+        <MudDataGrid Dense="true" T="Repository" Items="@_repositories"
                      FilterMode="@DataGridFilterMode.ColumnFilterRow" Filterable="true"
                      FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive" Virtualize="true"
-                     RowsPerPage="20">
+                     RowsPerPage="20" RowClick="OnRowClick" Hover="true">
             <ToolBarContent>
                 <MudText Typo="Typo.h4">
-                    <MudElement HtmlTag="b">Pipelines</MudElement>
+                    <MudElement HtmlTag="b">Repositories</MudElement>
                 </MudText>
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Platform" Title="Platform" Filterable="false" Sortable="false">
+                <PropertyColumn Property="x => x.Platform" Title="Platform" Filterable="false" Sortable="true">
                     <CellTemplate>
                         <MudIcon Icon="@GetPlatformIcon(context.Item)"/>
                     </CellTemplate>
@@ -28,6 +28,11 @@
                 <PropertyColumn Property="x => x.Name" Title="Name">
                     <CellTemplate>
                         <MudLink Target="_blank" Href="@(context.Item?.Url.ToString())">@context.Item?.Name</MudLink>
+                    </CellTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.DefaultBranch" Title="Default Branch">
+                    <CellTemplate>
+                        @context.Item?.DefaultBranch
                     </CellTemplate>
                 </PropertyColumn>
                 <PropertyColumn Property="x => x.Owner.Name" Title="Owner">
@@ -38,7 +43,7 @@
                 </PropertyColumn>
             </Columns>
             <PagerContent>
-                <MudDataGridPager T="Pipeline" PageSizeOptions=@(new[] { 10, 20, 50 })/>
+                <MudDataGridPager T="Repository" PageSizeOptions=@(new[] { 10, 20, 50 })/>
             </PagerContent>
         </MudDataGrid>
     }

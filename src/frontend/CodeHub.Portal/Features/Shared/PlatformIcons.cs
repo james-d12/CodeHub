@@ -1,4 +1,4 @@
-﻿namespace CodeHub.Portal.Components;
+﻿namespace CodeHub.Portal.Features.Shared;
 
 public static class PlatformIcons
 {

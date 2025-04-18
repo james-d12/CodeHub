@@ -1,7 +1,7 @@
 ﻿using CodeHub.Domain.Ticketing;
-using CodeHub.Portal.Services.Services;
+using CodeHub.Portal.Features.Shared;
 
-namespace CodeHub.Portal.Components.Pages;
+namespace CodeHub.Portal.Features.Ticketing;
 
 public partial class WorkItems
 {

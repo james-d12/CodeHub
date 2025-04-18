@@ -1,6 +1,6 @@
 using CodeHub.Domain.Ticketing;
 
-namespace CodeHub.Portal.Services.Services;
+namespace CodeHub.Portal.Features.Ticketing;
 
 public interface ITicketingClient
 {

@@ -1,0 +1,43 @@
+@if (_pipeline == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+}
+else
+{
+    <MudDialog Class="pa-6">
+        <TitleContent>
+            <MudText Typo="Typo.h5" Align="Align.Center">
+                @_pipeline.Name Pipeline
+            </MudText>
+        </TitleContent>
+
+        <DialogContent>
+            <MudPaper Class="pa-4" Elevation="0">
+                <MudGrid>
+                    <MudItem xs="12" sm="12">
+                        <MudText Typo="Typo.caption" Color="Color.Primary">Owner</MudText>
+                        <MudText Typo="Typo.subtitle1">@_pipeline.Owner.Name</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="12">
+                        <MudText Typo="Typo.caption" Color="Color.Primary">URL</MudText>
+                        <MudText>
+                            <MudLink Typo="Typo.subtitle1" Href="@_pipeline.Url.ToString()"
+                                     Target="_blank">@_pipeline.Url</MudLink>
+                        </MudText>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="12">
+                        <MudText Typo="Typo.caption" Color="Color.Primary">Path</MudText>
+                        <MudText Typo="Typo.subtitle1">@_pipeline.Path</MudText>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </DialogContent>
+
+        <DialogActions>
+            <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+
