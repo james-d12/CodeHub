@@ -13,10 +13,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.3.1"/>
+        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.4.2"/>
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.8" />
       <ProjectReference Include="..\..\backend\CodeHub.Api\CodeHub.Api.csproj" />
       <ProjectReference Include="..\..\frontend\CodeHub.Portal\CodeHub.Portal.csproj" />
     </ItemGroup>
