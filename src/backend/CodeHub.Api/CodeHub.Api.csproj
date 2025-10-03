@@ -18,6 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" VersionOverride="1.16.0" />
+    <PackageReference Include="Azure.ResourceManager" VersionOverride="1.13.2" />
+  <PackageReference Include="Microsoft.Extensions.Caching.Memory" VersionOverride="9.0.9" />
+  <PackageReference Include="NGitLab" VersionOverride="10.3.0" />
+  <PackageReference Include="System.Formats.Asn1" VersionOverride="9.0.9" />
     <ProjectReference Include="..\..\aspire\CodeHub.Aspire.ServiceDefaults\CodeHub.Aspire.ServiceDefaults.csproj" />
     <ProjectReference Include="..\CodeHub.Module\CodeHub.Module.csproj" />
   </ItemGroup>
