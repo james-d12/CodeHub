@@ -1,0 +1,34 @@
+﻿<MudNavMenu>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+
+    <MudNavGroup Title="Cloud" Icon="@Icons.Material.Outlined.Cloud" Expanded="true">
+        <MudNavLink Href="cloud-resources" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Outlined.Cloud">Resources
+        </MudNavLink>
+        <MudNavLink Href="cloud-secrets" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Outlined.Key">Secrets
+        </MudNavLink>
+    </MudNavGroup>
+
+    <MudNavGroup Title="Code" Icon="@Icons.Material.Outlined.Code" Expanded="true">
+        <MudNavLink Href="repositories" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Outlined.Build">
+            Repositories
+        </MudNavLink>
+
+        <MudNavLink Href="pipelines" Match="NavLinkMatch.Prefix" Icon="@PipelineIcon">Pipelines
+        </MudNavLink>
+
+        <MudNavLink Href="pull-requests" Match="NavLinkMatch.Prefix" Icon="@PullRequestIcon" IconColor="Color.Default">
+            Pull Requests
+        </MudNavLink>
+
+        <MudNavLink Href="work-items" Match="NavLinkMatch.Prefix" Icon="@WorkItemIcon" IconColor="Color.Default">
+            Work Items
+        </MudNavLink>
+    </MudNavGroup>
+
+</MudNavMenu>
+
+@code {
+    const string PipelineIcon = "<svg class=\"w-6 h-6 text-gray-800 dark:text-white\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" fill=\"none\" viewBox=\"0 0 24 24\">\n  <path stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4\"/>\n</svg>\n";
+    const string PullRequestIcon = @"<svg class=""w-6 h-6 text-gray-800 dark:text-white"" aria-hidden=""true"" xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" fill=""currentColor"" viewBox=""0 0 24 24""> <path fill-rule=""evenodd"" d=""M3 6a3 3 0 1 1 4 2.83v6.34a3.001 3.001 0 1 1-2 0V8.83A3.001 3.001 0 0 1 3 6Zm11.207-2.707a1 1 0 0 1 0 1.414L13.914 5H15a4 4 0 0 1 4 4v6.17a3.001 3.001 0 1 1-2 0V9a2 2 0 0 0-2-2h-1.086l.293.293a1 1 0 0 1-1.414 1.414l-2-2a1 1 0 0 1 0-1.414l2-2a1 1 0 0 1 1.414 0Z"" clip-rule=""evenodd""/> </svg>";
+    const string WorkItemIcon = "<svg class=\"w-6 h-6 text-gray-800 dark:text-white\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" fill=\"none\" viewBox=\"0 0 24 24\"> <path stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M18.5 12A2.5 2.5 0 0 1 21 9.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2.5a2.5 2.5 0 0 1 0 5V17a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-2.5a2.5 2.5 0 0 1-2.5-2.5Z\"/> </svg>";
+}
