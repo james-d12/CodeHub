@@ -1,3 +1,7 @@
 /[Bb]in
 /[Oo]bj
 README.md
+/.idea
+/.git
+/.github
+/.vscode

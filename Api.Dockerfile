@@ -3,10 +3,11 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
 WORKDIR /app
 
-COPY ./aspire/CodeHub.Aspire.ServiceDefaults ./aspire/CodeHub.Aspire.ServiceDefaults
-COPY ./backend ./backend
+COPY Directory.Build.props .
+COPY Directory.Packages.props .
+COPY ./src .
 
-WORKDIR backend/CodeHub.Api
+WORKDIR CodeHub.Api
 
 RUN dotnet restore CodeHub.Api.csproj
 
