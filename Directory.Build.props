@@ -2,13 +2,16 @@
     <PropertyGroup>
         <IsPackable>false</IsPackable>
         <IsPublishable>false</IsPublishable>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <LangVersion>latest</LangVersion>
         <Features>strict</Features>
         <WarningLevel>4</WarningLevel>
         <Nullable>enable</Nullable>
         <AnalysisMode>Default</AnalysisMode>
+        <NuGetAudit>true</NuGetAudit>
+        <NuGetAuditLevel>moderate</NuGetAuditLevel>
+        <NuGetAuditMode>all</NuGetAuditMode>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <EnableRoslynAnalyzers>true</EnableRoslynAnalyzers>
@@ -16,5 +19,6 @@
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
         <RunAnalyzersDuringBuildOnly>true</RunAnalyzersDuringBuildOnly>
+        <NoWarn>NU1510</NoWarn>
     </PropertyGroup>
 </Project>

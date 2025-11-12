@@ -17,6 +17,6 @@
         <PackageReference Include="System.Text.RegularExpressions"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\CodeHub.Domain\CodeHub.Domain.csproj" />
+        <ProjectReference Include="..\CodeHub.Domain\CodeHub.Domain.csproj"/>
     </ItemGroup>
 </Project>

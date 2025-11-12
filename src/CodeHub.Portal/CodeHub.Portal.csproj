@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <IsPublishable>true</IsPublishable>
+        <UserSecretsId>b74f861f-7e46-483e-8502-e62ed2525ad1</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MudBlazor"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Update="appsettings.Development.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CodeHub.Aspire.ServiceDefaults\CodeHub.Aspire.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\CodeHub.Module\CodeHub.Module.csproj" />
+    </ItemGroup>
+
+</Project>

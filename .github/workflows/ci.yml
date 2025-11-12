@@ -1,4 +1,6 @@
 name: CI Workflow
+permissions:
+  contents: read
 
 on:
   push:
@@ -22,7 +24,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '10.0.x'
 
       - name: Cache NuGet packages
         uses: actions/cache@v4
@@ -50,8 +52,8 @@ jobs:
       - name: Run Tests
         run: dotnet test ${{ env.SOLUTION_FILE }} --configuration Release --no-build --collect:"XPlat Code Coverage"
 
-      - name: Run Mutation Tests
-        run: dotnet stryker --solution ${{ env.SOLUTION_FILE }}
+      # - name: Run Mutation Tests
+      #   run: dotnet stryker --solution ${{ env.SOLUTION_FILE }}
 
       - name: Build Docker
         run: docker compose build

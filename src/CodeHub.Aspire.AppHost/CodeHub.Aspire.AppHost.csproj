@@ -1,0 +1,15 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.0.0">
+    
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <IsPublishable>false</IsPublishable>
+        <IsAspireHost>true</IsAspireHost>
+        <UserSecretsId>5d667079-d3a8-430f-adf3-6c62d6297999</UserSecretsId>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\CodeHub.Api\CodeHub.Api.csproj"/>
+        <ProjectReference Include="..\CodeHub.Portal\CodeHub.Portal.csproj"/>
+    </ItemGroup>
+
+</Project>
