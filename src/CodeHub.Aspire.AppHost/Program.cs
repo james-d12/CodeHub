@@ -1,7 +1,6 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var api = builder.AddProject<Projects.CodeHub_Api>("api");
-builder.AddProject<Projects.CodeHub_Portal>("portal")
-    .WithReference(api);
+var api = builder.AddProject("api", "../CodeHub.Api");
+builder.AddProject("portal", "../CodeHub.Portal").WithReference(api);
 
 builder.Build().Run();
