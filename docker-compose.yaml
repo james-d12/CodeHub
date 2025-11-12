@@ -3,7 +3,7 @@ services:
   backend:
     build:
       context: ./src
-      dockerfile: backend/Backend.Dockerfile
+      dockerfile: Backend.Dockerfile
     ports:
       - "8080:8080"
     develop:
@@ -16,8 +16,8 @@ services:
     build:
       context: ./src
       additional_contexts:
-        backend: ./src/backend
-      dockerfile: frontend/Frontend.Dockerfile
+        backend: ./src/
+      dockerfile: Frontend.Dockerfile
     depends_on:
       - backend
     ports:
