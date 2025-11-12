@@ -19,5 +19,6 @@
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
         <RunAnalyzersDuringBuildOnly>true</RunAnalyzersDuringBuildOnly>
+        <NoWarn>NU1510</NoWarn>
     </PropertyGroup>
 </Project>

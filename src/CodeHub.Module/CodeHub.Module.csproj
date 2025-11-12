@@ -12,6 +12,9 @@
         <PackageReference Include="Octokit"/>
         <PackageReference Include="NGitLab"/>
         <PackageReference Include="System.Data.SqlClient"/>
+        <PackageReference Include="System.Formats.Asn1"/>
+        <PackageReference Include="System.Net.Http"/>
+        <PackageReference Include="System.Text.RegularExpressions"/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\CodeHub.Domain\CodeHub.Domain.csproj"/>
