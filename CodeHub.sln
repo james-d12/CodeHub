@@ -14,10 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		.dockerignore = .dockerignore
 		stryker-config.json = stryker-config.json
-		src\Directory.Build.props = src\Directory.Build.props
-		src\Directory.Packages.props = src\Directory.Packages.props
-		src\Backend.Dockerfile = src\Backend.Dockerfile
-		src\Frontend.Dockerfile = src\Frontend.Dockerfile
+		Backend.Dockerfile = Backend.Dockerfile
+		Frontend.Dockerfile = Frontend.Dockerfile
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHub.Api", "src\CodeHub.Api\CodeHub.Api.csproj", "{9F68DD93-619C-451F-B744-BC8A67D7B7E7}"
