@@ -14,7 +14,7 @@
         <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.0.1"/>
         <PackageVersion Include="Microsoft.TeamFoundationServer.Client" Version="19.225.1"/>
         <PackageVersion Include="Microsoft.VisualStudio.Services.Client" Version="19.225.1"/>
-        <PackageVersion Include="Azure.Identity" Version="1.17.0"/>
+        <PackageVersion Include="Azure.Identity" Version="1.17.1"/>
         <PackageVersion Include="Azure.ResourceManager" Version="1.13.2"/>
         <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.8.0"/>
         <PackageVersion Include="GitHub.Octokit.SDK" Version="0.0.30"/>
